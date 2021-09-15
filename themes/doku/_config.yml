@@ -1,0 +1,53 @@
+# Favicon
+favicon: 'theme-doku/img/favicon.ico'
+
+# --------------------
+# Navbar
+# --------------------
+navbar:
+  # The URL of Logo which will be shown at navbar
+  logo: 'theme-doku/img/logo.png'
+  # If you Logo has no text, you can add title next to your logo.
+  # Leave it as an empty string if you don't have
+  logo_text: 'Malagu'
+  links:
+    zh-CN:
+      - logo:
+        text: 'Package文档
+        url: '/'
+      - logo:
+        text: '框架介绍'
+        url: 'https://www.yuque.com/cellbang/malagu/puw7p0'
+      - logo:
+        text: 'Api文档'
+        url: 'https://cellbang.github.io/malagu/docs/next/'
+      - logo:
+        text: '更新日志'
+        url: 'https://github.com/cellbang/malagu/blob/master/CHANGELOG.md'
+      - logo: 'fab fa-github'
+        # 显示在链接旁边的图标，目前仅支持 font-awesome，输入 font-awesome 图标的完整名字
+        # 如果不想设置图标留空即可
+        text: 'GitHub'
+        # 链接的文字
+        url: 'https://github.com/cellbang/malagu'
+
+# --------------------
+# Sidebar Items
+# --------------------
+sidebar:
+  zh-CN: # 语言。
+    package: # 文档类型。以下配置的侧边栏内容只会在 zh-CN 语言、类型为「docs」的页面下显示
+      level: 2
+      items:
+        - package: # 子标题
+          - core | /package/core.html # 格式为 "[链接文字] | [链接的 URL]"
+          - web | /package/web.html
+          - mvc | /package/mvc.html
+          - serve-static | /package/serve-static.html
+          - vue | /package/vue.html
+        - dev-package:
+          - cli | /package/cli.html
+          - cli-service | /package/cli-service.html
+github:
+  repo: cellbang/malagu-docs
+  edit_on_github: true # true / false
