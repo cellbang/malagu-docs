@@ -3,17 +3,17 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Malagu Docs
+title: 'Malagu Docs'
 subtitle: ''
 description: ''
-keywords:
+keywords: 'malagu-docs'
 author: lccf
 language: zh-CN
 timezone: ''
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
+url: https://cellbang.github.io/malagu-docs/
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
