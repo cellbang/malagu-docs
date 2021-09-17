@@ -1,6 +1,6 @@
 ---
 title: '@malagu/core'
-description: '@malagu/core是malagu框架的核心包，提供IOC、AOP、Appliction、Logger、Error等抽象定义和实现以及相关工具方法。'
+description: '@malagu/core是Malagu框架的核心包，提供IOC、AOP、Appliction、Logger、Error等抽象定义和实现以及相关工具方法。'
 type: package
 lang: zh-CN
 ---
@@ -67,7 +67,12 @@ export class ApplicationShellImpl implements ApplicationShell {
 
 后端的`Appliction`的`start`方法中仅调用父类`AbstractApplication`的`doStart`方法处理生命周期的回调。具体的启动逻辑由对应的package处理。
 
-`Appliction`在日常应用开发基本不会接触，前端开发时可能需要自定义`ApplicationShell`来实现渲染。
+`Appliction`在日常应用开发基本接触不多，前端开发时可能需要自定义`ApplicationShell`来实现渲染。
+
+Application相关代码文件：
+- [common/application](https://github.com/cellbang/malagu/tree/master/packages/core/src/common/application)
+- [node/application](https://github.com/cellbang/malagu/tree/master/packages/core/src/node/application)
+- [browser/application](https://github.com/cellbang/malagu/tree/master/packages/core/src/browser/application)
 
 ### IOC
 IoC 是面向对象编程的一种设计原则，Malagu中主要依靠一系列的注解器(`Annotation`)来组织代码使之匹配这种设计原则。来看一段示例代码：
@@ -92,6 +97,10 @@ export class B {
 - `Autowired`挂载功能
 - `Constant`定义常量
 - `Value`挂载配置
+
+IOC相关代码目录如下：
+- [common/container](https://github.com/cellbang/malagu/tree/master/packages/core/src/common/container)
+- [common/annotation](https://github.com/cellbang/malagu/tree/master/packages/core/src/common/annotation)IOC相关的注解器
 
 ### AOP
 AOP面向切面编程是一种编程方式，可以作为OOP的补充，针对特定方法做前置后置处理。下面展示一个针对Http请求处理的示例：
@@ -136,11 +145,46 @@ export class MethodBeforeAdviceImpl implements MethodBeforeAdvice {
     }
 }
 ```
+AOP相关代码文件：
+- [common/aop](https://github.com/cellbang/malagu/tree/master/packages/core/src/common/aop)定义AOP的interface和相关实现
+- [common/annotation](https://github.com/cellbang/malagu/tree/master/packages/core/src/common/annotation)AOP相关的注解器
+- [common/container/auto-bind.ts](https://github.com/cellbang/malagu/blob/master/packages/core/src/common/container/auto-bind.ts)`autoBind`中对AOP类进行包装
 
 ### Logger
+Malagu框架提供了对日志的封装，代码在 [common/logger/logger.ts](https://github.com/cellbang/malagu/blob/master/packages/core/src/common/logger/logger.ts)。示例：
 
+```typescript
+// http-service-before.ts
+import { Logger, Aspect, MethodBeforeAdvice } from '@malagu/core';
+
+@Aspect(MethodBeforeAdvice)
+export class MethodBeforeAdviceImpl implements MethodBeforeAdvice {
+    @Autowired(Logger)
+    loger: Logger;
+
+    async before(method: string | number | symbol, args: any[], target: any): Promise<void> {
+        if (method === 'get' || method === 'post') {
+            this.logger.info(`method: ${method} url: ${args[0]} data${args[1]}`);
+        }
+    }
+}
+```
+core默认的日志功能较为精简，如果有更复杂的需求可以自行定义Logger来扩展，或者使用@malagu/logger包。
+
+logger相关代码文件：
+- [common/logger](https://github.com/cellbang/malagu/tree/master/packages/core/src/common/logger)
 
 ### Error
+待完善
+
+### Config
+待完善
+
+### Pipe
+待完善
+
+### Utils
+待完善
 
 ### 配置参考
 
@@ -148,6 +192,13 @@ export class MethodBeforeAdviceImpl implements MethodBeforeAdvice {
 
 ```yaml
 malagu:
-    hostDomId: root
+    hostDomId: app
 ```
 
+2.malagu.logger.level用来定义日志级别，示例：
+
+```yaml
+malagu:
+    logger:
+        level: debug # 'verbose' | 'debug' | 'info' | 'warn' | 'error';
+```
