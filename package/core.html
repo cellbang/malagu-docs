@@ -43,6 +43,13 @@
                     <a class="navbar-item" href="/malagu-docs/">
                         
                         
+                            <span>学习Malagu</span>
+                        
+                    </a>
+                
+                    <a class="navbar-item" href="/malagu-docs/package">
+                        
+                        
                             <span>Package文档</span>
                         
                     </a>
@@ -135,7 +142,11 @@
                 <ul class="menu-list is-hidden-desktop">
                     
                         
-                            <li><a href="/malagu-docs/">Package文档</span></a></li>
+                            <li><a href="/malagu-docs/">学习Malagu</span></a></li>
+                        
+                    
+                        
+                            <li><a href="/malagu-docs/package">Package文档</span></a></li>
                         
                     
                         
@@ -202,7 +213,7 @@
         <div class="hero-body">
             <h1 class="title">@malagu/core</h1>
             
-                <p class="subtitle">@malagu/core是malagu框架的核心包，提供IOC、AOP、Appliction、Logger、Error等抽象定义和实现以及相关工具方法。</p>
+                <p class="subtitle">@malagu/core是Malagu框架的核心包，提供IOC、AOP、Appliction、Logger、Error等抽象定义和实现以及相关工具方法。</p>
             
             
                 <a href="https://github.com/cellbang/malagu-docs/tree/master/source/package/core.md" target="_blank" rel="external nofollow noreferrer noopener" class="button is-small is-rounded is-black"><span class="icon is-small"><i class="fab fa-github"></i></span><span>在 GitHub 上编辑</span></a>
@@ -230,7 +241,13 @@
 
 <p>我们可以看到<code>attch</code>方法接为一个类型为<code>HTMLElement</code>的参数<code>host</code>，并调用<code>host.textContent = &#39;Hello, Malagu.&#39;</code>赋值实现了一个前端的渲染动作。</p>
 <p>后端的<code>Appliction</code>的<code>start</code>方法中仅调用父类<code>AbstractApplication</code>的<code>doStart</code>方法处理生命周期的回调。具体的启动逻辑由对应的package处理。</p>
-<p><code>Appliction</code>在日常应用开发基本不会接触，前端开发时可能需要自定义<code>ApplicationShell</code>来实现渲染。</p>
+<p><code>Appliction</code>在日常应用开发基本接触不多，前端开发时可能需要自定义<code>ApplicationShell</code>来实现渲染。</p>
+<p>Application相关代码文件：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/cellbang/malagu/tree/master/packages/core/src/common/application">common/application</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/cellbang/malagu/tree/master/packages/core/src/node/application">node/application</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/cellbang/malagu/tree/master/packages/core/src/browser/application">browser/application</a></li>
+</ul>
 <h3 id="IOC"><a href="#IOC" class="headerlink" title="IOC"></a>IOC</h3><p>IoC 是面向对象编程的一种设计原则，Malagu中主要依靠一系列的注解器(<code>Annotation</code>)来组织代码使之匹配这种设计原则。来看一段示例代码：</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component, Autowired &#125; <span class="keyword">from</span> <span class="string">&#x27;@malagu/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">B</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span>(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">    <span class="keyword">protected</span> a: A;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -241,16 +258,39 @@
 <li><code>Constant</code>定义常量</li>
 <li><code>Value</code>挂载配置</li>
 </ul>
+<p>IOC相关代码目录如下：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/cellbang/malagu/tree/master/packages/core/src/common/container">common/container</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/cellbang/malagu/tree/master/packages/core/src/common/annotation">common/annotation</a>IOC相关的注解器</li>
+</ul>
 <h3 id="AOP"><a href="#AOP" class="headerlink" title="AOP"></a>AOP</h3><p>AOP面向切面编程是一种编程方式，可以作为OOP的补充，针对特定方法做前置后置处理。下面展示一个针对Http请求处理的示例：</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// http-service-protocol.ts</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> HttpService = <span class="built_in">Symbol</span>(<span class="string">&#x27;HttpService&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> HttpService &#123;</span><br><span class="line">    get&lt;T&gt;: <span class="function">(<span class="params">url: <span class="built_in">string</span>, data: <span class="built_in">any</span></span>) =&gt;</span> <span class="built_in">Promise</span>&lt;T&gt;;</span><br><span class="line">    post&lt;T&gt;: <span class="function">(<span class="params">url: <span class="built_in">string</span>, data: <span class="built_in">any</span></span>) =&gt;</span> <span class="built_in">Promise</span>&lt;T&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// http-service.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; Service &#125; <span class="keyword">from</span> <span class="string">&#x27;@malagu/core&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; HttpService &#125; <span class="keyword">from</span> <span class="string">&#x27;http-service-protocol&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span>(HttpService)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">HttpServiceImpl</span> <span class="title">implements</span> <span class="title">HttpService</span> </span>&#123;</span><br><span class="line">    get&lt;T&gt;(url: <span class="built_in">string</span>, <span class="attr">data</span>: <span class="built_in">any</span>) &#123;</span><br><span class="line">        <span class="comment">// 发送get请求</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    post&lt;T&gt;(url: <span class="built_in">string</span>, <span class="attr">data</span>: <span class="built_in">any</span>) &#123;</span><br><span class="line">        <span class="comment">// 发送post请求</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// http-service-before.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; Aspect, MethodBeforeAdvice &#125; <span class="keyword">from</span> <span class="string">&#x27;@malagu/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Aspect</span>(MethodBeforeAdvice)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">MethodBeforeAdviceImpl</span> <span class="title">implements</span> <span class="title">MethodBeforeAdvice</span> </span>&#123;</span><br><span class="line">    <span class="keyword">async</span> before(method: <span class="built_in">string</span> | <span class="built_in">number</span> | symbol, <span class="attr">args</span>: <span class="built_in">any</span>[], <span class="attr">target</span>: <span class="built_in">any</span>): <span class="built_in">Promise</span>&lt;<span class="built_in">void</span>&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (method === <span class="string">&#x27;get&#x27;</span> || method === <span class="string">&#x27;post&#x27;</span>) &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">`method: <span class="subst">$&#123;method&#125;</span> url: <span class="subst">$&#123;args[<span class="number">0</span>]&#125;</span> data<span class="subst">$&#123;args[<span class="number">1</span>]&#125;</span>`</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>AOP相关代码文件：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/cellbang/malagu/tree/master/packages/core/src/common/aop">common/aop</a>定义AOP的interface和相关实现</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/cellbang/malagu/tree/master/packages/core/src/common/annotation">common/annotation</a>AOP相关的注解器</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/cellbang/malagu/blob/master/packages/core/src/common/container/auto-bind.ts">common/container/auto-bind.ts</a><code>autoBind</code>中对AOP类进行包装</li>
+</ul>
+<h3 id="Logger"><a href="#Logger" class="headerlink" title="Logger"></a>Logger</h3><p>Malagu框架提供了对日志的封装，代码在 <a target="_blank" rel="noopener" href="https://github.com/cellbang/malagu/blob/master/packages/core/src/common/logger/logger.ts">common/logger/logger.ts</a>。示例：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// http-service-before.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; Logger, Aspect, MethodBeforeAdvice &#125; <span class="keyword">from</span> <span class="string">&#x27;@malagu/core&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Aspect</span>(MethodBeforeAdvice)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">MethodBeforeAdviceImpl</span> <span class="title">implements</span> <span class="title">MethodBeforeAdvice</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span>(Logger)</span><br><span class="line">    <span class="attr">loger</span>: Logger;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">async</span> before(method: <span class="built_in">string</span> | <span class="built_in">number</span> | symbol, <span class="attr">args</span>: <span class="built_in">any</span>[], <span class="attr">target</span>: <span class="built_in">any</span>): <span class="built_in">Promise</span>&lt;<span class="built_in">void</span>&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (method === <span class="string">&#x27;get&#x27;</span> || method === <span class="string">&#x27;post&#x27;</span>) &#123;</span><br><span class="line">            <span class="built_in">this</span>.logger.info(<span class="string">`method: <span class="subst">$&#123;method&#125;</span> url: <span class="subst">$&#123;args[<span class="number">0</span>]&#125;</span> data<span class="subst">$&#123;args[<span class="number">1</span>]&#125;</span>`</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>core默认的日志功能较为精简，如果有更复杂的需求可以自行定义Logger来扩展，或者使用@malagu/logger包。</p>
+<p>logger相关代码文件：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/cellbang/malagu/tree/master/packages/core/src/common/logger">common/logger</a></li>
+</ul>
+<h3 id="Error"><a href="#Error" class="headerlink" title="Error"></a>Error</h3><p>待完善</p>
+<h3 id="Config"><a href="#Config" class="headerlink" title="Config"></a>Config</h3><p>待完善</p>
+<h3 id="Pipe"><a href="#Pipe" class="headerlink" title="Pipe"></a>Pipe</h3><p>待完善</p>
+<h3 id="Utils"><a href="#Utils" class="headerlink" title="Utils"></a>Utils</h3><p>待完善</p>
+<h3 id="配置参考"><a href="#配置参考" class="headerlink" title="配置参考"></a>配置参考</h3><p>1.malagu.hostDomId用来定义前端的根元素id，示例：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">malagu:</span></span><br><span class="line">    <span class="attr">hostDomId:</span> <span class="string">app</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="Logger"><a href="#Logger" class="headerlink" title="Logger"></a>Logger</h3><h3 id="Error"><a href="#Error" class="headerlink" title="Error"></a>Error</h3><h3 id="配置参考"><a href="#配置参考" class="headerlink" title="配置参考"></a>配置参考</h3><p>1.malagu.hostDomId用来定义前端的根元素id，示例：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">malagu:</span></span><br><span class="line">    <span class="attr">hostDomId:</span> <span class="string">root</span></span><br></pre></td></tr></table></figure>
-
+<p>2.malagu.logger.level用来定义日志级别，示例：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">malagu:</span></span><br><span class="line">    <span class="attr">logger:</span></span><br><span class="line">        <span class="attr">level:</span> <span class="string">debug</span> <span class="comment"># &#x27;verbose&#x27; | &#x27;debug&#x27; | &#x27;info&#x27; | &#x27;warn&#x27; | &#x27;error&#x27;;</span></span><br></pre></td></tr></table></figure>
 
             </div>
 
@@ -267,7 +307,7 @@
             <aside class="doku-document-toc" id="doku-document-toc">
                 <div class="doku-document-toc-content">
                     <p class="doku-document-toc-title">目录</p>
-                    <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Application"><span class="post-toc-text">Application</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#IOC"><span class="post-toc-text">IOC</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#AOP"><span class="post-toc-text">AOP</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Logger"><span class="post-toc-text">Logger</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Error"><span class="post-toc-text">Error</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E9%85%8D%E7%BD%AE%E5%8F%82%E8%80%83"><span class="post-toc-text">配置参考</span></a></li></ol>
+                    <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Application"><span class="post-toc-text">Application</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#IOC"><span class="post-toc-text">IOC</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#AOP"><span class="post-toc-text">AOP</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Logger"><span class="post-toc-text">Logger</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Error"><span class="post-toc-text">Error</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Config"><span class="post-toc-text">Config</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Pipe"><span class="post-toc-text">Pipe</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Utils"><span class="post-toc-text">Utils</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E9%85%8D%E7%BD%AE%E5%8F%82%E8%80%83"><span class="post-toc-text">配置参考</span></a></li></ol>
                 </div>
             </aside>
         </div>
