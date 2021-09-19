@@ -5,4 +5,4 @@ type: learn
 lang: zh-CN
 ---
 
-- 创建一个Vue项目(进行中) [链接](/malagu-docs/learn/vue.html)
+- 创建Vue项目(进行中) [链接](/malagu-docs/learn/vue.html)

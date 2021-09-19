@@ -142,7 +142,7 @@ theme_config:
       learn:
         level: 1
         items:
-          - 创建一个Vue项目 | /learn/vue.md
+          - 创建Vue项目 | /learn/vue.md
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
