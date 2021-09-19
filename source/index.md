@@ -6,4 +6,4 @@ lang: zh-CN
 ---
 
 - 创建Vue项目 [链接](/malagu-docs/learn/vue.html)
-- 配置Vue项目(更新中) [链接](/malagu-docs/learn/vue.html)
+- 配置Vue项目(更新中) [链接](/malagu-docs/learn/config-vue.html)
