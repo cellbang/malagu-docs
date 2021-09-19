@@ -1,11 +1,11 @@
 ---
-title: '创建一个Vue项目'
-description: '从零创建一个Vue项目'
+title: '创建Vue项目'
+description: '本篇从零开始创建一个基于Malagu框架的vue项目，以便大家更好的了解Malagu框架'
 type: learn
 lang: zh-CN
 ---
 
-本教程教大家从零开始创建一个基于Malagu框架的vue项目，以便大家更好的了解Malagu框架。Malagu自带的cli工具可快速创建模板项目，可参考以下链接：[1.创建项目](https://www.yuque.com/cellbang/malagu/ogreg3) [2.Vue 开发](https://www.yuque.com/cellbang/malagu/vgim9q)
+本篇从零开始创建一个基于Malagu框架的vue项目，以便大家更好的了解Malagu框架。Malagu自带的cli工具可快速创建模板项目，可参考以下链接：[创建项目](https://www.yuque.com/cellbang/malagu/ogreg3)、[Vue 开发](https://www.yuque.com/cellbang/malagu/vgim9q)
 
 ### 创建项目
 
@@ -95,8 +95,8 @@ targets:
 src/shims-vue.d.ts
 
 ```typescript
-declare module '*.vue' {
-    import { DefineComponent } from 'vue'
+declare module "*.vue" {
+    import { DefineComponent } from "vue"
     const component: DefineComponent<{}, {}, unknown>
     export default component
 }
@@ -260,55 +260,6 @@ import { router } from "./config/router";
 export default class { }
 ```
 
-### 配置路径别名
-
-刚刚可以看到，我们在src/config/router.ts文件中引用vue文件使用的是相对路径，实际开发中会为路径定义别名。现在我们给Malagu根目录配置别名
-
-#### 修改ts别名配置
-
-修改tsconfig.json，添加paths设置:
-
-```json
-{
-  "compilerOptions": {
-      // ...
-      "paths": {
-        "~/*": ["*"]
-      }
-  }
-}
-```
-
-#### 添加webpack配置
-
-添加src/hooks/webpack.ts配置webpack别名
-
-src/hooks/webpack.ts
-
-```ts
-import { WebpackContext, ConfigurationContext } from '@malagu/cli-service';
-import * as path from 'path';
-
-export default async (context: WebpackContext) => {
-    const { configurations } = context;
-    const webpackConfig = ConfigurationContext.getFrontendConfiguration( configurations );
-    if (webpackConfig) {
-        const basePath = path.resolve(__dirname, '../');
-        webpackConfig.resolve
-            .alias
-                .set('~', basePath);
-    }
-}
-```
-
-* 修改配置使用webpack-chain语法，可搜索相关api用法。
-
-#### 修改路由文件
-
-将src/config/router.ts中的路径，将`../`修改为`~`
-
-* 因为之前项目启动前没有加载src/hook/webpack.ts所以需要重启项目加载该配置
-
 ### 添加vuex
 
 #### 安装vuex组件
@@ -322,12 +273,12 @@ npm i -S vuex@next
 src/store/index.ts
 
 ```ts
-import { createStore } from 'vuex';
+import { createStore } from "vuex";
 
 export const store = createStore({
     state() {
         return {
-            title: '首页'
+            title: "首页"
         }
     }
 });

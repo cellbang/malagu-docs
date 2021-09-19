@@ -7,10 +7,10 @@ lang: zh-CN
 
 当前文档主要针对Malagu的Package提供相关参考。目前进度如下：
 
-- core(进行中) [链接](/malagu-docs/package/core.html)
-- web(待完善)
-- mvc(待完善)
-- serve-static(待完善)
-- vue(待完善)
-- cli(待完善)
-- cli-service(待完善)
+- core(更新中) [链接](/malagu-docs/package/core.html)
+- web(未开始)
+- mvc(未开始)
+- serve-static(未开始)
+- vue(未开始)
+- cli(未开始)
+- cli-service(未开始)
