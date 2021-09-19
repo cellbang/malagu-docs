@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+<title>配置vue项目 | Malagu Docs</title>
+<meta name="generator" content="Hexo 5.4.0">
+<meta http-equiv="x-dns-prefetch-control" content="on">
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="/malagu-docs/theme-doku/img/favicon.ico">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.16.2/styles/github.min.css">
+<link rel="stylesheet" href="/malagu-docs/theme-doku/css/doku.css">
+
+</head>
+
+<body>
+    
+
+<nav id="doku-navbar" class="navbar is-spaced has-shadow">
+    <div class="container">
+        <div class="navbar-brand">
+            <!-- burger btn -->
+            <a role="button" class="navbar-burger burger" id="doku-sidebar-toggle">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+
+            <a class="navbar-item" href="https://cellbang.github.io/malagu-docs">
+                <h1 class="doku-navbar-title">
+                    <img src="/malagu-docs/theme-doku/img/logo.png" height="28">
+                    <span class="is-size-4">Malagu</span>
+                </h1>
+            </a>
+        </div>
+        <div class="navbar-menu">
+            <div class="navbar-start">
+                
+                    <a class="navbar-item" href="/malagu-docs/">
+                        
+                        
+                            <span>学习Malagu</span>
+                        
+                    </a>
+                
+                    <a class="navbar-item" href="/malagu-docs/package">
+                        
+                        
+                            <span>Package文档</span>
+                        
+                    </a>
+                
+                    <a class="navbar-item" target="_blank" rel="noopener" href="https://www.yuque.com/cellbang/malagu/puw7p0">
+                        
+                        
+                            <span>框架介绍</span>
+                        
+                    </a>
+                
+                    <a class="navbar-item" href="https://cellbang.github.io/malagu/docs/next/">
+                        
+                        
+                            <span>Api文档</span>
+                        
+                    </a>
+                
+                    <a class="navbar-item" target="_blank" rel="noopener" href="https://github.com/cellbang/malagu/blob/master/CHANGELOG.md">
+                        
+                        
+                            <span>更新日志</span>
+                        
+                    </a>
+                
+                    <a class="navbar-item" target="_blank" rel="noopener" href="https://github.com/cellbang/malagu">
+                        
+                            <span class="icon">
+                                <i class="fab fa-github"></i>
+                            </span>
+                        
+                        
+                            <span>GitHub</span>
+                        
+                    </a>
+                
+                <!-- navbar link -->
+                <!--<a class="navbar-item">
+                Home
+            </a>-->
+            </div>
+            <!-- i18n switch -->
+            <div class="navbar-end">
+                <!--<div class="navbar-item">
+                    <div class="dropdown is-right is-hoverable">
+                        <div class="dropdown-trigger">
+                            <button class="button" id="navbar-i18n-btn">
+                                <span class="icon is-small">
+                                    <i class="fas fa-globe-americas" aria-hidden="true"></i>
+                                </span>
+                                <span>Language</span>
+                                <span class="icon is-small">
+                                    <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-content">
+                                <a href="#" class="dropdown-item">
+                                    Dropdown item
+                                </a>
+                                <a class="dropdown-item">
+                                    Other dropdown item
+                                </a>
+                                <a href="#" class="dropdown-item">
+                                    Active dropdown item
+                                </a>
+                                <a href="#" class="dropdown-item">
+                                    Other dropdown item
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+    <div class="container-fluid">
+        <section class="main-content">
+            
+
+
+<aside class="doku-sidebar" id="doku-sidebar">
+    <div class="doku-sidebar-content">
+        <div class="menu">
+            
+                <ul class="menu-list is-hidden-desktop">
+                    
+                        
+                            <li><a href="/malagu-docs/">学习Malagu</span></a></li>
+                        
+                    
+                        
+                            <li><a href="/malagu-docs/package">Package文档</span></a></li>
+                        
+                    
+                        
+                            <li><a target="_blank" rel="noopener" href="https://www.yuque.com/cellbang/malagu/puw7p0">框架介绍</span></a></li>
+                        
+                    
+                        
+                            <li><a href="https://cellbang.github.io/malagu/docs/next/">Api文档</span></a></li>
+                        
+                    
+                        
+                            <li><a target="_blank" rel="noopener" href="https://github.com/cellbang/malagu/blob/master/CHANGELOG.md">更新日志</span></a></li>
+                        
+                    
+                        
+                            <li><a target="_blank" rel="noopener" href="https://github.com/cellbang/malagu">GitHub</span></a></li>
+                        
+                    
+                </ul>
+            
+            <hr class="is-hidden-desktop">
+            
+                
+                    <ul class="menu-list">
+                        
+                            <li><a  href="/malagu-docs/learn/vue.html">创建Vue项目</a></li>
+                        
+                            <li><a class="is-current" href="/malagu-docs/learn/config-vue.html">配置Vue项目</a></li>
+                        
+                    </ul>
+                
+            
+        </div>
+    </div>
+</aside>
+
+            <main class="is-paddingless doku-main-wrapper" id="doku-main">
+                
+
+<article class="doku-document-container clearfix">
+    <header class="hero is-light" id="doku-document-hero">
+        <div class="hero-body">
+            <h1 class="title">配置vue项目</h1>
+            
+                <p class="subtitle">Malagu框架整合了webpack，这里展示如何进行项目相关配置</p>
+            
+            
+                <a href="https://github.com/cellbang/malagu-docs/tree/master/source/learn/config-vue.md" target="_blank" rel="external nofollow noreferrer noopener" class="button is-small is-rounded is-black"><span class="icon is-small"><i class="fab fa-github"></i></span><span>在 GitHub 上编辑</span></a>
+            
+        </div>
+    </header>
+    <div class="columns">
+        <div class="column is-9-tablet doku-document-wrapper">
+            <div class="content">
+                <h3 id="配置路径别名"><a href="#配置路径别名" class="headerlink" title="配置路径别名"></a>配置路径别名</h3><p>刚刚可以看到，我们在src/config/router.ts文件中引用vue文件使用的是相对路径，实际开发中会为路径定义别名。现在我们给Malagu根目录配置别名</p>
+<h4 id="修改ts别名配置"><a href="#修改ts别名配置" class="headerlink" title="修改ts别名配置"></a>修改ts别名配置</h4><p>修改tsconfig.json，添加paths设置:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;compilerOptions&quot;</span>: &#123;</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">      <span class="attr">&quot;paths&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;~/*&quot;</span>: [<span class="string">&quot;*&quot;</span>]</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="添加webpack配置"><a href="#添加webpack配置" class="headerlink" title="添加webpack配置"></a>添加webpack配置</h4><p>添加src/hooks/webpack.ts配置webpack别名</p>
+<p>src/hooks/webpack.ts</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; WebpackContext, ConfigurationContext &#125; <span class="keyword">from</span> <span class="string">&quot;@malagu/cli-service&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> path <span class="keyword">from</span> <span class="string">&quot;path&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">async</span> (context: WebpackContext) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; configurations &#125; = context;</span><br><span class="line">    <span class="keyword">const</span> webpackConfig = ConfigurationContext.getFrontendConfiguration( configurations );</span><br><span class="line">    <span class="keyword">if</span> (webpackConfig) &#123;</span><br><span class="line">        <span class="keyword">const</span> basePath = path.resolve(__dirname, <span class="string">&quot;../&quot;</span>);</span><br><span class="line">        webpackConfig.resolve</span><br><span class="line">            .alias</span><br><span class="line">                .set(<span class="string">&quot;~&quot;</span>, basePath);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改配置使用webpack-chain语法，可搜索相关api用法。</li>
+</ul>
+<h4 id="修改路由文件"><a href="#修改路由文件" class="headerlink" title="修改路由文件"></a>修改路由文件</h4><p>将src/config/router.ts中的路径，将<code>../</code>修改为<code>~</code></p>
+<ul>
+<li>因为之前项目启动前没有加载src/hook/webpack.ts所以需要重启项目加载该配置</li>
+</ul>
+<h3 id="为scss加载全局变量"><a href="#为scss加载全局变量" class="headerlink" title="为scss加载全局变量"></a>为scss加载全局变量</h3><h4 id="添加scss变量文件"><a href="#添加scss变量文件" class="headerlink" title="添加scss变量文件"></a>添加scss变量文件</h4><p>src/styles/variables.scss</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$backgrond-color</span>: <span class="number">#DDD</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="添加webpack配置-1"><a href="#添加webpack配置-1" class="headerlink" title="添加webpack配置"></a>添加webpack配置</h4><p>通过webpack相关配置可以为scss全局载入变量。编辑src/hooks/webpack.ts在刚刚别名配置后面加入以下内容：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> oneOfKeys = [<span class="string">&quot;normal&quot;</span>, <span class="string">&quot;normal-modules&quot;</span>, <span class="string">&quot;vue&quot;</span>, <span class="string">&quot;vue-modules&quot;</span>];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> oneOfKey <span class="keyword">of</span> oneOfKeys) &#123;</span><br><span class="line">    webpackConfig.module</span><br><span class="line">        .rule(<span class="string">&quot;scss&quot;</span>)</span><br><span class="line">            .oneOf(oneOfKey)</span><br><span class="line">            .use(<span class="string">&quot;sass-loader&quot;</span>)</span><br><span class="line">                .tap(<span class="function">(<span class="params">options: <span class="built_in">any</span></span>) =&gt;</span> (&#123;</span><br><span class="line">                    ...options,</span><br><span class="line">                    <span class="attr">additionalData</span>: <span class="string">&quot;@import &#x27;~/styles/variables.scss&#x27;;&quot;</span></span><br><span class="line">                &#125;))</span><br><span class="line">        .end().end().end()</span><br><span class="line">        .rule(<span class="string">&quot;sass&quot;</span>)</span><br><span class="line">            .oneOf(oneOfKey)</span><br><span class="line">                .use(<span class="string">&quot;sass-loader&quot;</span>)</span><br><span class="line">                    .tap(<span class="function">(<span class="params">options: <span class="built_in">any</span></span>) =&gt;</span> (&#123;</span><br><span class="line">                        ...options,</span><br><span class="line">                        <span class="attr">additionalData</span>: <span class="string">&quot;@import &#x27;~/styles/variables.scss&#x27;&quot;</span></span><br><span class="line">                    &#125;));</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="设置样式"><a href="#设置样式" class="headerlink" title="设置样式"></a>设置样式</h4><p>编辑src/root.vue添加以下内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;style lang=&quot;scss&quot;&gt;</span><br><span class="line">body &#123;</span><br><span class="line">  background-color: $backgrond-color;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+            </div>
+
+            <ul class="doku-pagination">
+            <li class="page-item page-prev">
+                <a href="/malagu-docs/learn/vue.html">
+                    <div class="page-item-subtitle"><span class="icon is-small"><i class="fas fa-arrow-left"></i></span> <span>前一页</span></div>
+                    <div class="page-item-title h5">创建Vue项目</div>
+                </a>
+            </li></ul>
+        </div>
+        
+        <div class="column is-3 is-narrow-touch is-hidden-mobile">
+            <aside class="doku-document-toc" id="doku-document-toc">
+                <div class="doku-document-toc-content">
+                    <p class="doku-document-toc-title">目录</p>
+                    <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E9%85%8D%E7%BD%AE%E8%B7%AF%E5%BE%84%E5%88%AB%E5%90%8D"><span class="post-toc-text">配置路径别名</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#%E4%BF%AE%E6%94%B9ts%E5%88%AB%E5%90%8D%E9%85%8D%E7%BD%AE"><span class="post-toc-text">修改ts别名配置</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#%E6%B7%BB%E5%8A%A0webpack%E9%85%8D%E7%BD%AE"><span class="post-toc-text">添加webpack配置</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#%E4%BF%AE%E6%94%B9%E8%B7%AF%E7%94%B1%E6%96%87%E4%BB%B6"><span class="post-toc-text">修改路由文件</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E4%B8%BAscss%E5%8A%A0%E8%BD%BD%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="post-toc-text">为scss加载全局变量</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#%E6%B7%BB%E5%8A%A0scss%E5%8F%98%E9%87%8F%E6%96%87%E4%BB%B6"><span class="post-toc-text">添加scss变量文件</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#%E6%B7%BB%E5%8A%A0webpack%E9%85%8D%E7%BD%AE-1"><span class="post-toc-text">添加webpack配置</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#%E8%AE%BE%E7%BD%AE%E6%A0%B7%E5%BC%8F"><span class="post-toc-text">设置样式</span></a></li></ol></li></ol>
+                </div>
+            </aside>
+        </div>
+        
+    </div>
+</article>
+
+                <footer>
+    <div class="doku-footer-container is-clearfix">
+        <div class="doku-footer-item is-pulled-left">&copy; <span id="doku-copyrght-year"></span> <a href="/">Malagu Docs</a></div>
+
+        <div class="doku-footer-item is-pulled-right">Powered by <a href="https://hexo.io" target="_blank" rel="external noopenner nofollow">Hexo</a> & <a href="https://github.com/SukkaW/hexo-theme-doku" target="_blank" rel="external noopenner nofollow">Doku</a></div>
+    </div>
+</footer>
+
+            </main>
+        </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/stickyfilljs@2.1.0/dist/stickyfill.min.js"></script>
+    <script src="/malagu-docs/theme-doku/js/doku.js"></script>
+</body>
+
+</html>
