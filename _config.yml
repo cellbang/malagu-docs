@@ -144,6 +144,7 @@ theme_config:
         items:
           - 创建Vue项目 | /learn/vue.html
           - 配置Vue项目 | /learn/config-vue.html
+          - 添加Node Api | /learn/node-api.html
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:

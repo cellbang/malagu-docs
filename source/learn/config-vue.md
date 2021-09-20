@@ -101,3 +101,20 @@ body {
 }
 </style>
 ```
+
+### 为webpack配置proxy
+
+修改src/hooks/webpack.ts，加入以下内容即可：
+
+```ts
+        webpackConfig.devServer
+            .proxy({
+                "/api": {
+                    target: "http://example.com",
+                    changeOrigin: true,
+                    pathRewrite: {
+                        "^/api": ""
+                    }
+                }
+            });
+```
