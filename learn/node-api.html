@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-<title>学习Malagu | Malagu Docs</title>
+<title>添加Node Api | Malagu Docs</title>
 <meta name="generator" content="Hexo 5.4.0">
 <meta http-equiv="x-dns-prefetch-control" content="on">
 <meta name="description" content="">
@@ -176,7 +176,7 @@
                         
                             <li><a  href="/malagu-docs/learn/config-vue.html">配置Vue项目</a></li>
                         
-                            <li><a  href="/malagu-docs/learn/node-api.html">添加Node Api</a></li>
+                            <li><a class="is-current" href="/malagu-docs/learn/node-api.html">添加Node Api</a></li>
                         
                     </ul>
                 
@@ -191,33 +191,54 @@
 <article class="doku-document-container clearfix">
     <header class="hero is-light" id="doku-document-hero">
         <div class="hero-body">
-            <h1 class="title">学习Malagu</h1>
+            <h1 class="title">添加Node Api</h1>
             
-                <p class="subtitle">通过一系列示例学习Malagu框架</p>
+                <p class="subtitle">Malagu框加的优点在于前后端一体化开发，这里展示如何创建Node Api</p>
             
             
-                <a href="https://github.com/cellbang/malagu-docs/tree/master/source/index.md" target="_blank" rel="external nofollow noreferrer noopener" class="button is-small is-rounded is-black"><span class="icon is-small"><i class="fab fa-github"></i></span><span>在 GitHub 上编辑</span></a>
+                <a href="https://github.com/cellbang/malagu-docs/tree/master/source/learn/node-api.md" target="_blank" rel="external nofollow noreferrer noopener" class="button is-small is-rounded is-black"><span class="icon is-small"><i class="fab fa-github"></i></span><span>在 GitHub 上编辑</span></a>
             
         </div>
     </header>
     <div class="columns">
-        <div class="column doku-document-wrapper">
+        <div class="column is-9-tablet doku-document-wrapper">
             <div class="content">
-                <ul>
-<li>创建Vue项目 <a href="/malagu-docs/learn/vue.html">链接</a></li>
-<li>配置Vue项目 <a href="/malagu-docs/learn/config-vue.html">链接</a></li>
-<li>添加Node Api(更新中) <a href="/malagu-docs/learn/node-api.html">链接</a></li>
+                <h3 id="添加Node-Api支持"><a href="#添加Node-Api支持" class="headerlink" title="添加Node Api支持"></a>添加Node Api支持</h3><h4 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -S @malagu/mvc</span><br></pre></td></tr></table></figure>
+
+<h4 id="整理文件及目录"><a href="#整理文件及目录" class="headerlink" title="整理文件及目录"></a>整理文件及目录</h4><p>将src/目录下，除hooks以外的文件都移动到src/frontend目录。</p>
+<p>创建src/backend/module.ts文件，内容如下：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; autoBind &#125; <span class="keyword">from</span> <span class="string">&quot;@malagu/core&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> autoBind();</span><br></pre></td></tr></table></figure>
+
+<p>修改malagu.yml，去除target配置，添加module相关配置，内容如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">frontend:</span></span><br><span class="line">  <span class="attr">modules:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">src/frontend/module</span></span><br><span class="line"><span class="attr">backend:</span></span><br><span class="line">  <span class="attr">modules:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">src/backend/module</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Malagu默认的目录名为node、browser，这里因为修改了默认目录，所以需要为前后端配置加载的模块。</li>
 </ul>
+<h4 id="添加接口"><a href="#添加接口" class="headerlink" title="添加接口"></a>添加接口</h4><p>添加src/backend/controllers/home-controller.ts</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Controller, Get, Text &#125; <span class="keyword">from</span> <span class="string">&quot;@malagu/mvc/lib/node&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Controller</span>(<span class="string">&quot;node-api&quot;</span>)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">HomeController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Get</span>()</span><br><span class="line">    <span class="meta">@Text</span>()</span><br><span class="line">    home(): <span class="built_in">string</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Welcome to Malagu&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>修改src/backend/module.ts引入home-controller.ts</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; autoBind &#125; <span class="keyword">from</span> <span class="string">&quot;@malagu/core&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;controllers/home-controller&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> autoBind();</span><br></pre></td></tr></table></figure>
 
             </div>
 
             <ul class="doku-pagination">
-            <li class="page-item page-next">
-                <a href="/malagu-docs/learn/vue.html">
-                    <div class="page-item-subtitle"><span>后一页</span> <span class="icon is-small"><i class="fas fa-arrow-right"></i></span></div>
-                    <div class="page-item-title h5">创建Vue项目</div>
+            <li class="page-item page-prev">
+                <a href="/malagu-docs/learn/config-vue.html">
+                    <div class="page-item-subtitle"><span class="icon is-small"><i class="fas fa-arrow-left"></i></span> <span>前一页</span></div>
+                    <div class="page-item-title h5">配置Vue项目</div>
                 </a>
             </li></ul>
+        </div>
+        
+        <div class="column is-3 is-narrow-touch is-hidden-mobile">
+            <aside class="doku-document-toc" id="doku-document-toc">
+                <div class="doku-document-toc-content">
+                    <p class="doku-document-toc-title">目录</p>
+                    <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E6%B7%BB%E5%8A%A0Node-Api%E6%94%AF%E6%8C%81"><span class="post-toc-text">添加Node Api支持</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96"><span class="post-toc-text">安装依赖</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#%E6%95%B4%E7%90%86%E6%96%87%E4%BB%B6%E5%8F%8A%E7%9B%AE%E5%BD%95"><span class="post-toc-text">整理文件及目录</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#%E6%B7%BB%E5%8A%A0%E6%8E%A5%E5%8F%A3"><span class="post-toc-text">添加接口</span></a></li></ol></li></ol>
+                </div>
+            </aside>
         </div>
         
     </div>
