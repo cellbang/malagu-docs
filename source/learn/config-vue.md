@@ -118,3 +118,36 @@ body {
                 }
             });
 ```
+
+### 前端应用
+
+将上例中的`target`修改为`https://www.baidu.com/`
+
+修改src/views/home/index.vue，内容如下：
+
+```vue
+<template>
+  <h1>index</h1>
+  <p>title: {{ title }}</p>
+  <button @click="request">click</button></template>
+<script lang="ts">
+import { defineComponent, computed, ref } from "vue";
+import { useStore } from "vuex";
+import { ContainerUtil } from '@malagu/core';
+import { HttpService } from '~/common';
+export default defineComponent({
+  setup() {
+    const store = useStore();
+    const title = computed(() => store.state.title);
+    return { title }
+  },
+  methods: {
+    request() {
+      fetch('/api/index.html').then((res: any) => console.log(res));
+    }
+  }
+});
+</script>
+```
+
+点击按钮，控制台会输出百度首页的html

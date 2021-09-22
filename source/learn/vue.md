@@ -150,7 +150,7 @@ export default autoBind();
 
 * Malagu框架通过module.ts加载项目，必须引入`autoBind`方法并调用。在此文件中引app.ts使Malagu框架能引导vue项目
 
-项目文件大概如下：
+项目文件如下：
 ```
 vue-example/
 ▸ node_modules/
