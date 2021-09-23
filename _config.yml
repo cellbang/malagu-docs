@@ -140,11 +140,15 @@ theme_config:
             - cli | /package/cli.html
             - cli-service | /package/cli-service.html
       learn:
-        level: 1
+        level: 2
         items:
-          - 创建Vue项目 | /learn/vue.html
-          - 配置Vue项目 | /learn/config-vue.html
-          - 用nodejs编写接口 | /learn/node-api.html
+          - 'Vue项目':
+            - 创建Vue项目 | /learn/vue.html
+            - 配置Vue项目 | /learn/config-vue.html
+            - 用nodejs编写接口 | /learn/node-api.html
+            - 编译打包 | /learn/vue-build.html
+          - '用Malagu写Blog':
+            - 介绍 | /learn/blog-intro.html
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
