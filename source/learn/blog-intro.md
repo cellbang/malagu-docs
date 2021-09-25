@@ -5,4 +5,12 @@ type: learn
 lang: zh-CN
 ---
 
-待更新
+项目目录
+- src/frontend 前端
+- src/backend 后端
+
+请求方式REST API
+
+表数据表结构如下
+
+![数据表结构](/malagu-docs/images/learn/blog_structure.svg)
