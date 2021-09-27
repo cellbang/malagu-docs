@@ -6,8 +6,6 @@ export default defineConfig({
   // hash: true,
   // more config: https://d.umijs.org/config
   favicon: 'favicon.ico',
-  base: '/malagu-docs/',
-  publicPath: '/malagu-docs/',
 
   // locales: [['zh-CN', '中文'], ['en-US', 'English'] ],
   locales: [['zh-CN', '中文']],

@@ -13,4 +13,4 @@ lang: zh-CN
 
 表数据表结构如下
 
-![数据表结构](/malagu-docs/images/learn/blog_structure.svg)
+![数据表结构](/images/learn/blog_structure.svg)
