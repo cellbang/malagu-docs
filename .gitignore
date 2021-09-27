@@ -3,5 +3,22 @@ Thumbs.db
 db.json
 *.log
 node_modules/
-public/
 .deploy*/
+
+# dependencies
+/npm-debug.log*
+/yarn-error.log
+/yarn.lock
+/package-lock.json
+
+# production
+/dist
+
+# umi
+.umi
+.umi-production
+.env.local
+
+# ide
+/.vscode
+/.idea
