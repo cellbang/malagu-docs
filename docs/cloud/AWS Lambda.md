@@ -68,17 +68,16 @@ malagu:
         name: ${stage}
 ```
 
+## 部署模式
 
-## 部署类型
 
+适配器组件通过 `mode` 属性定义部署模式，支持的部署模式如下：
 
-适配器组件通过 `type` 属性定义部署类型，支持的部署类型如下：
-
-- `**api-gateway**` 基于 API 网关的部署类型。部署过程中，创建或更新 API 网关、函数等云资源
+- `**timer**` 基于定时触发器 + 事件函数的部署模式。部署过程中，创建或更新定时触发器、函数等云资源
+- `**api-gateway**` 基于 API 网关 + 事件函数的部署模式。部署过程中，创建或更新 API 网关、函数等云资源
 ```yaml
-malagu:
-  faas-adapter:
-    type: api-gateway
+mode:
+	- api-gateway
 ```
 
 
@@ -93,11 +92,11 @@ malagu:
 
 默认规则定义在 `@malagu/lambda-adapter` 组件的 `malagu-remote.yml` 配置文件中。
 
-#### 自定义部署类型
+#### 自定义部署模式
 ```yaml
 malagu:
 	faas-adapter:
-    type: api-gateway # 默认值是 api-gateway，目前只支持 api-gateway
+    type: api-gateway # 默认值是 api-gateway，目前支持 api-gateway、timer
 ```
 
 

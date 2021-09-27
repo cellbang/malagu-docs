@@ -105,16 +105,16 @@ theme_config:
     links:
       zh-CN:
         - logo:
-          text: '学习Malagu'
+          text: '学习 Malagu'
           url: '/learn'
         - logo:
-          text: 'Package文档'
+          text: 'Package 文档'
           url: '/package'
         - logo:
           text: '框架介绍'
           url: 'https://www.yuque.com/cellbang/malagu/puw7p0'
         - logo:
-          text: 'Api文档'
+          text: 'API 文档'
           url: 'https://cellbang.github.io/malagu/docs/next/'
         - logo:
           text: '更新日志'
@@ -142,12 +142,12 @@ theme_config:
       learn:
         level: 2
         items:
-          - 'Vue项目':
-            - 创建Vue项目 | /learn/vue.html
-            - 配置Vue项目 | /learn/config-vue.html
-            - 用nodejs编写接口 | /learn/node-api.html
+          - 'Vue 项目':
+            - 创建 Vue 项目 | /learn/vue.html
+            - 配置 Vue 项目 | /learn/config-vue.html
+            - 用 node.js 编写接口 | /learn/node-api.html
             - 编译打包 | /learn/vue-build.html
-          - '用Malagu写Blog':
+          - '用 Malagu 写 Blog':
             - 介绍 | /learn/blog-intro.html
             - 创建项目 | /learn/blog-create-project.html
 # Deployment

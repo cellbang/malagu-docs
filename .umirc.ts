@@ -9,7 +9,7 @@ export default defineConfig({
 
   // locales: [['zh-CN', '中文'], ['en-US', 'English'] ],
   locales: [['zh-CN', '中文']],
-  logo: 'https://camo.githubusercontent.com/dfde52786510e76a6c47b2a51a28e4dce9e44fcaa6e6e71bb3167fd9c444a38e/68747470733a2f2f63656c6c62616e672d6c69622e6f73732d636e2d68616e677a686f752e616c6979756e63732e636f6d2f4d616c6167752532304c6f676f253230477265656e2e7376673f457870697265733d31363332323532353436264f53534163636573734b657949643d544d502e334b6672454c6f5a44784a447a654d346951466b67426e4546436d6e6241683734635165336d756e534c5a6f774558456148566e366d783739754e375a69364476704b7a415844774e7a5a4c69536a364453335a5533514266745a71424c265369676e61747572653d7947596c4e7238377154355047366c25324233674774645439584125324259253344',
+  logo: 'https://cellbang-lib.oss-cn-hangzhou.aliyuncs.com/Malagu%20Logo%20Green.svg',
 
   menus: {
     // 需要自定义侧边菜单的路径，没有配置的路径还是会使用自动生成的配置
@@ -23,7 +23,6 @@ export default defineConfig({
           'guide/快速开始.md',
           'guide/创建第一个应用.md',
           'guide/命令行工具.md',
-          'guide/基本概念.md',
           'guide/控制器.md',
           'guide/中间件.md',
           'guide/请求上下文.md',
@@ -48,8 +47,7 @@ export default defineConfig({
           'guide/Session管理.md',
           'guide/链路追踪.md',
           'guide/方法拦截（AOP）.md',
-          'guide/组件扩展.md',
-          'guide/云平台适配.md',
+          'guide/组件扩展.md'
         ],
       },
       {
@@ -84,29 +82,17 @@ export default defineConfig({
 
   navs: [
     // null, // null 值代表保留约定式生成的导航，只做增量配置
-    {
-      title: '文档',
-      children: [
-        { title: '教程', path: '/guide' },
-        { title: '示例', path: '/example' },
-        { title: '开发', path: '/dev' },
-        { title: '云平台', path: '/cloud' },
-      ],
-    },
-    {
-      title: '示例',
-      path: 'https://github.com/cellbang/malagu/tree/master/examples',
-    },
-    {
-      title: 'API参考',
-      path: 'https://cellbang.github.io/malagu/docs/next/',
-    },
+    { title: '概念', path: '/concepts' },
+    { title: '教程', path: '/guide' },
+    { title: '示例', path: '/example' },
+    { title: '开发', path: '/dev' },
+    { title: '云平台', path: '/cloud' },
     {
       title: '生态',
       // path: '链接是可选的',
       // 可通过如下形式嵌套二级导航菜单，目前暂不支持更多层级嵌套：
       children: [
-        { title: 'Package文档', path: 'https://cellbang.github.io/malagu-docs/package/' },
+        { title: 'Package 文档', path: 'https://cellbang.github.io/malagu-docs/package/' },
         { title: '参与贡献', path: '/malagu' },
       ],
     },
@@ -114,6 +100,10 @@ export default defineConfig({
     //   title: '更多文档',
     //   path: 'https://www.yuque.com/cellbang/malagu',
     // },
+    {
+      title: 'API 参考',
+      path: 'https://cellbang.github.io/malagu/docs/next/',
+    },
     {
       title: 'GitHub',
       path: 'https://github.com/cellbang/malagu',
