@@ -149,6 +149,7 @@ theme_config:
             - 编译打包 | /learn/vue-build.html
           - '用Malagu写Blog':
             - 介绍 | /learn/blog-intro.html
+            - 创建项目 | /learn/blog-create-project.html
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:

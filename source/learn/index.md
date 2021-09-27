@@ -13,3 +13,4 @@ lang: zh-CN
 
 ### 用Malagu写Blog
 - 项目介绍 [链接](/malagu-docs/learn/blog-intro.html)
+- 创建项目(更新中) [链接](/malagu-docs/learn/blog-create-project.html)
