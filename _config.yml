@@ -106,7 +106,7 @@ theme_config:
       zh-CN:
         - logo:
           text: '学习Malagu'
-          url: '/'
+          url: '/learn'
         - logo:
           text: 'Package文档'
           url: '/package'
