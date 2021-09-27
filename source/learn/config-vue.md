@@ -69,6 +69,10 @@ $backgrond-color: #DDD;
 通过webpack相关配置可以为scss全局载入变量。编辑src/hooks/webpack.ts在刚刚别名配置后面加入以下内容：
 
 ```ts
+export default async (context: WebpackContext) => {
+    const { configurations } = context;
+    const webpackConfig = ConfigurationContext.getFrontendConfiguration( configurations );
+    if (webpackConfig) {
         let oneOfKeys = ["normal", "normal-modules", "vue", "vue-modules"];
         for (let oneOfKey of oneOfKeys) {
             webpackConfig.module
@@ -88,6 +92,8 @@ $backgrond-color: #DDD;
                                 additionalData: "@import '~/styles/variables.scss'"
                             }));
         };
+    }
+}
 ```
 
 #### 设置样式
@@ -107,6 +113,10 @@ body {
 修改src/hooks/webpack.ts，加入以下内容即可：
 
 ```ts
+export default async (context: WebpackContext) => {
+    const { configurations } = context;
+    const webpackConfig = ConfigurationContext.getFrontendConfiguration( configurations );
+    if (webpackConfig) {
         webpackConfig.devServer
             .proxy({
                 "/api": {
@@ -117,6 +127,8 @@ body {
                     }
                 }
             });
+    }
+}
 ```
 
 ### 前端应用
