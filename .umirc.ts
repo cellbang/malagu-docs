@@ -74,6 +74,23 @@ export default defineConfig({
         ],
       },
     ],
+    '/learn': [
+      {
+        title: 'Vue项目',
+        children: [
+          'learn/vue.md',
+          'learn/config-vue.md',
+          'learn/vue-build.md'
+        ]
+      },
+      {
+        title: 'Malagu Blog项目',
+        children: [
+          'learn/blog-intro.md',
+          'learn/blog-create-project.md'
+        ]
+      }
+    ],
     // 如果该路径有其他语言，需在前面加上语言前缀，需与 locales 配置中的路径一致
     // '/zh-CN/guide': [
     //   // 省略，配置同上
@@ -92,7 +109,8 @@ export default defineConfig({
       // path: '链接是可选的',
       // 可通过如下形式嵌套二级导航菜单，目前暂不支持更多层级嵌套：
       children: [
-        { title: 'Package 文档', path: 'https://cellbang.github.io/malagu-docs/package/' },
+        { title: '学习Malagu', path: '/learn' },
+        { title: 'Package 文档', path: '/package' },
         { title: '参与贡献', path: '/malagu' },
       ],
     },
