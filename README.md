@@ -10,5 +10,5 @@ Malagu项目文档，使用Markdown编写，Hexo生成静态站点文件。当�
 
 ```bash
 yarn install
-yarn hexo s
+yarn start
 ```

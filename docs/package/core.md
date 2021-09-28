@@ -5,6 +5,8 @@ type: package
 lang: zh-CN
 ---
 
+# @malagu/core
+
 ### Application
 
 Application是Malagu应用的入口，以 [common/application-entry.ts](https://github.com/cellbang/malagu/blob/master/packages/core/src/common/application/application-entry.ts) 为例：
@@ -178,9 +180,6 @@ logger相关代码文件：
 待完善
 
 ### Config
-待完善
-
-### Pipe
 待完善
 
 ### Utils
