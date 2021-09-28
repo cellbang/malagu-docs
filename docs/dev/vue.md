@@ -50,7 +50,6 @@ frontend:
 
 
 ## **前后端项目分离**
-**
-如果您不喜欢上述的开发方式，或者需要迁移旧项目， 或者喜欢用 vite 等不基于 webpack 的工具开发前端，malagu 也是支持的。我们可以使用 malagu 托管前端 build 后的产物，从而使用任意前端框架。推荐使用 Monorepo 风格管理前后端项目。具体可以参照 [前后端项目分离](https://www.yuque.com/cellbang/malagu/yuyvg0)。
 
+如果您不喜欢上述的开发方式，或者需要迁移旧项目， 或者喜欢用 vite 等不基于 webpack 的工具开发前端，malagu 也是支持的。我们可以使用 malagu 托管前端 build 后的产物，从而使用任意前端框架。推荐使用 Monorepo 风格管理前后端项目。具体可以参照 [前后端项目分离](https://malagu.cellbang.com/example/%E5%89%8D%E5%90%8E%E7%AB%AF%E9%A1%B9%E7%9B%AE%E5%88%86%E7%A6%BB)。
 
