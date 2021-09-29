@@ -13,13 +13,10 @@ jobs:
         with:
           node-version: '12.x'
       - run: |
-          npm install -g hexo-cli
           npm install
-          npm run build:hexo
           npm run build
-          cp -fr dist/* publish/
       - name: Deploy 🚀
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./publish
+          publish_dir: ./dist
