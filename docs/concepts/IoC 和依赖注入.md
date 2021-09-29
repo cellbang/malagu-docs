@@ -11,7 +11,7 @@ Malagu 框架中大量使用了 IoC 和依赖注入，在使用 Malagu 框架的
 
 
 ## 什么是 IoC 和依赖注入
-**
+
 **控制反转**（Inversion of Control，缩写为**IoC**），是[面向对象编程](https://link.zhihu.com/?target=https%3A//zh.wikipedia.org/wiki/%25E9%259D%25A2%25E5%2590%2591%25E5%25AF%25B9%25E8%25B1%25A1%25E7%25BC%2596%25E7%25A8%258B)中的一种设计原则，可以用来减低计算机代码之间的[耦合度](https://link.zhihu.com/?target=https%3A//zh.wikipedia.org/wiki/%25E8%2580%25A6%25E5%2590%2588%25E5%25BA%25A6_%28%25E8%25A8%2588%25E7%25AE%2597%25E6%25A9%259F%25E7%25A7%2591%25E5%25AD%25B8%29)。其中最常见的方式叫做**依赖注入**（Dependency Injection，简称**DI**），还有一种方式叫“依赖查找”（Dependency Lookup）。
 
 
