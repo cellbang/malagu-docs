@@ -1,9 +1,11 @@
 ---
-title: '介绍'
+title: '项目介绍'
 description: 本篇通过使用Malagu框架编写Blog来演示相关组件用法
 type: learn
 lang: zh-CN
 ---
+
+# 项目介绍
 
 项目目录
 - src/frontend 前端

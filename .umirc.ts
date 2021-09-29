@@ -87,7 +87,8 @@ export default defineConfig({
         title: 'Malagu Blog项目',
         children: [
           'learn/blog-intro.md',
-          'learn/blog-create-project.md'
+          'learn/blog-create-project.md',
+          'learn/blog-create-model.md'
         ]
       }
     ],
