@@ -5,6 +5,8 @@ type: learn
 lang: zh-CN
 ---
 
+# 配置vue项目
+
 ### 配置路径别名
 
 刚刚可以看到，我们在src/config/router.ts文件中引用vue文件使用的是相对路径，实际开发中会为路径定义别名。现在我们给Malagu根目录配置别名

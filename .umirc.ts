@@ -88,7 +88,8 @@ export default defineConfig({
         children: [
           'learn/blog-intro.md',
           'learn/blog-create-project.md',
-          'learn/blog-create-model.md'
+          'learn/blog-create-model.md',
+          'learn/blog-api.md'
         ]
       }
     ],

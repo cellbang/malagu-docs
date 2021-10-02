@@ -7,7 +7,7 @@ lang: zh-CN
 
 # 创建模型
 
-我们使用typeorm的entity定义字段并生成数据库表文件。
+我们使用typeorm的entity定义字段，配置好后启动项目typeorm自动生成数据库表
 
 ### 配置数据库
 
@@ -28,14 +28,15 @@ backend:
           logging: true
 ```
 
-* synchronize开发的时候要打开，typeorm会根据entity来创建、修改表和索引。typeorm某些功能是通过修改数据库定义实现的。
+* synchronize开发的时候要打开，typeorm会根据entity来创建、修改表和索引。typeorm某些功能是通过修改数据库定义实现的
 
 ### 创建模型
 
 分类模型`src/backend/entity/category.ts`内容如下：
 
 ```ts
-import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany, JoinColumn } from "typeorm";
+import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, CreateDateColumn,
+    UpdateDateColumn, OneToMany, JoinColumn } from "typeorm";
 import { Post } from "./post";
 
 @Entity({ name: "categories" })
@@ -67,10 +68,13 @@ export class Category extends BaseEntity {
 }
 ```
 
+* 字段名和表中定义不一样的，可以用@Column选项来指定表中的字段名，@CreateDateColumn、@UpdateDateColumn会修改数据库字段的默认值，所以需要开启`synchronize`选项
+
 blog模型`src/backend/entity/post.ts`内容如下：
 
 ```ts
-import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToMany, JoinTable, ManyToOne } from "typeorm";
+import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, CreateDateColumn,
+    UpdateDateColumn, JoinColumn, ManyToMany, JoinTable, ManyToOne } from "typeorm";
 import { Category } from "./category";
 import { Tag } from "./tag";
 
@@ -114,10 +118,13 @@ export class Post extends BaseEntity {
 }
 ```
 
+* typeorm中OneToOne和ManyToOne有不同的表中结构约束，不可混用。ManyToMany使用自定义的表名和表字段，需要手动指定
+
 tag模型`src/backend/entity/tag.ts`内容如下：
 
 ```ts
-import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToMany } from "typeorm";
+import { BaseEntity, Entity, Column, PrimaryGeneratedColumn,
+    CreateDateColumn, UpdateDateColumn, ManyToMany } from "typeorm";
 import { Post } from "./post";
 
 @Entity({ name: "tags" })
@@ -146,7 +153,7 @@ export class Tag extends BaseEntity {
 
 创建`src/backend/entity/index.ts`内容如下：
 
-```
+```ts
 export * from "./category";
 export * from "./post";
 export * from "./tag";
@@ -160,3 +167,5 @@ import * as entities from './entity';
 
 autoBindEntities(entities);
 ```
+
+
