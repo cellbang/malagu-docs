@@ -5,7 +5,10 @@ type: learn
 lang: zh-CN
 ---
 
+# 创建Vue项目
+
 本篇从零开始创建一个基于Malagu框架的vue项目，以便大家更好的了解Malagu框架。Malagu自带的cli工具可快速创建模板项目，可参考以下链接：[创建项目](https://www.yuque.com/cellbang/malagu/ogreg3)、[Vue 开发](https://www.yuque.com/cellbang/malagu/vgim9q)
+
 
 ### 创建项目
 

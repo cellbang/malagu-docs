@@ -76,7 +76,7 @@ export default defineConfig({
     ],
     '/learn': [
       {
-        title: 'Vue项目',
+        title: 'Vue 项目',
         children: [
           'learn/vue.md',
           'learn/config-vue.md',
@@ -84,10 +84,12 @@ export default defineConfig({
         ]
       },
       {
-        title: 'Malagu Blog项目',
+        title: 'Malagu Blog 项目',
         children: [
           'learn/blog-intro.md',
-          'learn/blog-create-project.md'
+          'learn/blog-create-project.md',
+          'learn/blog-create-model.md',
+          'learn/blog-api.md'
         ]
       }
     ],
@@ -99,8 +101,8 @@ export default defineConfig({
 
   navs: [
     // null, // null 值代表保留约定式生成的导航，只做增量配置
-    { title: '概念', path: '/concepts' },
     { title: '教程', path: '/guide' },
+    { title: '概念', path: '/concepts' },
     { title: '示例', path: '/example' },
     { title: '开发', path: '/dev' },
     { title: '云平台', path: '/cloud' },
@@ -109,7 +111,7 @@ export default defineConfig({
       // path: '链接是可选的',
       // 可通过如下形式嵌套二级导航菜单，目前暂不支持更多层级嵌套：
       children: [
-        { title: '学习Malagu', path: '/learn' },
+        { title: '学习 Malagu', path: '/learn' },
         { title: 'Package 文档', path: '/package' },
         { title: '参与贡献', path: '/malagu' },
       ],
