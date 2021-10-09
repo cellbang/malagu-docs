@@ -67,7 +67,7 @@ backend:
           password: root
           database: test
         - type: mysql
-        	name: 'datasource2'
+          name: 'datasource2'
           host: xxxx
           port: 3306
           synchronize: true
@@ -125,9 +125,9 @@ export class UserController {
         await repo.update(user.id, user);
     }
 		
-  	//操作非默认数据源需要指定数据源的name
-  	//操作mongodb示例
-  	@Post('/order')
+    //操作非默认数据源需要指定数据源的name
+    //操作mongodb示例
+    @Post('/order')
     @Transactional({ readOnly: true,  name: 'mongo' })
     create(@Body() order: Order): Promise<Order> {
       const repo = OrmContext.getMongoRepository(Order,'mongo');
