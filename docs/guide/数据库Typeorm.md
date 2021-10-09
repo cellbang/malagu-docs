@@ -129,7 +129,7 @@ export class UserController {
   	//操作mongodb示例
   	@Post('/order')
     @Transactional({ readOnly: true,  name: 'mongo' })
-    create(@Body() order: Order): Promise<User> {
+    create(@Body() order: Order): Promise<Order> {
       const repo = OrmContext.getMongoRepository(Order,'mongo');
       return repo.save(order);
     }
@@ -276,7 +276,7 @@ export enum Propagation {
 
 
 **注意：事务在不同的方法传播的时候，请保证方法之间是同步调用的。如下：**
-**
+
 ```typescript
 ...
 @Transactional()
