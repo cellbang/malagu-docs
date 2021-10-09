@@ -74,6 +74,11 @@ backend:
           username: root
           password: root
           database: test
+        - type: mongodb
+          name: 'mongo'
+          host: localhost
+          port: 27017
+          database: test
 ```
 
 
@@ -87,6 +92,7 @@ backend:
 import { Controller, Get, Param, Delete, Put, Post, Body } from '@malagu/mvc/lib/node';
 import { Transactional, OrmContext } from '@malagu/typeorm/lib/node';
 import { User } from './entity';
+import { Order } from './mongo_entity';
 
 @Controller('users')
 export class UserController {
@@ -118,14 +124,23 @@ export class UserController {
         const repo = OrmContext.getRepository(User);
         await repo.update(user.id, user);
     }
-
+		
+  	//操作非默认数据源需要指定数据源的name
+  	//操作mongodb示例
+  	@Post('/order')
+    @Transactional({ readOnly: true,  name: 'mongo' })
+    create(@Body() order: Order): Promise<User> {
+      const repo = OrmContext.getMongoRepository(Order,'mongo');
+      return repo.save(order);
+    }
+  
     @Post()
     @Transactional()
     create(@Body() user: User): Promise<User> {
         const repo = OrmContext.getRepository(User);
         return repo.save(user);
     }
-
+    
 }
 ```
 
@@ -305,9 +320,11 @@ export function autoBindEntities(entities: any, name = DEFAULT_CONNECTION_NAME) 
 ```typescript
 import { autoBindEntities } from '@malagu/typeorm';
 import * as entities from './entity';
+import * as mongo_entities from './mongo_entity';
 import { autoBind } from '@malagu/core';
 
 autoBindEntities(entities);
+autoBindEntities(mongo_entities,'mongo'); // 多数据源链接情况下，需要指定数据源链接名称
 export default autoBind();
 ```
 
@@ -319,7 +336,7 @@ export default autoBind();
 | **工具** | **描述** |
 | --- | --- |
 | DEFAULT_CONNECTION_NAME | 默认数据库连接名称 default |
-| autoBindEntities | 绑定实体类 |
+| autoBindEntities | 绑定实体类,非默认数据源时需要指定数据源的name |
 
 
 
