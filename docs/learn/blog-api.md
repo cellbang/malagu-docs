@@ -19,7 +19,7 @@ lang: zh-CN
 }
 ```
 
-创建接口`src/common/data/response-data.ts`
+定义接口数据结构`src/common/data/response-data.ts`
 
 ```ts
 export interface ResponseData<T> {
@@ -29,13 +29,13 @@ export interface ResponseData<T> {
 }
 ```
 
-导出接口`src/common/index.ts`
+导出数据构结定义`src/common/index.ts`
 
 ```ts
 export * from './data/response-data';
 ```
 
-创建格式化工具`src/common/backend/utils/index.ts`
+创建工具函数格式化输出结果`src/common/backend/utils/index.ts`
 
 ```ts
 import { ResponseData } from "../../common";
@@ -133,3 +133,24 @@ export class CategoryController {
 ```
 
 修改`src/backend/controllers/index.ts`文件，导出接口类
+
+```ts
+export * from "./category-controller";
+```
+
+命令行测试接口
+
+```bash
+# 新增分类
+curl -X POST -d 'json={"parentId":0,"title":"test","level":1,"desc":"测试分类"}' \
+  'http://localhost:3000/api/category'
+# 查询数据列表
+curl 'http://localhost:3000/api/category'
+# 查询单条纪录，1为刚刚插入的纪录id
+curl 'http://localhost:3000/api/category/1'
+# 修改数据
+curl -X PATCH -d 'json={"parentId":0,"title":"testaaa","level":1,"desc":"测试分类"}' \
+  'http://localhost:3000/api/category/1'
+# 删除数据
+curl -X DELETE 'http://localhost:3000/api/category/1'
+```
