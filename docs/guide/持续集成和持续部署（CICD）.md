@@ -1,4 +1,5 @@
 ---
+
 title: 持续集成和持续部署（CICD）
 order: 18.8
 toc: menu
@@ -70,5 +71,103 @@ MALAGU_ACCESS_KEY_ID
 MALAGU_ACCESS_KEY_SECRET
 MALAGU_ACCOUNT_ID # 部分云厂商可以不提供
 ```
+
+## Coding持续集成
+
+脚本如下：
+
+```yaml
+pipeline {
+  agent any
+  stages {
+    stage('检出') {
+      steps {
+        checkout([$class: 'GitSCM',
+        branches: [[name: GIT_BUILD_REF]],
+        userRemoteConfigs: [[
+          url: GIT_REPO_URL,
+          credentialsId: CREDENTIALS_ID
+        ]]])
+      }
+    }
+    stage('初始化 Node.js') {
+      steps {
+        sh 'date'
+        sh 'curl -fsSL https://deb.nodesource.com/setup_14.x | bash -'
+        sh 'apt-get install -y nodejs'
+        sh 'node -v'
+        sh 'echo MALAGU_REGION=$MALAGU_REGION >> .env'  # 在环境变量中填写MALAGU_REGION参数
+        sh 'echo MALAGU_ACCESS_KEY_ID=$MALAGU_ACCESS_KEY_ID >> .env'  # 在环境变量中填写MALAGU_ACCESS_KEY_ID参数
+        sh 'echo MALAGU_ACCESS_KEY_SECRET=$MALAGU_ACCESS_KEY_SECRET >> .env' # 在环境变量中填写MALAGU_ACCESS_KEY_SECRET参数
+        sh 'echo MALAGU_ACCOUNT_ID=$MALAGU_ACCOUNT_ID >> .env'  # 在环境变量中填写MALAGU_ACCOUNT_ID参数
+      }
+    }
+    stage('安装 Malagu 环境') {
+      steps {
+        sh 'pnpm install -g @malagu/cli'
+      }
+    }
+    stage('安装依赖') {
+      steps {
+        sh 'rm -rf ./node_modules'
+        sh 'yarn install'
+      }
+    }
+    stage('部署应用') {
+      steps {
+        sh 'malagu deploy'  # 这里可以参照框架提供的GitHub脚本，对不同的分支执行不同的命令，部署到不同的环境
+      }
+    }
+  }
+}
+```
+
+使用方法：
+
+1. 在Coding `持续集成-构建计划` 页面中，点击右上角 `创建构建计划` 
+
+    
+
+    ![创建构建计划.svg](../../public/images/new_build_plan.png)
+
+    
+
+2. 在 `选择构建计划模版`  页面中，选择 `自定义构建过程` 
+
+    
+
+    ![自定义构建过程.svg](../../public/images/custom_build.png)
+
+    
+
+3. 填写自定义构建过程中的 `构建计划名称` ，选择代码仓库，配置来源选择 `使用静态的Jenkinsfile` ,（也可以将配置信息放入代码仓库，使用代码库中的Jenkinsfile）,
+
+    
+
+    ![填写自定义构建过程信息.svg](../../public/images/edit_build_info.png)
+
+    
+
+4. 在 `流程配置-文本编辑器`  中，填入上述脚本，在 `环境变量` 中，填入脚本中所需的参数,（即云平台部署中所需的env参数，可参考云平台文档中的配置说明）,点击保存
+
+    
+
+    ![填写脚本.svg](../../public/images/text_edit_page.png)
+
+    
+
+5. 返回 `构建计划` ，点击 `立即构建` ，此时已经可以成功构建，前往云平台控制台，可发现函数已经成功部署。
+
+
+    ![构建成功.svg](../../public/images/build_success.png)
+
+    
+
+    
+
+    
+
+    
+
 
 
