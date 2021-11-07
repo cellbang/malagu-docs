@@ -48,7 +48,7 @@ export const jsonFormat = <T>(data: T, error: any = null) : ResponseData<T> => {
 ```
 
 
-### Catetory分类接口
+### Category分类接口
 
 接口说明
 
@@ -56,11 +56,11 @@ Category分类CURD接口及路径如下：
 
 | URI Pattren       | Verb   | Controller.Action          | Descripton |
 | ----              | ----   | ----                       | ----       |
-| /api/category     | GET    | catetory-controller.index  | 分类型表   |
-| /api/catetory/:id | GET    | catetory-controller.show   | 分类详情   |
-| /api/category     | POST   | catetory-controller.create | 创建分类   |
-| /api/category/:id | PATCH  | catetory-controller.update | 修改分类   |
-| /api/category/:id | DELETE | catetory-controller.delete | 删除分类   |
+| /api/category     | GET    | category-controller.index  | 分类列表   |
+| /api/category/:id | GET    | category-controller.show   | 分类详情   |
+| /api/category     | POST   | category-controller.create | 创建分类   |
+| /api/category/:id | PATCH  | category-controller.update | 修改分类   |
+| /api/category/:id | DELETE | category-controller.delete | 删除分类   |
 
 接口实现`src/backend/controllers/category-controller.ts`
 
@@ -153,4 +153,113 @@ curl -X PATCH -d 'json={"parentId":0,"title":"testaaa","level":1,"desc":"测试�
   'http://localhost:3000/api/category/1'
 # 删除数据
 curl -X DELETE 'http://localhost:3000/api/category/1'
+```
+
+### Post内容接口
+
+接口说明
+
+Post内容CURD接口及路径如下：
+
+| URI Pattren   | Verb   | Controller.Action      | Descripton |
+| ----          | ----   | ----                   | ----       |
+| /api/post     | GET    | post-controller.index  | blog列表   |
+| /api/post/:id | GET    | post-controller.show   | blog详情   |
+| /api/post     | POST   | post-controller.create | 创建blog   |
+| /api/post/:id | PATCH  | post-controller.update | 修改blog   |
+| /api/post/:id | DELETE | post-controller.delete | 删除blog   |
+
+接口实现`src/backend/controllers/post-controller.ts`
+
+```ts
+import { Controller, Get, Post, Patch, Delete, Json, Param, Query, Body } from "@malagu/mvc/lib/node";
+import { Post as PostModel, Tag } from "../entity";
+import { ResponseData } from "../../common";
+import { jsonFormat } from '../utils';
+
+@Controller('api/post')
+export class PostController {
+    @Get()
+    @Json()
+    async index(@Query("page") page: number = 1, @Query("size") size: number = 20): Promise<ResponseData<PostModel[]>> {
+        let posts: PostModel[] = await PostModel.find({
+            take: size,
+            skip: size * (page - 1),
+            order: { id: "DESC" },
+            relations: ["category"]
+        });
+        return jsonFormat(posts);
+    }
+
+    @Get(":id")
+    @Json()
+    async show(@Param('id') id: number): Promise<ResponseData<PostModel>> {
+        let post: PostModel = await PostModel.findOne(id, {
+            relations: ["category"]
+        });
+        return jsonFormat(post);
+    }
+
+    @Post()
+    @Json()
+    async create(@Body("json") postData): Promise<any> {
+        let post = JSON.parse(postData);
+        try {
+            let saved = await PostModel.save(post);
+            return jsonFormat(saved);
+        }
+        catch(e) {
+            return jsonFormat(e);
+        }
+    }
+
+    @Patch(":id")
+    @Json()
+    async update(@Param("id") id: number, @Body("json") postData): Promise<any> {
+        let saveData = JSON.parse(postData);
+        try {
+            let saved = await PostModel.update(id, saveData);
+            return jsonFormat(saveData);
+        }
+        catch(e) {
+            return jsonFormat(null, e);
+        }
+    }
+
+    @Delete(":id")
+    @Json()
+    async delete(@Param("id") id: number): Promise<any> {
+        try {
+            let deleted = await PostModel.delete(id);
+            return jsonFormat(deleted);
+        }
+        catch(e) {
+            return jsonFormat(null, e);
+        }
+    }
+}
+```
+* 因为Post模型和Post修器命名冲突，所以这里用PostModel代替
+
+修改`src/backend/controllers/index.ts`文件，导出接口类
+
+```ts
+export * from "./category-controller";
+```
+
+命令行测试接口
+
+```bash
+# 新增内容
+curl -X POST -d 'json={ "title": "子夜四时歌-春歌", "desc": "测试post", "content": "兰叶始满地。梅花已落枝。持此可怜意。摘以寄心知。", "category": { "id": 1 } }' \
+  'http://localhost:3000/api/post'
+# 查询数据列表
+curl 'http://localhost:3000/api/post'
+# 查询单条纪录，1为刚刚插入的纪录id
+curl 'http://localhost:3000/api/post/1'
+# 修改数据
+curl -X PATCH -d 'json={ "title": "子夜四时歌-春歌", "desc": "测试post", "content": "兰叶始满地。梅花已落枝。持此可怜意。摘以寄心知。--萧衍", "category": { "id": 1 } }' \
+  'http://localhost:3000/api/post/1'
+# 删除数据
+curl -X DELETE 'http://localhost:3000/api/post/1'
 ```
