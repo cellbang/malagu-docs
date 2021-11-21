@@ -26,3 +26,13 @@ Category分类CURD接口及路径如下：
 | /api/category     | POST   | catetory-controller.create | 创建分类   |
 | /api/category/:id | PATCH  | catetory-controller.update | 修改分类   |
 | /api/category/:id | DELETE | catetory-controller.delete | 删除分类   |
+
+Post内容CURD接口及路径如下：
+
+| URI Pattren   | Verb   | Controller.Action      | Descripton |
+| ----          | ----   | ----                   | ----       |
+| /api/post     | GET    | post-controller.index  | blog列表   |
+| /api/post/:id | GET    | post-controller.show   | blog详情   |
+| /api/post     | POST   | post-controller.create | 创建blog   |
+| /api/post/:id | PATCH  | post-controller.update | 修改blog   |
+| /api/post/:id | DELETE | post-controller.delete | 删除blog   |
