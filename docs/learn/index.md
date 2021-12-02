@@ -16,3 +16,4 @@ lang: zh-CN
 - 创建项目 [链接](learn/blog-create-project.md)
 - 创建模型 [链接](learn/blog-create-model.md)
 - 编写接口 [链接](learn/blog-api.md)
+- 添加标签 [链接](learn/blog-tag.md)
