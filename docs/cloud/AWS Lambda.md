@@ -6,7 +6,7 @@ toc: menu
 
 # AWS Lambda
 
-我们可以使用 `@malagu/lambda-adapter` 组件把应用部署到 aws lambda 平台。基于约定大于配置原则，零配置，开箱即用。
+我们可以使用 `@malagu/lambda-adapter` 和 `@malagu/lambda-plugin` 组件把应用部署到 aws lambda 平台，其中 `@malagu/lambda-adapter` 适配平台运行时接口，比如函数入口；`@malagu/lambda-plugin` 负责适配平台部署接口。基于约定大于配置原则，零配置，开箱即用。
 
 
 ## 云资源
@@ -21,7 +21,7 @@ toc: menu
 ## 环境隔离
 
 
-在 Malagu 框架中，提供了一个顶级配置属性 `stage` 表示环境。而在 `@malagu/scf-adapter` 组件约定的部署规则中，使用 `mode` 属性映射 `stage` 属性。默认提供了三套环境：测试、预发和生产。表达式规则如下：
+在 Malagu 框架中，提供了一个顶级配置属性 `stage` 表示环境。而在 `@malagu/lambda-plugin` 组件约定的部署规则中，使用 `mode` 属性映射 `stage` 属性。默认提供了三套环境：测试、预发和生产。表达式规则如下：
 ```yaml
 stage: "${'test' in mode ? 'test' : 'pre' in mode ? 'pre' : 'prod' in mode ? 'prod' : cliContext.prod ? 'prod' : 'test'}" # test, pre, prod
 ```
@@ -55,17 +55,19 @@ malagu deploy -m prod
 `stage` 属性值与函数别名关联（以下是默认规则，无需配置）：
 ```yaml
 malagu:
-  faas-adapter:
-    alias:
-      name: ${stage}
+  cloud:
+    faas:
+      alias:
+        name: ${stage}
 ```
 API 网关的 `stage` 关联（以下是默认规则，无需配置）：
 ```yaml
 malagu:
-  faas-adapter:
-    apiGateway:
-      stage:
-        name: ${stage}
+  cloud:
+    faas:
+      apiGateway:
+        stage:
+          name: ${stage}
 ```
 
 ## 部署模式
@@ -90,13 +92,13 @@ mode:
 #### 默认规则
 
 
-默认规则定义在 `@malagu/lambda-adapter` 组件的 `malagu-remote.yml` 配置文件中。
+默认规则定义在 `@malagu/lambda-plugin` 组件的 `malagu-*.yml` 配置文件中。
 
 #### 自定义部署模式
 ```yaml
 malagu:
-	faas-adapter:
-    type: api-gateway # 默认值是 api-gateway，目前支持 api-gateway、timer
+	mode:
+    - api-gateway # 默认值是 api-gateway，目前支持 api-gateway、timer
 ```
 
 
@@ -105,10 +107,13 @@ malagu:
 #### 自定义函数名
 ```yaml
 malagu:
-	faas-adapter:
-    function:
-      name: xxxx # 默认值是 ${pkg.name}
+  cloud:
+    faas:
+      function:
+        name: xxxx # 默认值是 ${pkg.name}
 ```
 函数的其他属性也是类似的方式配置。
 
 ## 属性配置
+
+// TODO
