@@ -1,14 +1,10 @@
-# malagu-docs
+# Malagu Framework 文档
 
-Malagu项目文档，使用Markdown编写，Hexo生成静态站点文件。当前文档分为以下几块：
+本项目为 Malagu Framework 文档项目，欢迎大家一起共建。
 
-- 1.框架介绍及使用，维护在语雀上 https://www.yuque.com/cellbang/malagu/puw7p0
-- 2.Package文档，当前项目维护
-- 3.Api文档，使用Typedoc生成 https://cellbang.github.io/malagu/docs/next/
+## 交流群
 
-### 本地预览
+![群二维码.png](https://cellbang-lib.oss-cn-hangzhou.aliyuncs.com/%E7%BE%A4%E4%BA%8C%E7%BB%B4%E7%A0%81.png)
 
-```bash
-yarn install
-yarn start
-```
+
+
