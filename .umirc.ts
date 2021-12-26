@@ -20,6 +20,7 @@ export default defineConfig({
         children: [
           // 菜单子项（可选）
           'guide/介绍.md', // 对应的 Markdown 文件，路径是相对于 resolve.includes 目录识别的
+          'guide/更新日志.md',
           'guide/快速开始.md',
           'guide/创建第一个应用.md',
           'guide/命令行工具.md',
