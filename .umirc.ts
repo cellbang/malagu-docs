@@ -90,7 +90,8 @@ export default defineConfig({
           'learn/blog-create-project.md',
           'learn/blog-create-model.md',
           'learn/blog-api.md',
-          'learn/blog-tag.md'
+          'learn/blog-tag.md',
+          'learn/blog-auth.md'
         ]
       }
     ],

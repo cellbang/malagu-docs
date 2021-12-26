@@ -149,6 +149,33 @@ export class Tag extends BaseEntity {
 }
 ```
 
+用户模型`src/backend/entity/user.ts`内容如下：
+
+```ts
+import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany, JoinColumn } from "typeorm";
+
+@Entity({ name: "users" })
+export class User extends BaseEntity {
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @Column()
+    username: string;
+
+    @Column()
+    password: string;
+
+    @Column()
+    desc: string;
+
+    @CreateDateColumn({ name: "created_at" })
+    createdAt: Date;
+
+    @UpdateDateColumn({ name: "updated_at" })
+    updatedAt: Date;
+}
+```
+
 将定义好的模型导出
 
 创建`src/backend/entity/index.ts`内容如下：
