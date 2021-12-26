@@ -11,6 +11,13 @@ lang: zh-CN
 
 示例设计的是一个单用户blog系统，所以只要用户登录成功token可以效验即允许用户操作。使用@malagu/security、jsonwebtoken、crypto-js等库。
 
+### 添加依赖
+
+```bash
+yarn add @malagu/security jsonwebtoken crypto-js
+yarn add --dev @types/crypto-js
+```
+
 ### 添加token和加密工具函数
 
 token工具类 `src/backend/token-utils.ts`

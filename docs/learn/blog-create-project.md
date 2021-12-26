@@ -13,8 +13,8 @@ lang: zh-CN
 mkdir malagu-blog
 cd malagu-blog
 echo '{}' > package.json
-npm i -D @malagu/cli @malagu/cli-service
-npm i -S @malagu/core @malagu/mvc @malagu/typeorm
+yarn add --dev @malagu/cli
+yarn add @malagu/core @malagu/mvc @malagu/typeorm
 ```
 
 #### 编辑package.json
