@@ -1,5 +1,5 @@
 ---
-title: 添加标签
+title: 标签接口
 description: 本篇通过使用Malagu框架编写Blog来演示相关组件用法
 type: learn
 lang: zh-CN
@@ -24,14 +24,37 @@ lang: zh-CN
 }
 ```
 
-### 处理tags
+### 创建tag模型
 
-编辑`src/entity/tag.ts`添加如下处理函数：
+创建tag模型 `src/backend/entity/tag.ts` 内容如下：
 
 ```typescript
+import { 
+    BaseEntity, Entity, Column, PrimaryGeneratedColumn,
+    CreateDateColumn, UpdateDateColumn, ManyToMany, In } from "typeorm";
+import { Post } from "./post";
+
+@Entity({ name: "tags" })
 export class Tag extends BaseEntity {
-  // ...
-  static async buildTags(tagText: string) {
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @ManyToMany(() => Post, (post) => post.tags)
+    posts: Post[];
+
+    @Column()
+    title: string;
+
+    @Column()
+    desc: string;
+
+    @CreateDateColumn({ name: "created_at" })
+    createdAt: number;
+
+    @UpdateDateColumn({ name: "updated_at" })
+    updatedAt: number;
+
+    static async buildTags(tagText: string) {
         let tagTextArray = tagText.split(',').map(
             (item: string) => item.replace(/^\s|\s$/g, '')
         );
@@ -65,9 +88,62 @@ export class Tag extends BaseEntity {
 
 这里将输入的文本进行拆分，然后查找不存在的标签执行插入动作后返回标签的数组。
 
+修改 `src/backend/entity/index.ts` 导出模型，添加内容如下:
+
+```ts
+export * from "./tag";
+```
+
+同时修改 `src/backend/entity/post.ts` 添加对`tag`的引用，修改后内容如下：
+
+```ts
+import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToMany, JoinTable, ManyToOne } from "typeorm";
+import { Category } from "./category";
+import { Tag } from "./tag";
+
+@Entity({ name: "posts" })
+export class Post extends BaseEntity {
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @ManyToOne(() => Category)
+    @JoinColumn({ name: "category_id" })
+    category: Category;
+
+    @ManyToMany(() => Tag, (tag) => tag.posts)
+    @JoinTable({
+        name: "post_tags",
+        joinColumn: {
+            name: "post_id"
+        },
+        inverseJoinColumn: {
+            name: "tag_id"
+        }
+    })
+    tags: Tag[];
+
+    @Column()
+    title: string;
+
+    @Column({
+        length: 10000
+    })
+    content: string;
+
+    @Column()
+    desc: string;
+
+    @CreateDateColumn({ name: "created_at" })
+    createdAt: number;
+
+    @UpdateDateColumn({ name: "updated_at" })
+    updatedAt: number;
+}
+```
+
 ### 应用标签功能
 
-修改`src/backend/controller/post-controller.ts`文件
+修改 `src/backend/controller/post-controller.ts` 文件，添加内容如下：
 
 ```typescript
 export class PostController {
@@ -137,18 +213,18 @@ export class PostController {
 }
 ```
 
-命令行测试
+### 命令行测试
 
 ```bash
 # 新增内容
-curl -X POST -d 'json={ "title": "子夜四时歌-春歌", "desc": "测试post", "content": "兰叶始满地。梅花已落枝。持此可怜意。摘以寄心知。", "category": { "id": 1 }, "tags": "诗歌,诗与歌" }' \
+curl -X POST -d 'json={ "title": "子夜四时歌-春歌", "desc": "测试post", "content": "兰叶始满地。梅花已落枝。持此可怜意。摘以寄心知。", "category": { "id": 2 }, "tags": "诗歌,诗与歌" }' \
   'http://localhost:3000/api/post'
 # 查询数据列表
 curl 'http://localhost:3000/api/post'
 # 查询单条纪录，2为刚刚插入的纪录id
 curl 'http://localhost:3000/api/post/2'
 # 修改数据
-curl -X PATCH -d 'json={ "title": "子夜四时歌-春歌", "desc": "测试post", "content": "兰叶始满地。梅花已落枝。持此可怜意。摘以寄心知。--萧衍", "category": { "id": 1 }, "tags": "诗歌,诗与歌,乐府民歌"}' \
+curl -X PATCH -d 'json={ "title": "子夜四时歌-春歌", "desc": "测试post", "content": "兰叶始满地。梅花已落枝。持此可怜意。摘以寄心知。--萧衍", "category": { "id": 2 }, "tags": "诗歌,诗与歌,乐府民歌"}' \
   'http://localhost:3000/api/post/2'
 # 删除数据
 curl -X DELETE 'http://localhost:3000/api/post/2'

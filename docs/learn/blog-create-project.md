@@ -14,7 +14,7 @@ mkdir malagu-blog
 cd malagu-blog
 echo '{}' > package.json
 yarn add --dev @malagu/cli
-yarn add @malagu/core @malagu/mvc @malagu/typeorm
+yarn add @malagu/core @malagu/mvc
 ```
 
 #### 编辑package.json
@@ -23,19 +23,21 @@ yarn add @malagu/core @malagu/mvc @malagu/typeorm
 
 ```json
 {
-    "name": "vue-example",
+    "name": "malagu-blog",
     "keywords": ["malagu-component"],
     "scripts": {
         "start": "malagu serve",
         "build": "malagu build"
     },
+    // npm依赖等
 }
 ```
 * keywords必须添加且其中必须有`malagu-component`，框架通过此配置来循环查找依赖链
 
-#### 添加文件
+#### 创建示例
 
-tsconfig.json
+在项目根目录创建 `tsconfig.json` 配置typescript编译参数
+
 ```json
 {
     "compilerOptions": {
@@ -74,9 +76,7 @@ tsconfig.json
 }
 ```
 
-* 添加ts配置
-
-malagu.yml
+在项目根目录创建 `malagu.yml` 配置项目模块
 
 ```yaml
 backend:
@@ -84,14 +84,12 @@ backend:
     - src/backend/module
 ```
 
-* 添加Malagu项目配置
-
-src/backend/controllers/home-controller.ts
+创建 `src/backend/controllers/home-controller.ts` 测试输出
 
 ```ts
 import { Controller, Get, Text } from "@malagu/mvc/lib/node";
 
-@Controller('api/home')
+@Controller("api/home")
 export class HomeController {
     @Get()
     @Text()
@@ -101,13 +99,13 @@ export class HomeController {
 }
 ```
 
-src/backend/controllers/index.ts
+创建 `src/backend/controllers/index.ts` 导出上面定义的controller
 
 ```ts
 export * from "./home-controller";
 ```
 
-src/backend/module.ts
+创建 `src/backend/module.ts` 引入定义的controller并导出项目模块
 
 ```ts
 import { autoBind } from "@malagu/core";
@@ -116,4 +114,4 @@ import "./controllers";
 export default autoBind();
 ```
 
-本地运行`npm start`，用curl测试接口：`curl http://localhost:3000/api/home`此时应该能看到接口输出
+本地运行`yarn start`，用curl测试接口：`curl http://localhost:3000/api/home`此时应该能看到接口输出

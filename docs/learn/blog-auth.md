@@ -1,5 +1,5 @@
 ---
-title: 添加认证
+title: 登录认证
 description: 本篇通过使用Malagu框架编写Blog来演示相关组件用法
 type: learn
 lang: zh-CN
@@ -15,12 +15,27 @@ lang: zh-CN
 
 ```bash
 yarn add @malagu/security jsonwebtoken crypto-js
-yarn add --dev @types/crypto-js
+yarn add --dev @types/crypto-js @types/jsonwebtoken
 ```
+
+修改 `src/malagu-local.yml` 添加如下内容：
+
+```yml
+backend:
+  malagu:
+    # 新增内容
+    logger:
+      level: debug
+
+    security:
+      enabled: false
+```
+
+打开日志，禁用掉security默认的认证策略
 
 ### 添加token和加密工具函数
 
-token工具类 `src/backend/token-utils.ts`
+创建token工具类 `src/backend/auth/token-utils.ts` 内容如下：
 
 ```ts
 import { Service } from "@malagu/core";
@@ -44,9 +59,9 @@ export class TokenUtils {
       decoded = JWT.verify(token, privateKey);
     } catch (err) {
       if (err.name === "TokenExpiredError") {
-        throw new Error('TokenExpired');
+        throw new Error("TokenExpired");
       }
-      throw new Error('TokenError');
+      throw new Error("TokenError");
     }
 
     if (decoded.uid) {
@@ -55,12 +70,12 @@ export class TokenUtils {
         user_name: decoded.user_name
       };
     }
-    throw new Error('TokenNotMatch');
+    throw new Error("TokenNotMatch");
   }
 }
 ```
 
-密码加密函数 `src/backend/utils/crypto.ts`
+创建加密工具函数 `src/backend/utils/crypto.ts` 内容如下：
 
 ```ts
 import * as SHA256 from "crypto-js/sha256";
@@ -70,7 +85,7 @@ export function sha256Encode(content: string) {
 }
 ```
 
-### 添加认证功能实现
+### 添加认证实现
 
 认证提供者 `src/backend/auth/auth-provider.ts`
 
@@ -108,7 +123,10 @@ export class CustomAuthenticationProviderImpl implements AuthenticationProvider 
         this.logger.error("authenticate");
         this.logger.debug("----------------------------------------");
         const request = Context.getRequest();
-        let headerToken = request.get("Token")?.trim();
+        let headerToken = request.get("Token");
+        if (headerToken) {
+          headerToken = headerToken.trim();
+        }
         if (!headerToken) {
             this.responseNoAuth(401, "no auth");
         }
@@ -143,7 +161,7 @@ export class CustomAuthenticationProviderImpl implements AuthenticationProvider 
         const request = Context.getRequest();
         let { url, method } = request;
         let whiteUrl = {
-            "/api/post": ["POST", "PATCH", "DELETE"]
+            "/api/post": ["GET", "POST", "PATCH", "DELETE"]
         }
         // request.url
         // let token = request.get("Token");
@@ -160,16 +178,64 @@ export class CustomAuthenticationProviderImpl implements AuthenticationProvider 
 }
 ```
 
-导出相工具和认证类 `src/backend/auth/index.ts`
+* 在support中过拦截要认证的url和请求方法。
+
+创建 `src/backend/auth/index.ts` 导出相工具和认证类，内容如下：
 
 ```ts
 export * from "./token-utils";
 export * from "./auth-provider";
 ```
 
-### 添加用户登录发放token
+修改 `src/backend/module.ts` 导出认证模块，修改后内容如下：
 
-添加 `src/backend/controllers/user-controller.ts`
+```ts
+import { autoBind } from "@malagu/core";
+import "./controllers";
+import "./auth";
+import { autoBindEntities } from "@malagu/typeorm";
+import * as entities from "./entity";
+
+autoBindEntities(entities);
+export default autoBind();
+```
+
+### 添加用户登录和token生成
+
+创建用户模型 `src/backend/entity/user.ts` 内容如下：
+
+```ts
+import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany, JoinColumn } from "typeorm";
+
+@Entity({ name: "users" })
+export class User extends BaseEntity {
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @Column()
+    username: string;
+
+    @Column()
+    password: string;
+
+    @Column()
+    desc: string;
+
+    @CreateDateColumn({ name: "created_at" })
+    createdAt: Date;
+
+    @UpdateDateColumn({ name: "updated_at" })
+    updatedAt: Date;
+}
+```
+
+修改 `src/backend/entity/index.ts` 导出模型，添加内容如下:
+
+```ts
+export * from "./user";
+```
+
+创建用户controller `src/backend/controllers/user-controller.ts` 内容如下：
 
 ```ts
 import { Autowired } from "@malagu/core";
@@ -182,43 +248,44 @@ import { sha256Encode } from "../utils/crypto";
 
 @Controller('api/user')
 export class UserController {
-  @Autowired()
-  tokenUtils: TokenUtils;
+    @Autowired()
+    tokenUtils: TokenUtils;
 
-  @Post("login")
-  @Json()
-  async login(
-    @Body("username") username: string,
-    @Body("password") password: string): Promise<ResponseData<any>> {
-      if (username && password) {
-        let passwordHash = sha256Encode(password);
-        // let passwordHash = password; 
-        let user = await User.findOne({ where: {
-          username, password: passwordHash
-        } });
-        if (user) {
-          let token = await this.tokenUtils.getToken(user.id, user.username);
-          return jsonFormat({ token, id: user.id, username: user.username, desc: user.desc });
+    @Post("login")
+    @Json()
+    async login(
+        @Body("username") username: string,
+        @Body("password") password: string
+    ): Promise<ResponseData<any>> {
+        if (username && password) {
+            let passwordHash = sha256Encode(password);
+            // let passwordHash = password; 
+            let user = await User.findOne({ where: {
+                username, password: passwordHash
+            } });
+            if (user) {
+                let token = await this.tokenUtils.getToken(user.id, user.username);
+                return jsonFormat({ token, id: user.id, username: user.username, desc: user.desc });
+            }
+            return jsonFormat(null, "用户名或密码不正确");
         }
-        return jsonFormat(null, "用户名或密码不正确");
-      }
-      return jsonFormat(null, "请输入用户名和密码登录")
-  }
+        return jsonFormat(null, "请输入用户名和密码登录")
+    }
 }
 ```
 
 因为没有注册功能，我们直接写一个方法创建一个类认用户，在`user-controller.ts`中添加如下代码:
 
 ```ts
-  @Get("create")
-  @Json()
-  async create(): Promise<ResponseData<User>> {
-    let user: any = { username: "admin", password: "123456", desc: "默认用户"};
-    user.password = sha256Encode(user.password);
-    let saved = await User.save(user);
-    let result = await User.findOne({ where: { username: user.username }});
-    return jsonFormat(result);
-  }
+    @Get("create")
+    @Json()
+    async create(): Promise<ResponseData<User>> {
+        let user: any = { username: "admin", password: "123456", desc: "默认用户"};
+        user.password = sha256Encode(user.password);
+        let saved = await User.save(user);
+        let result = await User.findOne({ where: { username: user.username }});
+        return jsonFormat(result);
+    }
 ```
 
 注意，创建用户后请注释掉这个方法
@@ -231,12 +298,16 @@ export * from "./user-controller";
 
 用户登录后会返回 id、token、username 等字段，请求需要授权的接口，在header中添带上token即可
 
-这里为了测试，我们将 '/api/post/1' 加到认证列表中
+### 命令行测试
 
-命令行测试
+我们刚刚已经在 `src/backend/auth/auth-provider.ts` 拦截了 `/api/blog`，此处用这个地址来测试：
 
 ```bash
+# 请求认证url
+curl http://localhost:3000/api/post
+# 创建用户
+curl http://localhost:3000/api/user/create
 # 登录获取token
 curl -X POST -d "username=admin&password=123456" http://localhost:3000/api/user/login
-curl -H curl -H 'token: <token>' http://localhost:3000/api/post/1
+curl -H 'token: <token>' http://localhost:3000/api/post
 ```
