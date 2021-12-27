@@ -4,6 +4,7 @@ description: 本篇通过使用Malagu框架编写Blog来演示相关组件用法
 type: learn
 lang: zh-CN
 ---
+# 分类接口
 
 ### 创建模型
 
@@ -38,7 +39,7 @@ export class Category extends BaseEntity {
 }
 ```
 
-* 字段名和表中定义不一样的，可以用@Column选项来指定表中的字段名，@CreateDateColumn、@UpdateDateColumn会修改数据库字段的默认值，所以需`malagu-local.yml`中要开启`synchronize`选项
+* 字段名和表中定义不一样的可以用@Column选项来指定表中的字段名，@CreateDateColumn、@UpdateDateColumn会修改数据库字段的默认值，所以需`malagu-local.yml`中要开启`synchronize`选项
 
 创建 `src/backend/entity/index.ts` 导出模型
 

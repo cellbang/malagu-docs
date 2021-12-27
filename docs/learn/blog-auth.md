@@ -178,9 +178,9 @@ export class CustomAuthenticationProviderImpl implements AuthenticationProvider 
 }
 ```
 
-* 在support中过拦截要认证的url和请求方法。
+* 在support中拦截要认证的url和请求方法。
 
-创建 `src/backend/auth/index.ts` 导出相工具和认证类，内容如下：
+创建 `src/backend/auth/index.ts` 导出工具和认证类，内容如下：
 
 ```ts
 export * from "./token-utils";
@@ -274,7 +274,7 @@ export class UserController {
 }
 ```
 
-因为没有注册功能，我们直接写一个方法创建一个类认用户，在`user-controller.ts`中添加如下代码:
+因为没有注册功能，我们直接写一个方法创建一个用户，在`user-controller.ts`中添加如下代码:
 
 ```ts
     @Get("create")

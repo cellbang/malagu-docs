@@ -4,6 +4,7 @@ description: 本篇通过使用Malagu框架编写Blog来演示相关组件用法
 type: learn
 lang: zh-CN
 ---
+# blog接口
 
 ### 创建模型
 

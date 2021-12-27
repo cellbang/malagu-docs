@@ -5,11 +5,11 @@ type: learn
 lang: zh-CN
 ---
 
-# 标签功能
+# 标签接口
 
 ### 功能说明
 
-之前的接口我们已经创建了blog的相关api，这个时候我们需要给blog添加标签(tag)。blog和tag是多对多的关系，用一个中间表来关联。
+之前的接口已经创建了blog相关api，现在需要给blog添加标签(tag)。blog和tag是多对多的关系，用一个中间表来关联。
 
 ### 数据说明
 
@@ -143,7 +143,7 @@ export class Post extends BaseEntity {
 
 ### 应用标签功能
 
-修改 `src/backend/controller/post-controller.ts` 文件，添加内容如下：
+修改 `src/backend/controller/post-controller.ts` 文件中的show、create、update、delete方法，修改内容如下：
 
 ```typescript
 export class PostController {
