@@ -39,8 +39,10 @@
       ><text x="5" font-size="14px" y="70.2695" clip-path="url(#clipPath2)" font-family="sans-serif" stroke="none" xml:space="preserve"
       >password</text
       ><text x="5" font-size="14px" y="86.0869" clip-path="url(#clipPath2)" font-family="sans-serif" stroke="none" xml:space="preserve"
-      >created_at</text
+      >desc</text
       ><text x="5" font-size="14px" y="101.9043" clip-path="url(#clipPath2)" font-family="sans-serif" stroke="none" xml:space="preserve"
+      >created_at</text
+      ><text x="5" font-size="14px" y="117.7217" clip-path="url(#clipPath2)" font-family="sans-serif" stroke="none" xml:space="preserve"
       >updated_at</text
     ></g
     ><g fill="rgb(255,255,255)" fill-opacity="0" transform="translate(180,20)" stroke-opacity="0" stroke="rgb(255,255,255)"
