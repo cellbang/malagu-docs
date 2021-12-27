@@ -22,19 +22,13 @@ backend:
     typeorm:
       ormConfig:
         - type: mysql
-          host: 127.0.0.1
+          host: <db_host>
           port: 3306
           synchronize: true
-          username: test
-          password: "123456"
-          database: malagu-blog2
+          username: <db_user>
+          password: "<db_pass>"
+          database: malagu-blog
           logging: true
-    logger:
-      level: debug
-
-    security:
-      enabled: false
-
 ```
 * 请将db_host、db_user、db_pass进行相应替换。
 
