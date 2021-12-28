@@ -57,7 +57,7 @@ export class TokenUtils {
     let decoded: any = {};
     try {
       decoded = JWT.verify(token, privateKey);
-    } catch (err) {
+    } catch (err: any) {
       if (err.name === "TokenExpiredError") {
         throw new Error("TokenExpired");
       }
@@ -123,7 +123,7 @@ export class CustomAuthenticationProviderImpl implements AuthenticationProvider 
         this.logger.error("authenticate");
         this.logger.debug("----------------------------------------");
         const request = Context.getRequest();
-        let headerToken = request.get("Token");
+        let headerToken = request.get("Token") || "";
         if (headerToken) {
           headerToken = headerToken.trim();
         }
@@ -160,7 +160,7 @@ export class CustomAuthenticationProviderImpl implements AuthenticationProvider 
         this.logger.debug("support called");
         const request = Context.getRequest();
         let { url, method } = request;
-        let whiteUrl = {
+        let whiteUrl: any = {
             "/api/post": ["GET", "POST", "PATCH", "DELETE"]
         }
         // request.url
@@ -283,7 +283,7 @@ export class UserController {
         let user: any = { username: "admin", password: "123456", desc: "默认用户"};
         user.password = sha256Encode(user.password);
         let saved = await User.save(user);
-        let result = await User.findOne({ where: { username: user.username }});
+        let result = await User.findOne({ where: { username: user.username }}) as User;
         return jsonFormat(result);
     }
 ```

@@ -29,8 +29,7 @@ lang: zh-CN
 创建tag模型 `src/backend/entity/tag.ts` 内容如下：
 
 ```typescript
-import { 
-    BaseEntity, Entity, Column, PrimaryGeneratedColumn,
+import { BaseEntity, Entity, Column, PrimaryGeneratedColumn,
     CreateDateColumn, UpdateDateColumn, ManyToMany, In } from "typeorm";
 import { Post } from "./post";
 
@@ -97,7 +96,8 @@ export * from "./tag";
 同时修改 `src/backend/entity/post.ts` 添加对`tag`的引用，修改后内容如下：
 
 ```ts
-import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToMany, JoinTable, ManyToOne } from "typeorm";
+import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, CreateDateColumn,
+    UpdateDateColumn, JoinColumn, ManyToMany, JoinTable, ManyToOne } from "typeorm";
 import { Category } from "./category";
 import { Tag } from "./tag";
 
@@ -110,7 +110,7 @@ export class Post extends BaseEntity {
     @JoinColumn({ name: "category_id" })
     category: Category;
 
-    @ManyToMany(() => Tag, (tag) => tag.posts)
+    @ManyToMany(() => Tag, (tag: Tag) => tag.posts)
     @JoinTable({
         name: "post_tags",
         joinColumn: {
@@ -143,24 +143,41 @@ export class Post extends BaseEntity {
 
 ### 应用标签功能
 
-修改 `src/backend/controller/post-controller.ts` 文件中的show、create、update、delete方法，修改内容如下：
+修改 `src/backend/controller/post-controller.ts` 文件中的show、create、update、delete方法，修改后文件内容如下：
 
 ```typescript
+import { Controller, Get, Post, Patch, Delete, Json, Param, Query, Body } from "@malagu/mvc/lib/node";
+import { Post as PostModel, Tag } from "../entity";
+import { ResponseData } from "../../common";
+import { jsonFormat } from '../utils';
+
+@Controller('api/post')
 export class PostController {
-    // ...
+    // 列表
+    @Get()
+    @Json()
+    async index(@Query("page") page: number = 1, @Query("size") size: number = 20): Promise<ResponseData<PostModel[]>> {
+        let posts: PostModel[] = await PostModel.find({
+            take: size,
+            skip: size * (page - 1),
+            order: { id: "DESC" },
+            relations: ["category"]
+        });
+        return jsonFormat(posts);
+    }
     // 查询
     @Get(":id")
     @Json()
     async show(@Param('id') id: number): Promise<ResponseData<PostModel>> {
         let post: PostModel = await PostModel.findOne(id, {
             relations: ["category", "tags"]
-        });
+        }) as PostModel;
         return jsonFormat(post);
     }
     // 创建
     @Post()
     @Json()
-    async create(@Body("json") postData): Promise<any> {
+    async create(@Body("json") postData: string): Promise<any> {
         let post = JSON.parse(postData);
         try {
             if (post.tags) {
@@ -176,7 +193,7 @@ export class PostController {
     // 更新
     @Patch(":id")
     @Json()
-    async update(@Param("id") id: number, @Body("json") postData): Promise<any> {
+    async update(@Param("id") id: number, @Body("json") postData: string): Promise<any> {
         let saveData = JSON.parse(postData);
         try {
             let tagText = "";
@@ -185,7 +202,7 @@ export class PostController {
                 delete saveData.tags;
             }
             let saved = await PostModel.update(id, saveData);
-            let post: PostModel = await PostModel.findOne(id);
+            let post: PostModel = await PostModel.findOne(id) as PostModel;
             post.tags = await Tag.buildTags(tagText);
             await post.save();
             return jsonFormat(post);
@@ -200,7 +217,7 @@ export class PostController {
     @Json()
     async delete(@Param("id") id: number): Promise<any> {
         try {
-            let post: PostModel = await PostModel.findOne(id);
+            let post: PostModel = await PostModel.findOne(id) as PostModel;
             post.tags = [];
             await post.save();
             let deleted = await PostModel.delete(id);

@@ -12,7 +12,7 @@ lang: zh-CN
 
 ```ts
 import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, CreateDateColumn,
-    UpdateDateColumn, JoinColumn, ManyToMany, JoinTable, ManyToOne } from "typeorm";
+    UpdateDateColumn, JoinColumn, ManyToOne } from "typeorm";
 import { Category } from "./category";
 
 @Entity({ name: "posts" })
@@ -67,7 +67,7 @@ Post内容CURD接口及路径如下：
 
 ```ts
 import { Controller, Get, Post, Patch, Delete, Json, Param, Query, Body } from "@malagu/mvc/lib/node";
-import { Post as PostModel, Tag } from "../entity";
+import { Post as PostModel } from "../entity";
 import { ResponseData } from "../../common";
 import { jsonFormat } from '../utils';
 
@@ -91,7 +91,7 @@ export class PostController {
     async show(@Param('id') id: number): Promise<ResponseData<PostModel>> {
         let post: PostModel = await PostModel.findOne(id, {
             relations: ["category"]
-        });
+        }) as PostModel;
         return jsonFormat(post);
     }
     // 创建

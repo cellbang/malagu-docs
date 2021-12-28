@@ -144,7 +144,7 @@ export class CategoryController {
 修改 `src/backend/controllers/index.ts` 导出上面定义的 controller，添加内容如下：
 
 ```ts
-export * from "./category-controller.ts";
+export * from "./category-controller";
 ```
 
 ### 命令行测试接口
