@@ -97,7 +97,7 @@ export class PostController {
     // 创建
     @Post()
     @Json()
-    async create(@Body("json") postData: any): Promise<any> {
+    async create(@Body("json") postData: string): Promise<any> {
         let post = JSON.parse(postData);
         try {
             let saved = await PostModel.save(post);
@@ -110,7 +110,7 @@ export class PostController {
     // 更新
     @Patch(":id")
     @Json()
-    async update(@Param("id") id: number, @Body("json") postData: any): Promise<any> {
+    async update(@Param("id") id: number, @Body("json") postData: string): Promise<any> {
         let saveData = JSON.parse(postData);
         try {
             let saved = await PostModel.update(id, saveData);

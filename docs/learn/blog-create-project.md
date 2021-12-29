@@ -79,6 +79,8 @@ yarn add @malagu/core @malagu/mvc
 在项目根目录创建 `malagu.yml` 配置项目模块
 
 ```yaml
+targets:
+  - backend
 backend:
   modules:
     - src/backend/module
