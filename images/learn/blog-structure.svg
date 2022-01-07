@@ -50,8 +50,8 @@
     /></g
     ><g transform="translate(180,20)"
     ><rect fill="none" x="0.5" width="118.5" height="148.5" y="0.5" clip-path="url(#clipPath2)"
-      /><text x="21" font-size="14px" y="17.8174" clip-path="url(#clipPath2)" font-family="sans-serif" stroke="none" xml:space="preserve"
-      >categoryies</text
+      /><text x="25" font-size="14px" y="17.8174" clip-path="url(#clipPath2)" font-family="sans-serif" stroke="none" xml:space="preserve"
+      >categories</text
       ><path fill="none" d="M1 23.8174 L119 23.8174" clip-path="url(#clipPath2)"
       /><text x="5" font-size="14px" y="38.6348" clip-path="url(#clipPath2)" font-family="sans-serif" stroke="none" xml:space="preserve"
       >id</text
