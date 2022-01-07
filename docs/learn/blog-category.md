@@ -83,7 +83,6 @@ import { jsonFormat } from '../utils';
 @Controller("api/category")
 export class CategoryController {
     @Get()
-    @Json()
     async index(@Query("page") page: number = 1,
                 @Query("size") size: number = 20):Promise<ResponseData<Category[]>> {
         let result = await Category.find({ 
@@ -95,14 +94,12 @@ export class CategoryController {
     }
 
     @Get(":id")
-    @Json()
     async show(@Param("id" ) id: number): Promise<ResponseData<Category>> {
         let result = await Category.findOne({ id });
         return jsonFormat(result);
     }
 
     @Post()
-    @Json()
     async create(@Body("json") postData: any): Promise<any> {
         let category = JSON.parse(postData);
         try {
@@ -115,7 +112,6 @@ export class CategoryController {
     }
 
     @Patch(":id")
-    @Json()
     async update(@Param("id") id: number, @Body("json") postData: any): Promise<any> {
         let saveData = JSON.parse(postData);
         try {
@@ -128,7 +124,6 @@ export class CategoryController {
     }
 
     @Delete(":id")
-    @Json()
     async delete(@Param("id") id: number): Promise<any> {
         try {
             let deleted = Category.delete({ id });

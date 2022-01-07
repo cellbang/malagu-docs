@@ -92,7 +92,9 @@ export function sha256Encode(content: string) {
 ```ts
 import { Autowired, Component, Logger } from "@malagu/core";
 import { Context } from "@malagu/web/lib/node";
-import { AuthenticationProvider, BASE_AUTHENTICATION_PROVIDER_PRIORITY, Authentication } from "@malagu/security/lib/node";
+import { RouteMetadataMatcher } from "@malagu/mvc/lib/node";
+import { AuthenticationProvider, Authentication,
+    BASE_AUTHENTICATION_PROVIDER_PRIORITY } from "@malagu/security/lib/node";
 import { TokenUtils } from "./token-utils";
 import { jsonFormat } from "../utils";
 
@@ -110,6 +112,9 @@ export class CustomAuthenticationProviderImpl implements AuthenticationProvider 
 
     @Autowired(Logger)
     logger: Logger;
+
+    @Autowired(RouteMetadataMatcher)
+    routeMetadataMatcher: RouteMetadataMatcher;
 
     responseNoAuth(statusCode: number = 401, message = "no auth") {
         const res = Context.getResponse();
@@ -158,27 +163,37 @@ export class CustomAuthenticationProviderImpl implements AuthenticationProvider 
     async support(): Promise<boolean> {
         this.logger.debug("----------------------------------------");
         this.logger.debug("support called");
-        const request = Context.getRequest();
-        let { url, method } = request;
-        let whiteUrl: any = {
-            "/api/post": ["GET", "POST", "PATCH", "DELETE"]
+        const routeMetadataMatcher = await this.routeMetadataMatcher.match();
+        if (!routeMetadataMatcher) return false;
+        let { target, key: method} = routeMetadataMatcher.methodMetadata;
+        let needAuth = false;
+        if (target && typeof target.getAccess == 'function') {
+            needAuth = true;
+            const access = await target.getAccess();
+            if (access.only && access.only.indexOf(method) < 0) {
+                needAuth = false;
+            }
+            else if (access.except && access.except.indexOf(method) > -1) {
+                needAuth = false;
+            }
         }
-        // request.url
-        // let token = request.get("Token");
-        // this.logger.debug(`token: ${token}`);
+        this.logger.debug(`needAuth: ${needAuth}`);
         this.logger.debug("----------------------------------------");
-        // if (!token) {
-        //     return false;
-        // }
-        if (whiteUrl[url] && whiteUrl[url].indexOf(method) > -1) {
-            return true;
-        }
-        return false;
+        return needAuth;
     }
 }
 ```
 
-* 在support中拦截要认证的url和请求方法。
+修改 `src/backend/controllers/post-controller.ts` 文件给`PostController`类添加`getAccess`方法配置权限信息，代码如下：
+```ts
+    getAccess() {
+        return {
+            except: ["index", "show"]
+        }
+    }
+```
+
+这里表示`index`、`show`之外的方法都需要认证，也可以用`only`字段来配置只认证哪些方法。
 
 创建 `src/backend/auth/index.ts` 导出工具和认证类，内容如下：
 
@@ -252,7 +267,6 @@ export class UserController {
     tokenUtils: TokenUtils;
 
     @Post("login")
-    @Json()
     async login(
         @Body("username") username: string,
         @Body("password") password: string
@@ -278,7 +292,6 @@ export class UserController {
 
 ```ts
     @Get("create")
-    @Json()
     async create(): Promise<ResponseData<User>> {
         let user: any = { username: "admin", password: "123456", desc: "默认用户"};
         user.password = sha256Encode(user.password);
@@ -303,11 +316,11 @@ export * from "./user-controller";
 我们刚刚已经在 `src/backend/auth/auth-provider.ts` 拦截了 `/api/blog`，此处用这个地址来测试：
 
 ```bash
-# 请求认证url
-curl http://localhost:3000/api/post
+# 请求认证url此时返回需要认证
+curl -X DELETE http://localhost:3000/api/post/1
 # 创建用户
 curl http://localhost:3000/api/user/create
 # 登录获取token
 curl -X POST -d "username=admin&password=123456" http://localhost:3000/api/user/login
-curl -H 'token: <token>' http://localhost:3000/api/post
+curl -X DELETE -H 'token: <token>' http://localhost:3000/api/post/1
 ```

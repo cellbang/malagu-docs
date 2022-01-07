@@ -87,7 +87,6 @@ export class PostController {
     }
     // 查询
     @Get(":id")
-    @Json()
     async show(@Param('id') id: number): Promise<ResponseData<PostModel>> {
         let post: PostModel = await PostModel.findOne(id, {
             relations: ["category"]
@@ -96,7 +95,6 @@ export class PostController {
     }
     // 创建
     @Post()
-    @Json()
     async create(@Body("json") postData: string): Promise<any> {
         let post = JSON.parse(postData);
         try {
@@ -109,7 +107,6 @@ export class PostController {
     }
     // 更新
     @Patch(":id")
-    @Json()
     async update(@Param("id") id: number, @Body("json") postData: string): Promise<any> {
         let saveData = JSON.parse(postData);
         try {
@@ -122,7 +119,6 @@ export class PostController {
     }
     // 删除
     @Delete(":id")
-    @Json()
     async delete(@Param("id") id: number): Promise<any> {
         try {
             let deleted = await PostModel.delete(id);

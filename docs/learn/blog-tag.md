@@ -155,7 +155,6 @@ import { jsonFormat } from '../utils';
 export class PostController {
     // 列表
     @Get()
-    @Json()
     async index(@Query("page") page: number = 1, @Query("size") size: number = 20): Promise<ResponseData<PostModel[]>> {
         let posts: PostModel[] = await PostModel.find({
             take: size,
@@ -167,7 +166,6 @@ export class PostController {
     }
     // 查询
     @Get(":id")
-    @Json()
     async show(@Param('id') id: number): Promise<ResponseData<PostModel>> {
         let post: PostModel = await PostModel.findOne(id, {
             relations: ["category", "tags"]
@@ -176,7 +174,6 @@ export class PostController {
     }
     // 创建
     @Post()
-    @Json()
     async create(@Body("json") postData: string): Promise<any> {
         let post = JSON.parse(postData);
         try {
@@ -192,7 +189,6 @@ export class PostController {
     }
     // 更新
     @Patch(":id")
-    @Json()
     async update(@Param("id") id: number, @Body("json") postData: string): Promise<any> {
         let saveData = JSON.parse(postData);
         try {
@@ -214,7 +210,6 @@ export class PostController {
 
     // 删除
     @Delete(":id")
-    @Json()
     async delete(@Param("id") id: number): Promise<any> {
         try {
             let post: PostModel = await PostModel.findOne(id) as PostModel;
