@@ -31,6 +31,10 @@ footer: Open-source MIT Licensed | Copyright © 2021<br />Powered by [dumi](http
 1. 被腾云扣钉 Cloud Studio 内置到预置环境；
 1. 被腾讯云 Serverless 团队认可，并成为腾讯云函数首个合作的第三方开发框架；
 
+## 贡献者
+<a href="https://github.com/cellbang/malagu/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=cellbang/malagu" />
+</a>
 
 ## 加入我们
 
