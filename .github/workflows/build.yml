@@ -27,8 +27,8 @@ jobs:
 
       - name: Deploy CN 🚀
         env:
-          COS_BUCKET_NAME: malagu-1300141256
-          COS_BUCKET_LOCATION: ap-guangzhou
+          COS_BUCKET_NAME: malagu-hk-1300141256
+          COS_BUCKET_LOCATION: ap-hongkong
         uses: nick-fields/retry@v2
         with:
           timeout_minutes: 5
