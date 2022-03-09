@@ -56,18 +56,16 @@ malagu deploy -m prod
 ```yaml
 malagu:
   cloud:
-    faas:
-      alias:
-        name: ${stage}
+    alias:
+      name: ${stage}
 ```
 API 网关的 `stage` 关联（以下是默认规则，无需配置）：
 ```yaml
 malagu:
   cloud:
-    faas:
-      apiGateway:
-        stage:
-          name: ${stage}
+    apiGateway:
+      stage:
+        name: ${stage}
 ```
 
 ## 部署模式
@@ -108,9 +106,8 @@ malagu:
 ```yaml
 malagu:
   cloud:
-    faas:
-      function:
-        name: xxxx # 默认值是 ${pkg.name}
+    function:
+      name: xxxx # 默认值是 ${pkg.name}
 ```
 函数的其他属性也是类似的方式配置。
 
