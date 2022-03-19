@@ -7,6 +7,32 @@ lang: zh-CN
 
 # @malagu/core
 
+
+### 配置参考
+
+1.`malagu.hostDomId`用来定义前端的根元素id，默认值：`malagu-root`，示例：
+
+```yaml
+malagu:
+    hostDomId: app
+```
+
+2.`malagu.annotation.Component.proxy`，是否启用代理(可在组件的参数中单独启用，AOP组件需要开启)，默认值：`false`
+
+3.`malagu.aop`是否开启aop，默认值`true`
+
+4.`malagu.logger.level`用来定义日志级别，默认值：`info`，示例：
+
+```yaml
+malagu:
+    logger:
+        level: debug # 'verbose' | 'debug' | 'info' | 'warn' | 'error';
+```
+
+5.`frontend.entry`指定前端应用的入口文件，默认值：`lib/common/application/application-entry`
+
+6.`backend.entry`指定node应用的入口文件，默认值：`lib/common/application/application-entry`
+
 ### Application
 
 Application是Malagu应用的入口，以 [common/application-entry.ts](https://github.com/cellbang/malagu/blob/master/packages/core/src/common/application/application-entry.ts) 为例：
@@ -184,20 +210,3 @@ logger相关代码文件：
 
 ### Utils
 待完善
-
-### 配置参考
-
-1.malagu.hostDomId用来定义前端的根元素id，示例：
-
-```yaml
-malagu:
-    hostDomId: app
-```
-
-2.malagu.logger.level用来定义日志级别，示例：
-
-```yaml
-malagu:
-    logger:
-        level: debug # 'verbose' | 'debug' | 'info' | 'warn' | 'error';
-```

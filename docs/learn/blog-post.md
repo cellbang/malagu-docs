@@ -55,8 +55,8 @@ export * from "./post";
 
 Post内容CURD接口及路径如下：
 
-| URI Pattren   | Verb   | Controller.Action      | Descripton |
-| ----          | ----   | ----                   | ----       |
+| URI Pattern   | Verb   | Controller.Action      | Description |
+| ----          | ----   | ----                   | ----        |
 | /api/post     | GET    | post-controller.index  | blog列表   |
 | /api/post/:id | GET    | post-controller.show   | blog详情   |
 | /api/post     | POST   | post-controller.create | 创建blog   |

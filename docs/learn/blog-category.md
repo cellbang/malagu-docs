@@ -63,8 +63,8 @@ export default autoBind();
 
 Category分类CURD接口及路径如下：
 
-| URI Pattren       | Verb   | Controller.Action          | Descripton |
-| ----              | ----   | ----                       | ----       |
+| URI Pattern       | Verb   | Controller.Action          | Description |
+| ----              | ----   | ----                       | ----        |
 | /api/category     | GET    | catetory-controller.index  | 分类型表   |
 | /api/catetory/:id | GET    | catetory-controller.show   | 分类详情   |
 | /api/category     | POST   | catetory-controller.create | 创建分类   |
