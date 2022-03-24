@@ -19,13 +19,13 @@ features:
 footer: Open-source MIT Licensed | Copyright © 2022<br />Powered by [Cellbang](https://github.com/cellbang)
 ---
 
-## 支持 10+ 框架
+## 支持 15+ 框架
 目前 Malagu 生态包含了 Malagu Cli 和 Malagu Framework，其中，Malagu Cli 已支持如下框架和工具，可以享受 Malagu 带来的开发和部署的便利:
 
 ![Malagu Cli 支持框架列表](../public/images/support_framework.png)
 
 ## 开源项目与社区发展
-截至 2021 年 9 月，Malagu 经历了三年的打磨和真实项目实践，陆续发布了 128 个版本。目前 Malagu 核心部分已经稳定，拥有 10 位左右的核心共建成员。在微信小程序、钉钉小程序、uniapp、门户网站、内容管理平台、云文档平台等场景都有真实项目成功落地。我们自己每天都在用 Malagu 开发真实业务项目。 ​
+截至 2022 年 2 月，Malagu 经历了三年的打磨和真实项目实践，陆续发布了 200 个版本。目前 Malagu 核心部分已经稳定，拥有 10 位左右的核心共建成员。在微信小程序、钉钉小程序、uniapp、门户网站、内容管理平台、云文档平台等场景都有真实项目成功落地。我们自己每天都在用 Malagu 开发真实业务项目。 ​
 
 在社区发展过程中，被越来越多的开发者和云厂商的认可，陆续有 29 位开发者加入到我们的社区共建团队。在早期，阿里云 CRO 团队就采用了 Malagu 实现了内部的 CMS 平台，并成功上线了几十个 CMS 系统。后面主要经历了这么几个阶段：
 
