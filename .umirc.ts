@@ -86,6 +86,13 @@ export default defineConfig({
         ]
       },
       {
+        title: 'Vite 适配',
+        children: [
+          'learn/vite-intro.md',
+          'learn/vite-vue.md'
+        ]
+      },
+      {
         title: 'Malagu Blog 项目',
         children: [
           'learn/blog-intro.md',
@@ -118,6 +125,7 @@ export default defineConfig({
       // 可通过如下形式嵌套二级导航菜单，目前暂不支持更多层级嵌套：
       children: [
         { title: '学习 Malagu', path: '/learn' },
+        { title: 'Vite 适配', path: '/learn/vite-intro'},
         { title: 'Package 文档', path: '/package' },
         { title: '参与贡献', path: '/malagu' },
       ],
