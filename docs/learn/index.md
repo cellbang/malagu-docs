@@ -14,7 +14,7 @@ lang: zh-CN
 ### Vite 适配
 - 适配说明 [链接](learn/vite-intro.md)
 - Vue项目 [链接](learn/vite-vue.md)
-- React项目 [链接](learn/vite-vue.md)
+- React项目 [链接](learn/vite-react.md)
 
 ### Malagu Blog 项目
 - 项目介绍   [链接](learn/blog-intro.md)
