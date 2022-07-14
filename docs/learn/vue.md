@@ -110,7 +110,7 @@ declare module "*.vue" {
 #### 添加vue文件
 src/root.vue
 
-```vue
+```html
 <template>
   <h1>{{ msg }}</h1>
 </template>
@@ -188,7 +188,7 @@ npm i -S vue-router@next
 
 添加src/views/home/index.vue
 
-```vue
+```html
 <template>
     <h1>index</h1>
 </template>
@@ -202,7 +202,7 @@ export default defineComponent({
 
 添加src/views/home/about.vue
 
-```vue
+```html
 <template>
     <h1>about</h1>
 </template>
@@ -232,7 +232,7 @@ export const router = createRouter({
 
 修改src/root.vue添加链接，修改后的文件如下：
 
-```vue
+```html
 <template>
   <div>
     <ul>
@@ -304,7 +304,7 @@ export default class { }
 
 修改src/views/home/index.vue文件读取store定义的state，示例如下：
 
-```vue
+```html
 <template>
   <h1>index</h1>
   <p>title: {{ title }}</p>

@@ -89,7 +89,8 @@ export default defineConfig({
         title: 'Vite 适配',
         children: [
           'learn/vite-intro.md',
-          'learn/vite-vue.md'
+          'learn/vite-vue.md',
+          'learn/vite-react.md'
         ]
       },
       {

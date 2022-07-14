@@ -11,6 +11,7 @@ lang: zh-CN
 
 ```bash
 npm create vite@latest malagu-vue-for-vite --template vue-ts
+npm i
 npm i -D @malagu/core @malagu/vue
 ```
 
