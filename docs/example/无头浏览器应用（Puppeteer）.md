@@ -70,18 +70,26 @@ Malagu 框架提供了命令行模板，我们可以通过 `malagu init` 命令�
   \ \_\\ \_\ \__/.\_\/\____\ \__/.\_\ \____ \ \____/
    \/_/ \/_/\/__/\/_/\/____/\/__/\/_/\/___L\ \/___/
                                        /\____/
-                    @malagu/cli@1.9.0  \_/__/
+                   @malagu/cli@2.30.0  \_/__/
+
+╭──────────────────────────────────────────────────╮
+│      Serverless First Development Framework      │
+╰──────────────────────────────────────────────────╯
 
 ? Select a template to init
-  backend-app Official
-  sample-app Official
+  vue-app Official
   database-app Official
+  accounts Official
+  schedule Official
   admin-app Official
   microservice Official
+  standalone-app Official
+  file-service Official
 ❯ puppeteer Official
-  multi-component Official
   mycli Official
-  site Official
+  backend-app Official
+  sample-app Official
+(Move up and down to reveal more choices)
 ```
 ## 示例代码
 

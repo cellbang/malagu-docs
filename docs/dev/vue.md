@@ -11,7 +11,7 @@ toc: menu
 
 Malagu 命令行工具提供了一些列的应用开发模板，我们不需要完全从零开始创建项目。基于模块快速创建项目，然后再根据情况增减相关组件。模板内提供示例代码，让我们快速学习上手。
 ```bash
-$ malagu init vue-app # 基于 vue-app 模板初始化项目
+$ malagu init -o vue-app # 基于 vue-app 模板初始化项目
 ```
 接入 Vue 比较简单，只需要使用 App 装饰器把 Vue app 实例放进容器中即可。
 具体代码如下：

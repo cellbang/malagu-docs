@@ -19,7 +19,7 @@ Malagu 命令行工具提供了一些列的应用开发模板，我们不需要�
 
 
 ```bash
-$ malagu init project-name # 基于模板初始化项目，并知道项目名称
+$ malagu init -o project-name # 基于模板初始化项目，并知道项目名称
 ```
 
 
@@ -95,7 +95,7 @@ frontend:
 frontend:
   malagu:
   	react:
-      history:
+      router:
         type: hash
 ```
 
@@ -106,7 +106,7 @@ frontend:
 
 
 ```typescript
-// 形式一：视图关联一个简单布局组件
+// 视图关联一个简单布局组件
 @View({ path: '/page1', layout: Layout })
 export class Page1 extends React.Component { ... }
 
@@ -114,17 +114,6 @@ function Layout() {
 ...
 }
 
-// 形式二：视图关联一个父视图作为布局组件
-@View({ path: '/loyout/page1', layout: Layout })
-export class Page1 extends React.Component { ... }
-
-@View({ path: '/loyout/page2', layout: Layout })
-export class Page2 extends React.Component { ... }
-
-@View('/loyout')
-export class Layout extends React.Component {
-...
-}
 ```
 
 
@@ -147,12 +136,11 @@ export class DefaultLayout extends React.Component<{}, {}> {
 
 
 ```typescript
-@View({ path: '/page1', isDefaultLayout: false })
+import { View, EmptyLayout } from '@malagu/react';
+
+@View({ path: '/page1', layout: EmptyLayout })
 export class Page1 extends React.Component { ... }
 ```
-
-
-布局组件可以是一个视图页面，也可以是一个普通的组件。对于简单的布局，使用普通组件即可。对于复杂的布局可能会存在嵌套布局的情况，可以通过布局视图的方式来实现。
 
 
 ## React 上下文

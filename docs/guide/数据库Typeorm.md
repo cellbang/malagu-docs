@@ -11,7 +11,7 @@ Malagu 框架可以很方便集成第三方数据库操作相关的框架，比�
 ## 使用方法
 
 
-框架提供了一个内置模板 `database-app` ，使用命令 `malagu init demo database-app` 可以快速初始化一个有关数据库操作的模板应用。初始化完成后，只需要把数据库链接配置改成我们自己的就好了。当然，我们也可以在项目里面直接安装 `@malagu/typeorm` 组件：
+框架提供了一个内置模板 `database-app` ，使用命令 `malagu init database-app -o demo` 可以快速初始化一个有关数据库操作的模板应用。初始化完成后，只需要把数据库链接配置改成我们自己的就好了。当然，我们也可以在项目里面直接安装 `@malagu/typeorm` 组件：
 
 
 ```bash
