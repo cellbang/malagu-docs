@@ -56,6 +56,7 @@ export default defineConfig({
         title: '数据库',
         children: [
           'guide/数据库Typeorm.md',
+          'guide/数据库Prisma.md'
         ],
       },
       {
