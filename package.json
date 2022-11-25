@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "dumi": "^1.1.29",
-    "lint-staged": "^12.1.2",
+    "lint-staged": "^13.0.4",
     "prettier": "^2.2.1",
     "yorkie": "^2.0.0"
   }
