@@ -8,7 +8,7 @@
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\""
   },
   "devDependencies": {
-    "dumi": "^1.1.29",
+    "dumi": "^2.0.13",
     "lint-staged": "^12.1.2",
     "prettier": "^2.2.1",
     "yorkie": "^2.0.0"
