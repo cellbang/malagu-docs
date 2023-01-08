@@ -23,6 +23,7 @@ export default defineConfig({
           'guide/更新日志.md',
           'guide/常见问题.md',
           'guide/快速开始.md',
+          'guide/快速入门.md',
           'guide/创建第一个应用.md',
           'guide/命令行工具.md',
           'guide/控制器.md',
