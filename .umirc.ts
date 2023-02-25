@@ -44,6 +44,7 @@ export default defineConfig({
           'guide/日志.md',
           'guide/EL表达式.md',
           'guide/数据校验.md',
+          'guide/数据格式.md',
           'guide/缓存管理.md',
           'guide/静态资源服务.md',
           'guide/管道.md',
