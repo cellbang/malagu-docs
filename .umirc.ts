@@ -40,6 +40,7 @@ export default defineConfig({
           'guide/一级组件属性.md',
           'guide/跨域设置（CORS）.md',
           'guide/应用程序.md',
+          'guide/第三方应用集成方案.md',
           'guide/常用工具.md',
           'guide/日志.md',
           'guide/EL表达式.md',
