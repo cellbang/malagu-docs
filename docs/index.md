@@ -34,6 +34,8 @@ footer: Open-source MIT Licensed | Copyright © 2022<br />Powered by [Cellbang](
 3. 被阿里云函数计算的 Serverless Devs 工具集成；
 4. 受邀参加第三届腾讯运维技术开发日直播分享；
 6. 被腾讯云 Serverless 团队认可，并成为腾讯云函数首个合作的第三方开发框架；
+7. 参与 2022 【开源摘星计划】
+8. 2023 年成为 Gitee GVP 项目
 
 
 ## 贡献者
