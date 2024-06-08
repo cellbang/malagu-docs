@@ -25,3 +25,10 @@ lang: zh-CN
 - blog接口  [链接](learn/blog-post.md)
 - 标签接口   [链接](learn/blog-tag.md)
 - 登录认证   [链接](learn/blog-auth.md)
+
+### Security 模块教程
+- 项目介绍 [链接](learn/security-intro.md)
+- 创建项目 [链接](learn/security-create-project.md)
+- 添加认证 [链接](learn/security-auth.md)
+- 连接数据库 [链接](learn/security-db-auth.md)
+- 添加jwt支持 [链接](learn/security-jwt.md)

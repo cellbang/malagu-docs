@@ -109,6 +109,16 @@ export default defineConfig({
           'learn/blog-tag.md',
           'learn/blog-auth.md'
         ]
+      },
+      {
+        title: 'Security 模块教程',
+        children: [
+          'learn/security-intro.md',
+          'learn/security-create-project.md',
+          'learn/security-auth.md',
+          'learn/security-db-auth.md',
+          'learn/security-jwt.md'
+        ]
       }
     ],
     // 如果该路径有其他语言，需在前面加上语言前缀，需与 locales 配置中的路径一致
