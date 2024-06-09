@@ -10,78 +10,27 @@ lang: zh-CN
 ### 安装依赖
 
 ```bash
-yarn add jsonwebtoken
-yarn add --dev @types/jsonwebtoken
-```
-
-### 工具函数
-
-创建`src/backend/utils/ajax.ts`文件通过 http header 判断请求是否为 ajax 请求，内容如下：
-
-```ts
-export const isAjax = (headers: any) => {
-    let content = headers['x-requested-with'] || '';
-    return content.toUpperCase() === 'XMLHTTPREQUEST';
-}
-```
-
-创建`src/backend/authentication/token-utils.ts`文件处理jwt签名，内容如下：
-
-```typescript
-import { Service } from "@malagu/core";
-import * as JWT from "jsonwebtoken";
-
-const tokenExpireTime = 1800; // 30分钟
-const privateKey = "privateKey"; // json-web-token的密钥，不能泄露
-
-@Service()
-export class TokenUtils {
-    async getToken(username: string) {
-        return JWT.sign(
-            { username }, privateKey,
-            { expiresIn: tokenExpireTime }
-        );
-    }
-
-    async verifyToken(token: string) {
-        let decoded: any = {};
-        try {
-            decoded = JWT.verify(token, privateKey);
-        } catch (err: any) {
-            if (err.name === "TokenExpiredError") {
-                throw new Error("TokenExpired");
-            }
-            throw new Error("TokenError");
-        }
-
-        if (decoded.username) {
-            return {
-                username: decoded.username
-            };
-        }
-        throw new Error("TokenNotMatch");
-    }
-}
+yarn add @malagu/jwt
 ```
 
 ### 登录和认证
 
-创建`src/backend/authentication/authentication-success-handler.ts`文件，登录成功时返回`token`，内容如下：
+创建`src/backend/authentication/authentication-success-handler.ts`文件，登录成功时返回 token ，内容如下：
 
 ```typescript
 import { Component, Autowired } from "@malagu/core";
 import { Context } from "@malagu/web/lib/node";
 import { AuthenticationSuccessHandler, Authentication } from "@malagu/security/lib/node";
-import { TokenUtils } from "./token-utils";
+import { JwtService } from "@malagu/jwt";
 
 @Component({ id: AuthenticationSuccessHandler, rebind: true })
 export class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHandler {
-    @Autowired()
-    tokenUtils: TokenUtils;
+    @Autowired(JwtService)
+    jwtService: JwtService;
 
     async onAuthenticationSuccess(authentication: Authentication): Promise<void> {
         const response = Context.getResponse();
-        let token = await this.tokenUtils.getToken(authentication.name);
+        let token = await this.jwtService.sign(authentication.name);
         response.body = JSON.stringify({ token });
     }
 }
@@ -89,25 +38,22 @@ export class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 
 默认 [authentication-success-handler](https://github.com/cellbang/malagu/blob/main/packages/security/src/node/authentication/authentication-success-handler.ts) 实现
 
-创建`src/backend/authentication/security-context-store.ts`处理`header`带`Token`的请求，内容如下：
+创建`src/backend/authentication/security-context-store.ts`处理 header 带 Token 的请求，内容如下：
 
 ```typescript
 import { Autowired, Component, Value } from "@malagu/core";
 import { User } from "@malagu/security";
-import { SecurityContext, SecurityContextImpl, SecurityContextStore, SecurityContextStrategy, UserMapper, UserService } from "@malagu/security/lib/node";
+import { SecurityContext, SecurityContextStore, SecurityContextStrategy, UserMapper, UserService } from "@malagu/security/lib/node";
 import { Context } from '@malagu/web/lib/node';
-import { TokenUtils } from "./token-utils";
+import { JwtService } from "@malagu/jwt";
 
 @Component({ id: SecurityContextStore, rebind: true })
 export class SecurityContextStoreImpl implements SecurityContextStore {
-    @Value("malagu.security")
+    @Value('malagu.security')
     protected readonly options: any;
 
     @Autowired(UserService)
     protected readonly userService: UserService<string, User>;
-
-    @Autowired()
-    tokenUtils: TokenUtils;
 
     @Autowired(SecurityContextStrategy)
     protected readonly securityContextStrategy: SecurityContextStrategy;
@@ -115,14 +61,16 @@ export class SecurityContextStoreImpl implements SecurityContextStore {
     @Autowired(UserMapper)
     protected readonly userMapper: UserMapper;
 
-    async load(): Promise<SecurityContext> {
-        const request = Context.getRequest();
+    @Autowired(JwtService)
+    jwtService: JwtService;
 
-        const token = (request.get("Token") || "").trim()
+    async load(): Promise<any> {
+        const request = Context.getRequest();
+        const token = (request.get('Token') || '').trim()
+        const securityContext = await this.securityContextStrategy.create();
         if (token) {
-            const userInfo = await this.tokenUtils.verifyToken(token);
+            const userInfo: any = await this.jwtService.verify(token);
             const user = await this.userService.load(userInfo.username);
-            const securityContext = new SecurityContextImpl();
             securityContext.authentication = {
                 name: user.username,
                 principal: this.userMapper.map(user),
@@ -130,13 +78,10 @@ export class SecurityContextStoreImpl implements SecurityContextStore {
                 policies: user.policies,
                 authenticated: true
             };
-            return securityContext;
         }
-        else {
-            return this.securityContextStrategy.create();
-        }
-
+        return securityContext;
     }
+
     async save(context: SecurityContext): Promise<void> {
     }
 }
