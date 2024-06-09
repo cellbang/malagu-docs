@@ -13,6 +13,15 @@ lang: zh-CN
 yarn add @malagu/jwt
 ```
 
+修改 malagu.yml 添加 jwt 密钥配置
+
+```yml
+malagu:
+  # 新增内容
+  jwt:
+    secret: abcdefg
+```
+
 ### 登录和认证
 
 创建`src/backend/authentication/authentication-success-handler.ts`文件，登录成功时返回 token ，内容如下：
@@ -30,7 +39,7 @@ export class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 
     async onAuthenticationSuccess(authentication: Authentication): Promise<void> {
         const response = Context.getResponse();
-        let token = await this.jwtService.sign(authentication.name);
+        let token = await this.jwtService.sign({ username: authentication.name });
         response.body = JSON.stringify({ token });
     }
 }

@@ -146,9 +146,9 @@ export function sha256Encode(content: string) {
 创建`src/backend/authentication/password-encoder.ts`文件处理密码比较，内容如下：
 
 ```ts
-import { Service } from '@malagu/core';
-import { PasswordEncoder } from '@malagu/security/lib/node';
-import { sha256Encode } from '../utils/crypto';
+import { Service } from "@malagu/core";
+import { PasswordEncoder } from "@malagu/security/lib/node";
+import { sha256Encode } from "../utils/crypto";
 
 @Service({ id: PasswordEncoder, rebind: true })
 export class PasswordEncoderImpl implements PasswordEncoder {
