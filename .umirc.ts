@@ -102,8 +102,8 @@ export default defineConfig({
         children: [
           'learn/blog-intro.md',
           'learn/blog-create-project.md',
-          'learn/blog-db-conn.md',
           'learn/blog-api.md',
+          'learn/blog-db-conn.md',
           'learn/blog-category.md',
           'learn/blog-post.md',
           'learn/blog-tag.md',

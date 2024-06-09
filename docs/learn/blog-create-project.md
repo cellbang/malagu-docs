@@ -13,8 +13,8 @@ lang: zh-CN
 mkdir malagu-blog
 cd malagu-blog
 echo '{}' > package.json
-yarn add --dev @malagu/cli
 yarn add @malagu/core @malagu/mvc
+yarn add --dev @malagu/cli @malagu/cli-service
 ```
 
 #### 编辑package.json
@@ -34,45 +34,71 @@ yarn add @malagu/core @malagu/mvc
 ```
 * keywords必须添加且其中必须有`malagu-component`，框架通过此配置来循环查找依赖链
 
+完整 package.json 内容如下：
+
+```json
+{
+  "name": "malagu-blog",
+    "keywords": ["malagu-component"],
+    "scripts": {
+        "start": "malagu serve",
+        "build": "malagu build"
+    },
+  "dependencies": {
+    "@malagu/core": "^2.56.0",
+    "@malagu/mvc": "^2.56.0"
+  },
+  "devDependencies": {
+    "@malagu/cli": "^2.56.0",
+    "@malagu/cli-service": "^2.56.0"
+  }
+}
+```
+
 #### 创建示例
 
 在项目根目录创建 `tsconfig.json` 配置typescript编译参数
 
 ```json
 {
-    "compilerOptions": {
-        "target": "esnext",
-        "module": "commonjs",
-        "strict": true,
-        "jsx": "preserve",
-        "moduleResolution": "node",
-        "skipLibCheck": true,
-        "declaration": true,
-        "declarationMap": true,
-        "noImplicitAny": true,
-        "noEmitOnError": false,
-        "noImplicitThis": true,
-        "noUnusedLocals": true,
-        "strictNullChecks": true,
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
-        "downlevelIteration": true,
-        "strictPropertyInitialization": false,
-        "lib": [
-            "es6",
-            "dom"
-        ],
-        "sourceMap": true,
-        "rootDir": "src",
-        "outDir": "lib",
-        "baseUrl": "src",
-        "paths": {
-            "~/*": ["*"]
-        }
-    },
-    "include": [
-        "src"
-    ]
+  "compilerOptions": {
+    "target": "ES2017",
+    "module": "commonjs",
+    "importHelpers": true,
+    "strict": true,
+    "jsx": "preserve",
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "declaration": true,
+    "declarationMap": true,
+    "noImplicitAny": true,
+    "noEmitOnError": false,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "strictNullChecks": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "downlevelIteration": true,
+    "strictPropertyInitialization": false,
+    "lib": [
+      "es6",
+      "dom"
+    ],
+    "sourceMap": true,
+    "rootDir": "src",
+    "outDir": "lib",
+    "baseUrl": "./src",
+    "paths": {
+      "~/*": ["*"],
+      "@/*": ["frontend/*"]
+    }
+  },
+  "include": [
+    "src"
+  ],
+  "ts-node": {
+    "transpileOnly": true
+  }
 }
 ```
 

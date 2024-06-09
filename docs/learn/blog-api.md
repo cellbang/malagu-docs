@@ -31,7 +31,7 @@ export interface ResponseData<T> {
 导出数据构结定义`src/common/index.ts`
 
 ```ts
-export * from './data/response-data';
+export * from "./data/response-data";
 ```
 
 创建工具函数格式化输出结果`src/backend/utils/index.ts`

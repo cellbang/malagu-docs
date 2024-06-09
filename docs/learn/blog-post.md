@@ -87,8 +87,9 @@ export class PostController {
     }
     // 查询
     @Get(":id")
-    async show(@Param('id') id: number): Promise<ResponseData<PostModel>> {
-        let post: PostModel = await PostModel.findOne(id, {
+    async show(@Param("id") id: number): Promise<ResponseData<PostModel>> {
+        let post: PostModel = await PostModel.findOne({
+            where: { id },
             relations: ["category"]
         }) as PostModel;
         return jsonFormat(post);

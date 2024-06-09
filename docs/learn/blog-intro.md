@@ -10,8 +10,6 @@ lang: zh-CN
 ### 说明
 示例使用Malagu创建一个blog的接口服务，演示数据库CURD、登录及鉴权的使用。
 
-### 项目目录
-- src/frontend 前端
 - src/backend 后端
 - 数据库使用mariadb
 

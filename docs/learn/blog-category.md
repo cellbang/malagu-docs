@@ -12,7 +12,7 @@ lang: zh-CN
 
 ```ts
 import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, CreateDateColumn,
-    UpdateDateColumn, OneToMany, JoinColumn } from "typeorm";
+    UpdateDateColumn } from "typeorm";
 
 @Entity({ name: "categories" })
 export class Category extends BaseEntity {
@@ -74,7 +74,7 @@ Category分类CURD接口及路径如下：
 创建接口controller `src/backend/controllers/category-controller.ts` 内容如下：
 
 ```ts
-import { Controller, Get, Json, Param, Post,
+import { Controller, Get, Param, Post,
     Query, Body, Patch, Delete } from "@malagu/mvc/lib/node";
 import { ResponseData } from "../../common";
 import { Category } from "../entity";
@@ -94,8 +94,8 @@ export class CategoryController {
     }
 
     @Get(":id")
-    async show(@Param("id" ) id: number): Promise<ResponseData<Category>> {
-        let result = await Category.findOne({ id });
+    async show(@Param("id" ) id: number): Promise<ResponseData<Category | null>> {
+        let result = await Category.findOne({ where: { id }});
         return jsonFormat(result);
     }
 

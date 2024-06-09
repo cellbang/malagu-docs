@@ -19,8 +19,8 @@ lang: zh-CN
 ### Malagu Blog 项目
 - 项目介绍   [链接](learn/blog-intro.md)
 - 创建项目   [链接](learn/blog-create-project.md)
-- 连接数据库 [链接](learn/blog-db-conn.md)
 - 接口格式   [链接](learn/blog-api.md)
+- 连接数据库 [链接](learn/blog-db-conn.md)
 - 分类接口   [链接](learn/blog-category.md)
 - blog接口  [链接](learn/blog-post.md)
 - 标签接口   [链接](learn/blog-tag.md)

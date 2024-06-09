@@ -54,8 +54,8 @@ export class Tag extends BaseEntity {
     updatedAt: number;
 
     static async buildTags(tagText: string) {
-        let tagTextArray = tagText.split(',').map(
-            (item: string) => item.replace(/^\s|\s$/g, '')
+        let tagTextArray = tagText.split(",").map(
+            (item: string) => item.replace(/^\s|\s$/g, "")
         );
         let tags = await Tag.find({
             select: ["id", "title"],
@@ -97,7 +97,7 @@ export * from "./tag";
 
 ```ts
 import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, CreateDateColumn,
-    UpdateDateColumn, JoinColumn, ManyToMany, JoinTable, ManyToOne } from "typeorm";
+    UpdateDateColumn, JoinColumn, ManyToOne, JoinTable, ManyToMany } from "typeorm";
 import { Category } from "./category";
 import { Tag } from "./tag";
 
@@ -146,7 +146,7 @@ export class Post extends BaseEntity {
 修改 `src/backend/controller/post-controller.ts` 文件中的show、create、update、delete方法，修改后文件内容如下：
 
 ```typescript
-import { Controller, Get, Post, Patch, Delete, Json, Param, Query, Body } from "@malagu/mvc/lib/node";
+import { Controller, Get, Post, Patch, Delete, Param, Query, Body } from "@malagu/mvc/lib/node";
 import { Post as PostModel, Tag } from "../entity";
 import { ResponseData } from "../../common";
 import { jsonFormat } from '../utils';
@@ -166,8 +166,9 @@ export class PostController {
     }
     // 查询
     @Get(":id")
-    async show(@Param('id') id: number): Promise<ResponseData<PostModel>> {
-        let post: PostModel = await PostModel.findOne(id, {
+    async show(@Param("id") id: number): Promise<ResponseData<PostModel>> {
+        let post: PostModel = await PostModel.findOne({
+            where: { id },
             relations: ["category", "tags"]
         }) as PostModel;
         return jsonFormat(post);
@@ -198,7 +199,7 @@ export class PostController {
                 delete saveData.tags;
             }
             let saved = await PostModel.update(id, saveData);
-            let post: PostModel = await PostModel.findOne(id) as PostModel;
+            let post: PostModel = await PostModel.findOne({ where: { id } }) as PostModel;
             post.tags = await Tag.buildTags(tagText);
             await post.save();
             return jsonFormat(post);
@@ -212,7 +213,7 @@ export class PostController {
     @Delete(":id")
     async delete(@Param("id") id: number): Promise<any> {
         try {
-            let post: PostModel = await PostModel.findOne(id) as PostModel;
+            let post: PostModel = await PostModel.findOne({ where: { id }}) as PostModel;
             post.tags = [];
             await post.save();
             let deleted = await PostModel.delete(id);
