@@ -18,10 +18,10 @@ CORS是一个W3C标准，全称是"跨域资源共享"（Cross-origin resource s
 ## 实现与使用
 
 
-Malagu 框架提供的跨域设置能力是通过集成开源库 [cors](https://www.npmjs.com/package/cors) 实现的。将开源库 cors 的配置能力通过 Malagu 组件属性暴露出来，我们只需要使用组件属性配置跨域访问规则即可。框架默认运行所有源站跨域访问，**在正式环境务必设置跨域规则，避免出现安全问题。**
+Cell 框架提供的跨域设置能力是通过集成开源库 [cors](https://www.npmjs.com/package/cors) 实现的。将开源库 cors 的配置能力通过 Cell 组件属性暴露出来，我们只需要使用组件属性配置跨域访问规则即可。框架默认运行所有源站跨域访问，**在正式环境务必设置跨域规则，避免出现安全问题。**
 **
 ```yaml
-malagu:
+cell:
   web:
     cors:
       origin: https://www.cellbang.com  # 允许 https://www.cellbang.com 跨域访问
@@ -29,7 +29,7 @@ malagu:
 
 
 ```yaml
-malagu:
+cell:
   web:
     cors:
       origin: ${{'cellbang\.com$'|regexp}} # 允许以 cellbang.com 为后缀的源站跨域访问
@@ -37,7 +37,7 @@ malagu:
 
 
 ```yaml
-malagu:
+cell:
   web:
     cors:
       origin: 

@@ -1,39 +1,39 @@
 ---
-title: '@malagu/web'
-description: '@malagu/web 参考'
+title: '@celljs/web'
+description: '@celljs/web 参考'
 type: package
 lang: zh-CN
 ---
 
-# @malagu/web
+# @celljs/web
 
 ### 配置参考
 
-1.`malagu.session`会话配置，结构如下：
+1.`cell.session`会话配置，结构如下：
 
 | Key          | Value            | Description                |
 | ----         | ----             | ----                       |
 | autoCommit   | true             |                            |
 | maxAge       | 86400000         |                            |
-| sessionIdKey | malagu:sessionId |                            |
-| sessionKey   | malagu:session   |                            |
+| sessionIdKey | cell:sessionId |                            |
+| sessionKey   | cell:session   |                            |
 
-2.`malagu.server`服务配置，结构如下：
+2.`cell.server`服务配置，结构如下：
 
 | Key          | Value            | Description                |
 | ----         | ----             | ----                       |
 | path         | /                    |                            |
 | port         | 3000                 |                            |
-| endpoint     | http://localhost:${malagu.server.port} |                            |
+| endpoint     | http://localhost:${cell.server.port} |                            |
 
-3.`malagu.trace`追踪id，结构如下：
+3.`cell.trace`追踪id，结构如下：
 
 | Key          | Value            | Description                |
 | ----         | ----             | ----                       |
-| requestField  | X-Malagu-Trace-ID |                            |
-| responseField | X-Malagu-Trace-ID |                            |
+| requestField  | X-Cell-Trace-ID |                            |
+| responseField | X-Cell-Trace-ID |                            |
 
-4.`malagu.web`配置路由验证等，结构如下：
+4.`cell.web`配置路由验证等，结构如下：
 
 | Key          | Value            | Description                |
 | ----         | ----             | ----                       |
@@ -42,7 +42,7 @@ lang: zh-CN
 | - detailedOutputDisabled | false |                            |
 | - transformEnabled       | true  |                            |
 
-5.`malagu.client.config`结构如下：
+5.`cell.client.config`结构如下：
 
 | Key          | Value            | Description                |
 | ----         | ----             | ----                       |
@@ -50,12 +50,12 @@ lang: zh-CN
 | headers            | true           |                            |
 | - X-Requested-With | XMLHttpRequest |                            |
 
-6.`malagu.cookies`结构如下：
+6.`cell.cookies`结构如下：
 | Key          | Value            | Description                |
 | ----         | ----             | ----                       |
 | keys         | - abcdef             |                            |
 
-7.`malagu.backend`
+7.`cell.backend`
 
 | Key          | Value            | Description                |
 | ----         | ----             | ----                       |

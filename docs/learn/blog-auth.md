@@ -1,26 +1,26 @@
 ---
 title: 登录认证
-description: 本篇通过使用Malagu框架编写Blog来演示相关组件用法
+description: 本篇通过使用Cell框架编写Blog来演示相关组件用法
 type: learn
 lang: zh-CN
 ---
 
 # 登录认证
 
-示例设计的是一个单用户 blog 系统，当用户登录成功返回 token ，请求传入 token 可以校验即允许用户操作。使用@malagu/security、@malagu/jwt、crypto-js等库
+示例设计的是一个单用户 blog 系统，当用户登录成功返回 token ，请求传入 token 可以校验即允许用户操作。使用@celljs/security、@celljs/jwt、crypto-js等库
 
 ### 添加依赖
 
 ```bash
-yarn add @malagu/security @malagu/jwt crypto-js
+yarn add @celljs/security @celljs/jwt crypto-js
 yarn add --dev @types/crypto-js
 ```
 
-修改 `src/malagu-local.yml` 添加如下内容：
+修改 `src/cell-local.yml` 添加如下内容：
 
 ```yml
 backend:
-  malagu:
+  cell:
     # 新增内容
     logger:
       level: debug
@@ -80,8 +80,8 @@ export * from "./user";
 创建`src/backend/services/user-service.ts`文件处理用户加载，内容如下：
 
 ```ts
-import { Service } from "@malagu/core";
-import { UserService } from "@malagu/security/lib/node";
+import { Service } from "@celljs/core";
+import { UserService } from "@celljs/security/lib/node";
 import { User } from "../entity/user";
 
 @Service({ id: UserService, rebind: true })
@@ -93,18 +93,18 @@ export class UserServiceImpl implements UserService<string, any> {
 }
 ```
 
-默认 [user-service](https://github.com/cellbang/malagu/blob/main/packages/security/src/node/user/user-service.ts) 实现
+默认 [user-service](https://github.com/cellbang/cell/blob/main/packages/security/src/node/user/user-service.ts) 实现
 
 因为我们刚刚创建数据库，数据库中还没有用户
 
 创建`src/backend/controllers/user-controller.ts`初始化用户数据、返回用户信息，内容如下：
 
 ```ts
-import { Controller, Get } from "@malagu/mvc/lib/node";
+import { Controller, Get } from "@celljs/mvc/lib/node";
 import { User } from "../entity/user";
-import { Authenticated, SecurityContext } from "@malagu/security/lib/node"
+import { Authenticated, SecurityContext } from "@celljs/security/lib/node"
 import { sha256Encode } from "../utils/crypto";
-import { Value } from "@malagu/core";
+import { Value } from "@celljs/core";
 import { jsonFormat } from "../utils";
 
 @Controller("api/user")
@@ -153,8 +153,8 @@ export * from "./user-controller";
 创建`src/backend/authentication/user-checker.ts`文件处理用户检测，内容如下：
 
 ```ts
-import { Service } from "@malagu/core";
-import { UserChecker, UsernameNotFoundError } from "@malagu/security/lib/node";
+import { Service } from "@celljs/core";
+import { UserChecker, UsernameNotFoundError } from "@celljs/security/lib/node";
 
 @Service({id: UserChecker, rebind: true})
 export class UserCheckerImpl implements UserChecker {
@@ -170,8 +170,8 @@ export class UserCheckerImpl implements UserChecker {
 创建`src/backend/authentication/password-encoder.ts`文件处理密码比较，内容如下：
 
 ```ts
-import { Service } from "@malagu/core";
-import { PasswordEncoder } from "@malagu/security/lib/node";
+import { Service } from "@celljs/core";
+import { PasswordEncoder } from "@celljs/security/lib/node";
 import { sha256Encode } from "../utils/crypto";
 
 @Service({ id: PasswordEncoder, rebind: true })
@@ -187,15 +187,15 @@ export class PasswordEncoderImpl implements PasswordEncoder {
 }
 ```
 
-默认 [password-encoder](https://github.com/cellbang/malagu/blob/main/packages/security/src/node/crypto/password/password-encoder.ts) 实现
+默认 [password-encoder](https://github.com/cellbang/cell/blob/main/packages/security/src/node/crypto/password/password-encoder.ts) 实现
 
 创建`src/backend/authentication/authentication-success-handler.ts`文件登录成功时返回 token ，内容如下：
 
 ```typescript
-import { Component, Autowired } from "@malagu/core";
-import { Context } from "@malagu/web/lib/node";
-import { AuthenticationSuccessHandler, Authentication } from "@malagu/security/lib/node";
-import { JwtService } from "@malagu/jwt";
+import { Component, Autowired } from "@celljs/core";
+import { Context } from "@celljs/web/lib/node";
+import { AuthenticationSuccessHandler, Authentication } from "@celljs/security/lib/node";
+import { JwtService } from "@celljs/jwt";
 import { jsonFormat } from "../utils";
 
 @Component({ id: AuthenticationSuccessHandler, rebind: true })
@@ -211,20 +211,20 @@ export class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 }
 ```
 
-默认 [authentication-success-handler](https://github.com/cellbang/malagu/blob/main/packages/security/src/node/authentication/authentication-success-handler.ts) 实现
+默认 [authentication-success-handler](https://github.com/cellbang/cell/blob/main/packages/security/src/node/authentication/authentication-success-handler.ts) 实现
 
 创建`src/backend/authentication/security-context-store.ts`处理 header 带 Token 的请求，内容如下：
 
 ```typescript
-import { Autowired, Component, Value } from "@malagu/core";
-import { User } from "@malagu/security";
-import { SecurityContext, SecurityContextStore, SecurityContextStrategy, UserMapper, UserService } from "@malagu/security/lib/node";
-import { Context } from "@malagu/web/lib/node";
-import { JwtService } from "@malagu/jwt";
+import { Autowired, Component, Value } from "@celljs/core";
+import { User } from "@celljs/security";
+import { SecurityContext, SecurityContextStore, SecurityContextStrategy, UserMapper, UserService } from "@celljs/security/lib/node";
+import { Context } from "@celljs/web/lib/node";
+import { JwtService } from "@celljs/jwt";
 
 @Component({ id: SecurityContextStore, rebind: true })
 export class SecurityContextStoreImpl implements SecurityContextStore {
-    @Value("malagu.security")
+    @Value("cell.security")
     protected readonly options: any;
 
     @Autowired(UserService)
@@ -269,22 +269,22 @@ export class SecurityContextStoreImpl implements SecurityContextStore {
 创建 `src/backend/authentication/error-handler.ts` 添加认证错误处理，内容如下：
 
 ```ts
-import { Autowired, Component, Value } from "@malagu/core";
-import { Context, ErrorHandler, RedirectStrategy } from "@malagu/web/lib/node";
-import { AUTHENTICATION_ERROR_HANDLER_PRIORITY, AuthenticationError, RequestCache } from "@malagu/security/lib/node";
+import { Autowired, Component, Value } from "@celljs/core";
+import { Context, ErrorHandler, RedirectStrategy } from "@celljs/web/lib/node";
+import { AUTHENTICATION_ERROR_HANDLER_PRIORITY, AuthenticationError, RequestCache } from "@celljs/security/lib/node";
 import { jsonFormat } from "../utils";
 
 @Component(ErrorHandler)
 export class AuthenticationErrorHandler implements ErrorHandler {
     readonly priority: number = AUTHENTICATION_ERROR_HANDLER_PRIORITY + 100;
 
-    @Value("malagu.security.basic.realm")
+    @Value("cell.security.basic.realm")
     protected realm: string;
 
-    @Value("malagu.security.basic.enabled")
+    @Value("cell.security.basic.enabled")
     protected readonly baseEnabled: boolean;
 
-    @Value("malagu.security.loginPage")
+    @Value("cell.security.loginPage")
     protected loginPage: string;
 
     @Autowired(RedirectStrategy)
@@ -304,7 +304,7 @@ export class AuthenticationErrorHandler implements ErrorHandler {
 }
 ```
 
-默认 [AuthenticationErrorHandler](https://github.com/cellbang/malagu/blob/main/packages/security/src/node/error/error-handler.ts) 实现
+默认 [AuthenticationErrorHandler](https://github.com/cellbang/cell/blob/main/packages/security/src/node/error/error-handler.ts) 实现
 
 创建 `src/backend/authentication/index.ts` 引入认证文件，内容如下：
 
@@ -319,9 +319,9 @@ export * from "./error-handler";
 修改 `src/backend/index.ts` 引入认证文件，内容如下：
 
 ```ts
-import { autoBind } from "@malagu/core";
+import { autoBind } from "@celljs/core";
 import "./controllers";
-import { autoBindEntities } from "@malagu/typeorm";
+import { autoBindEntities } from "@celljs/typeorm";
 import * as entities from "./entity";
 import "./authentication";
 import "./services/user-service";
@@ -333,11 +333,11 @@ export default autoBind();
 修改`src/backend/controllers/post-controller.ts` 给 Create、Update、Delete 方法添加认证修饰器 Authenticated，内容如下：
 
 ```ts
-import { Controller, Get, Post, Patch, Delete, Param, Query, Body } from "@malagu/mvc/lib/node";
+import { Controller, Get, Post, Patch, Delete, Param, Query, Body } from "@celljs/mvc/lib/node";
 import { Post as PostModel, Tag } from "../entity";
 import { ResponseData } from "../../common";
 import { jsonFormat } from '../utils';
-import { Authenticated } from "@malagu/security/lib/node";
+import { Authenticated } from "@celljs/security/lib/node";
 
 @Controller('api/post')
 export class PostController {

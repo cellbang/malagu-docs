@@ -93,8 +93,8 @@ async function main() {
 #### 1.创建 src/hooks/webpack.ts
 
 ```ts
-import { ConfigurationContext,WebpackContext } from "@malagu/cli-service/lib/context/context-protocol";
-import { PathUtil } from "@malagu/cli-common/lib/utils/path-util";
+import { ConfigurationContext,WebpackContext } from "@celljs/cli-service/lib/context/context-protocol";
+import { PathUtil } from "@celljs/cli-common/lib/utils/path-util";
 
 export default async (context: WebpackContext) => {
     const { configurations } = context;
@@ -122,4 +122,4 @@ export default async (context: WebpackContext) => {
 
 #### 2.使用 Cos 方式部署代码
 
-因为 Prisma 生成的 client 体积非常大，使用直接上传代码包的方式上传的话，可能会超出接口限制，建议使用 malagu 的 ` 通过 Cos 方式部署 ` 能力进行部署。
+因为 Prisma 生成的 client 体积非常大，使用直接上传代码包的方式上传的话，可能会超出接口限制，建议使用 cell 的 ` 通过 Cos 方式部署 ` 能力进行部署。

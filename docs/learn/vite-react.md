@@ -1,6 +1,6 @@
 ---
 title: 'React项目'
-description: Malagu框架结合React适配Vite
+description: Cell框架结合React适配Vite
 type: learn
 lang: zh-CN
 ---
@@ -10,9 +10,9 @@ lang: zh-CN
 ### 创建项目
 
 ```bash
-npm create vite@latest malagu-react-for-vite --template react-ts
+npm create vite@latest cell-react-for-vite --template react-ts
 npm i
-npm i -D @malagu/core
+npm i -D @celljs/core
 ```
 
 ### 添加Shell和App修饰器
@@ -26,7 +26,7 @@ export const APP = Symbol("APP");
 添加`src/annotation/app.ts`
 
 ```ts
-import { Constant } from "@malagu/core";
+import { Constant } from "@celljs/core";
 import { APP } from "../common/constant";
 
 export function App(app: any, rebind: boolean = false): ClassDecorator {
@@ -39,8 +39,8 @@ export function App(app: any, rebind: boolean = false): ClassDecorator {
 添加`src/shell/index.ts`
 
 ```ts
-import { Component, Autowired, Optional } from "@malagu/core";
-import { ApplicationShell } from "@malagu/core/lib/browser";
+import { Component, Autowired, Optional } from "@celljs/core";
+import { ApplicationShell } from "@celljs/core/lib/browser";
 import { APP } from "../common/constant";
 
 @Component({ id: ApplicationShell, rebind: true })
@@ -87,7 +87,7 @@ export default class {
 
 ```ts
 import "./shell";
-import { autoBind } from "@malagu/core";
+import { autoBind } from "@celljs/core";
 
 import "./main";
 export default autoBind();
@@ -101,15 +101,15 @@ export default autoBind();
 import "reflect-metadata";
 import "setimmediate";
 import { Container } from "inversify";
-import { Application } from "@malagu/core/lib/common/application/application-protocol"
-import { ContainerProvider } from "@malagu/core/lib/common/container/container-provider";
-import { currentThis } from "@malagu/core/lib/common/utils";
-import commonModule from "@malagu/core/lib/common/static-module";
-import browserModule from "@malagu/core/lib/browser/static-module";
+import { Application } from "@celljs/core/lib/common/application/application-protocol"
+import { ContainerProvider } from "@celljs/core/lib/common/container/container-provider";
+import { currentThis } from "@celljs/core/lib/common/utils";
+import commonModule from "@celljs/core/lib/common/static-module";
+import browserModule from "@celljs/core/lib/browser/static-module";
 
 function bootstrap() {
-    currentThis.malaguProps = {
-        malagu: {
+    currentThis.cellProps = {
+        cell: {
             hostDomId: "app"
         }
     };

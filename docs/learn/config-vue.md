@@ -1,6 +1,6 @@
 ---
 title: '配置vue项目'
-description: 'Malagu框架整合了webpack，这里展示如何进行项目相关配置'
+description: 'Cell框架整合了webpack，这里展示如何进行项目相关配置'
 type: learn
 lang: zh-CN
 ---
@@ -9,7 +9,7 @@ lang: zh-CN
 
 ### 配置路径别名
 
-刚刚可以看到，我们在src/config/router.ts文件中引用vue文件使用的是相对路径，实际开发中会为路径定义别名。现在我们给Malagu根目录配置别名
+刚刚可以看到，我们在src/config/router.ts文件中引用vue文件使用的是相对路径，实际开发中会为路径定义别名。现在我们给Cell根目录配置别名
 
 #### 修改ts别名配置
 
@@ -33,7 +33,7 @@ lang: zh-CN
 src/hooks/webpack.ts
 
 ```ts
-import { WebpackContext, ConfigurationContext } from "@malagu/cli-service";
+import { WebpackContext, ConfigurationContext } from "@celljs/cli-service";
 import * as path from "path";
 
 export default async (context: WebpackContext) => {
@@ -147,7 +147,7 @@ export default async (context: WebpackContext) => {
 <script lang="ts">
 import { defineComponent, computed, ref } from "vue";
 import { useStore } from "vuex";
-import { ContainerUtil } from '@malagu/core';
+import { ContainerUtil } from '@celljs/core';
 import { HttpService } from '~/common';
 export default defineComponent({
   setup() {

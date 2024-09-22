@@ -1,6 +1,6 @@
 ---
-title: '@malagu/mvc'
-description: '@malagu/mvc 参考'
+title: '@celljs/mvc'
+description: '@celljs/mvc 参考'
 type: package
 lang: zh-CN
 ---

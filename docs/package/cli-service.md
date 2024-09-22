@@ -1,6 +1,6 @@
 ---
-title: '@malagu/cli-service'
-description: '@malagu/cli-service 参考'
+title: '@celljs/cli-service'
+description: '@celljs/cli-service 参考'
 type: package
 lang: zh-CN
 ---

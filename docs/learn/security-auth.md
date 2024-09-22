@@ -1,6 +1,6 @@
 ---
 title: 添加认证
-description: 本篇通过使用Malagu框架的Security组件来演示用法
+description: 本篇通过使用Cell框架的Security组件来演示用法
 type: learn
 lang: zh-CN
 ---
@@ -12,7 +12,7 @@ lang: zh-CN
 ### 添加模块依赖
 
 ```bash
-yarn add @malagu/security
+yarn add @celljs/security
 ```
 
 ### 添加认证逻辑
@@ -20,8 +20,8 @@ yarn add @malagu/security
 修改`src/backend/controllers/home-controller.ts`给 indexAction 方法配置鉴权，修改后文件内容如下：
 
 ```typescript
-import { Controller, Get, Html } from "@malagu/mvc/lib/node";
-import { Authenticated } from "@malagu/security/lib/node";
+import { Controller, Get, Html } from "@celljs/mvc/lib/node";
+import { Authenticated } from "@celljs/security/lib/node";
 
 @Controller("")
 export class HomeController {
@@ -72,8 +72,8 @@ export class HomeController {
 修改`src/backend/controllers/home-controller.ts`添加 loginAction 方法展示登录逻辑，修改后文件内容如下：
 
 ```typescript
-import { Controller, Get, Html } from "@malagu/mvc/lib/node";
-import { Authenticated } from "@malagu/security/lib/node";
+import { Controller, Get, Html } from "@celljs/mvc/lib/node";
+import { Authenticated } from "@celljs/security/lib/node";
 
 @Controller("")
 export class HomeController {
@@ -92,25 +92,25 @@ export class HomeController {
 }
 ```
 
-默认的登录页面地址，登录用户名和密码定义在 Security 组件的 [malagu.yml](https://github.com/cellbang/malagu/blob/main/packages/security/malagu.yml) 中。我们来配置默认的登录密码为`123456`。
+默认的登录页面地址，登录用户名和密码定义在 Security 组件的 [cell.yml](https://github.com/cellbang/cell/blob/main/packages/security/cell.yml) 中。我们来配置默认的登录密码为`123456`。
 
-修改`malagu.yml`配置默认密码，内容如下：
+修改`cell.yml`配置默认密码，内容如下：
 
 ```yaml
-malagu:
+cell:
   security:
     password: ${ 'MzQ0NTg4ZTk2NzQyYWI1ODY0M2NjM2VjNWFkYjA0YzcwYWZiMzg3MTJhZjY5NGYw' | onTarget('backend')}
     logoutMethod: GET
 ```
 
-完整`malagu.yml`内容如下：
+完整`cell.yml`内容如下：
 
 ```yaml
 backend:
   modules:
     - src/backend/module
 
-malagu:
+cell:
   security:
     password: ${ 'MzQ0NTg4ZTk2NzQyYWI1ODY0M2NjM2VjNWFkYjA0YzcwYWZiMzg3MTJhZjY5NGYw' | onTarget('backend')}
     logoutMethod: GET
@@ -123,8 +123,8 @@ malagu:
 修改`src/backend/controllers/home-controller.ts`文件中的 indexAction 方法，修改后内容如下：
 
 ```ts
-import { Controller, Get, Html } from "@malagu/mvc/lib/node";
-import { Authenticated, SecurityContext } from "@malagu/security/lib/node";
+import { Controller, Get, Html } from "@celljs/mvc/lib/node";
+import { Authenticated, SecurityContext } from "@celljs/security/lib/node";
 
 @Controller("")
 export class HomeController {
@@ -190,22 +190,22 @@ yarn start
 创建`src/backend/authentication/error-handler.ts`文件处理鉴权错误，内容如下：
 
 ```typescript
-import { Autowired, Component, Value } from "@malagu/core";
-import { HttpHeaders, XML_HTTP_REQUEST, HttpStatus } from "@malagu/web";
-import { Context, ErrorHandler, RedirectStrategy } from "@malagu/web/lib/node";
-import { AUTHENTICATION_ERROR_HANDLER_PRIORITY, AuthenticationError, RequestCache } from "@malagu/security/lib/node";
+import { Autowired, Component, Value } from "@celljs/core";
+import { HttpHeaders, XML_HTTP_REQUEST, HttpStatus } from "@celljs/web";
+import { Context, ErrorHandler, RedirectStrategy } from "@celljs/web/lib/node";
+import { AUTHENTICATION_ERROR_HANDLER_PRIORITY, AuthenticationError, RequestCache } from "@celljs/security/lib/node";
 
 @Component(ErrorHandler)
 export class AuthenticationErrorHandler implements ErrorHandler {
     readonly priority: number = AUTHENTICATION_ERROR_HANDLER_PRIORITY + 100;
 
-    @Value("malagu.security.basic.realm")
+    @Value("cell.security.basic.realm")
     protected realm: string;
 
-    @Value("malagu.security.basic.enabled")
+    @Value("cell.security.basic.enabled")
     protected readonly baseEnabled: boolean;
 
-    @Value("malagu.security.loginPage")
+    @Value("cell.security.loginPage")
     protected loginPage: string;
 
     @Autowired(RedirectStrategy)
@@ -240,14 +240,14 @@ export class AuthenticationErrorHandler implements ErrorHandler {
 }
 ```
 
-默认 [AuthenticationErrorHandler](https://github.com/cellbang/malagu/blob/main/packages/security/src/node/error/error-handler.ts) 实现
+默认 [AuthenticationErrorHandler](https://github.com/cellbang/cell/blob/main/packages/security/src/node/error/error-handler.ts) 实现
 
 
 编辑`src/backend/controllers/home-controller.ts`文件修改 loginAction 方法将错误信息返回到模板文件，内容如下：
 
 ```typescript
-import { Controller, Get, Query, Html } from "@malagu/mvc/lib/node";
-import { Authenticated, SecurityContext } from "@malagu/security/lib/node";
+import { Controller, Get, Query, Html } from "@celljs/mvc/lib/node";
+import { Authenticated, SecurityContext } from "@celljs/security/lib/node";
 
 @Controller("")
 export class HomeController {
@@ -305,7 +305,7 @@ export class HomeController {
 修改`src/backend/module.ts`文件，引入定义的 error-handler.ts，内容如下：
 
 ```typescript
-import { autoBind } from "@malagu/core";
+import { autoBind } from "@celljs/core";
 import "./controllers/home-controller";
 import "./authentication/error-handler";
 

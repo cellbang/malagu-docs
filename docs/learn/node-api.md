@@ -1,6 +1,6 @@
 ---
 title: '用nodejs编写接口'
-description: 'Malagu框加的优点在于前后端一体化开发，这里展示如何在vue项目中集成nodejs接口'
+description: 'Cell框加的优点在于前后端一体化开发，这里展示如何在vue项目中集成nodejs接口'
 type: learn
 lang: zh-CN
 ---
@@ -10,7 +10,7 @@ lang: zh-CN
 安装依赖
 
 ```bash
-npm i -S @malagu/mvc
+npm i -S @celljs/mvc
 ```
 
 整理文件及目录
@@ -26,14 +26,14 @@ npm i -S @malagu/mvc
 添加src/backend/controllers/home-controller.ts
 
 ```ts
-import { Controller, Get, Text } from "@malagu/mvc/lib/node";
+import { Controller, Get, Text } from "@celljs/mvc/lib/node";
 
 @Controller("node-api")
 export class HomeController {
     @Get("hello")
     @Text()
     home(): string {
-        return "Welcome to Malagu";
+        return "Welcome to Cell";
     }
 }
 ```
@@ -41,7 +41,7 @@ export class HomeController {
 添加src/backend/module.ts引入home-controller.ts
 
 ```ts
-import { autoBind } from "@malagu/core";
+import { autoBind } from "@celljs/core";
 import "./controllers/home-controller";
 
 export default autoBind();
@@ -49,7 +49,7 @@ export default autoBind();
 
 * 实际项目中controller会很多，会在controllers/index.ts中export出所有的controller，在module.ts中import './controllers'即可。
 
-修改malagu.yml，去除target配置，添加module相关配置修改后内容如下：
+修改cell.yml，去除target配置，添加module相关配置修改后内容如下：
 
 ```yaml
 frontend:
@@ -58,12 +58,12 @@ frontend:
 backend:
   modules:
     - src/backend/module
-malagu:
+cell:
   serve-static: 
     apiPath: /node-api/*
 ```
 
-* malagu.serve-static.apiPath配置node-api的路径转发到node服务
+* cell.serve-static.apiPath配置node-api的路径转发到node服务
 
 ### 创建前端请求类
 
@@ -81,8 +81,8 @@ export interface HttpService {
 创建src/frontend/services/common/http-request.ts
 
 ```ts
-import { Service } from "@malagu/core";
-import { RestOperations, DefaultRestOperationsFactory } from "@malagu/web";
+import { Service } from "@celljs/core";
+import { RestOperations, DefaultRestOperationsFactory } from "@celljs/web";
 import { HttpService } from '~/common';
 
 @Service(HttpService)
@@ -123,7 +123,7 @@ export class HttpServiceImpl extends DefaultRestOperationsFactory implements Htt
 
 ```ts
 import { createApp } from "vue";
-import { App } from "@malagu/vue";
+import { App } from "@celljs/vue";
 import Root from "./root.vue";
 import { router } from "./config/router";
 import { store } from "./store";
@@ -133,7 +133,7 @@ import './services/common/http-service';
 export default class { }
 ```
 
-* Malagu默认的目录名为node、browser，这里因为修改了默认目录，所以需要为前后端配置加载的模块。
+* Cell默认的目录名为node、browser，这里因为修改了默认目录，所以需要为前后端配置加载的模块。
 
 完成修改后项目文件如下：
 
@@ -164,7 +164,7 @@ vue-example/
       shims-vue.d.ts
   ▾ hooks/
       webpack.ts
-  malagu.yml
+  cell.yml
   package-lock.json
   package.json
   tsconfig.json
@@ -186,7 +186,7 @@ vue-example/
 <script lang="ts">
 import { defineComponent, computed, ref } from "vue";
 import { useStore } from "vuex";
-import { ContainerUtil } from '@malagu/core';
+import { ContainerUtil } from '@celljs/core';
 import { HttpService } from '~/common';
 export default defineComponent({
   setup() {

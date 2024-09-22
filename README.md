@@ -1,6 +1,6 @@
-# Malagu Framework 文档
+# Cell Framework 文档
 
-本项目为 Malagu Framework 文档项目，欢迎大家一起共建。
+本项目为 Cell Framework 文档项目，欢迎大家一起共建。
 
 ## 交流群
 

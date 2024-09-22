@@ -1,6 +1,6 @@
 ---
-title: '@malagu/vue'
-description: '@malagu/vue 参考'
+title: '@celljs/vue'
+description: '@celljs/vue 参考'
 type: package
 lang: zh-CN
 ---

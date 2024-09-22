@@ -1,6 +1,6 @@
 ---
 title: blog接口
-description: 本篇通过使用Malagu框架编写Blog来演示相关组件用法
+description: 本篇通过使用Cell框架编写Blog来演示相关组件用法
 type: learn
 lang: zh-CN
 ---
@@ -66,7 +66,7 @@ Post内容CURD接口及路径如下：
 创建接口controller `src/backend/controllers/post-controller.ts` 内容如下：
 
 ```ts
-import { Controller, Get, Post, Patch, Delete, Json, Param, Query, Body } from "@malagu/mvc/lib/node";
+import { Controller, Get, Post, Patch, Delete, Json, Param, Query, Body } from "@celljs/mvc/lib/node";
 import { Post as PostModel } from "../entity";
 import { ResponseData } from "../../common";
 import { jsonFormat } from '../utils';

@@ -1,6 +1,6 @@
 ---
 title: 分类接口
-description: 本篇通过使用Malagu框架编写Blog来演示相关组件用法
+description: 本篇通过使用Cell框架编写Blog来演示相关组件用法
 type: learn
 lang: zh-CN
 ---
@@ -39,7 +39,7 @@ export class Category extends BaseEntity {
 }
 ```
 
-* 字段名和表中定义不一样的可以用@Column选项来指定表中的字段名，@CreateDateColumn、@UpdateDateColumn会修改数据库字段的默认值，所以需`malagu-local.yml`中要开启`synchronize`选项
+* 字段名和表中定义不一样的可以用@Column选项来指定表中的字段名，@CreateDateColumn、@UpdateDateColumn会修改数据库字段的默认值，所以需`cell-local.yml`中要开启`synchronize`选项
 
 创建 `src/backend/entity/index.ts` 导出模型
 
@@ -50,9 +50,9 @@ export * from "./category";
 修改 `src/backend/module.ts` 添加实体绑定，修改后内容如下：
 
 ```ts
-import { autoBind } from "@malagu/core";
+import { autoBind } from "@celljs/core";
 import "./controllers";
-import { autoBindEntities } from "@malagu/typeorm";
+import { autoBindEntities } from "@celljs/typeorm";
 import * as entities from "./entity";
 
 autoBindEntities(entities);
@@ -75,7 +75,7 @@ Category分类CURD接口及路径如下：
 
 ```ts
 import { Controller, Get, Param, Post,
-    Query, Body, Patch, Delete } from "@malagu/mvc/lib/node";
+    Query, Body, Patch, Delete } from "@celljs/mvc/lib/node";
 import { ResponseData } from "../../common";
 import { Category } from "../entity";
 import { jsonFormat } from '../utils';

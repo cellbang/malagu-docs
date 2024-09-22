@@ -1,6 +1,6 @@
 ---
 title: 标签接口
-description: 本篇通过使用Malagu框架编写Blog来演示相关组件用法
+description: 本篇通过使用Cell框架编写Blog来演示相关组件用法
 type: learn
 lang: zh-CN
 ---
@@ -20,7 +20,7 @@ lang: zh-CN
 ```json
 {
     ...
-    "tags": "malagu,framework,nodejs"
+    "tags": "cell,framework,nodejs"
 }
 ```
 
@@ -146,7 +146,7 @@ export class Post extends BaseEntity {
 修改 `src/backend/controller/post-controller.ts` 文件中的show、create、update、delete方法，修改后文件内容如下：
 
 ```typescript
-import { Controller, Get, Post, Patch, Delete, Param, Query, Body } from "@malagu/mvc/lib/node";
+import { Controller, Get, Post, Patch, Delete, Param, Query, Body } from "@celljs/mvc/lib/node";
 import { Post as PostModel, Tag } from "../entity";
 import { ResponseData } from "../../common";
 import { jsonFormat } from '../utils';

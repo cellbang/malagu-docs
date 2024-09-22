@@ -1,6 +1,6 @@
 ---
 title: 接口格式
-description: 本篇通过使用Malagu框架编写Blog来演示相关组件用法
+description: 本篇通过使用Cell框架编写Blog来演示相关组件用法
 type: learn
 lang: zh-CN
 ---

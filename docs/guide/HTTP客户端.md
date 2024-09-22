@@ -16,8 +16,8 @@ toc: menu
 ```typescript
 import { JWKS } from 'jose';
 import { JwkSetManager } from './jwk-protocol';
-import { Component, Autowired } from '@malagu/core';
-import { RestOperations } from '@malagu/web/lib/common/client/client-protocol';
+import { Component, Autowired } from '@celljs/core';
+import { RestOperations } from '@celljs/web/lib/common/client/client-protocol';
 
 @Component(JwkSetManager)
 export class DefaultJwkSetManager implements JwkSetManager<JWKS.KeyStore> {
@@ -41,7 +41,7 @@ export class DefaultJwkSetManager implements JwkSetManager<JWKS.KeyStore> {
 ## 属性配置
 
 
-我们可以通过 `malagu.client.config` 配置 HTTP 客户端服务对象，配置对象接口定义如下：
+我们可以通过 `cell.client.config` 配置 HTTP 客户端服务对象，配置对象接口定义如下：
 ​
 
 ```typescript
@@ -79,7 +79,7 @@ export interface AxiosRequestConfig {
 ```
 配置示例如下：
 ```yaml
-  malagu:
+  cell:
     client:
       config:
         withCredentials: true

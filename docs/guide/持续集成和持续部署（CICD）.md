@@ -12,16 +12,16 @@ toc: menu
 ## 框架默认提供 CICD 脚本
 
 
-Malagu 框架提供了一系列开箱即用的模板，在模板中，默认提供了基于 GitHub Actions 实现 CICD 脚本，我们只需要在平台中注入相应的秘钥即可使用。脚本如下：
+Cell 框架提供了一系列开箱即用的模板，在模板中，默认提供了基于 GitHub Actions 实现 CICD 脚本，我们只需要在平台中注入相应的秘钥即可使用。脚本如下：
 
 
 ```yaml
-name: Malagu Deploy
+name: Cell Deploy
 
 on: push
 
 jobs:
-  malagu-deploy:
+  cell-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -34,28 +34,28 @@ jobs:
       - run: npm test                   # 执行测试命令
       - if: ${{ github.ref == 'refs/heads/master' }}  # 如果提交的主分支，则部署到生成环境
         env: ${{ secrets }}
-        run: npx malagu deploy -m prod
+        run: npx cell deploy -m prod
       - if: ${{ github.ref == 'refs/heads/pre' }} # 如果提交的 pre 分支，则部署到预发环境
         env: ${{ secrets }}
-        run: npx malagu deploy -m pre
+        run: npx cell deploy -m pre
       - if: ${{ github.ref != 'refs/heads/master' && github.ref != 'refs/heads/pre' }} # 如果提交的既不是主分支，又不是 pre 分支，则部署到测试环境
         env: ${{ secrets }}
-        run: npx malagu deploy -m test
+        run: npx cell deploy -m test
 ```
 
 
 说明：
 
-- 如果提交的主分支，则部署到生成环境： `npx malagu deploy -m prod` 
-- 如果提交的 pre 分支，则部署到预发环境: `npx malagu deploy -m pre`
-- 如果提交的既不是主分支，又不是 pre 分支，则部署到测试环境: `npx malagu deploy -m test`
+- 如果提交的主分支，则部署到生成环境： `npx cell deploy -m prod` 
+- 如果提交的 pre 分支，则部署到预发环境: `npx cell deploy -m pre`
+- 如果提交的既不是主分支，又不是 pre 分支，则部署到测试环境: `npx cell deploy -m test`
 
 
 
 ## 如何获取注入的秘钥
 
 
-GitHub 平台会将秘钥，通过环境变量注入到 CICD 运行环境中，在 Malagu 框架中，我们可以通过属性配置文件引用当前环境中的环境变量，如下所示：
+GitHub 平台会将秘钥，通过环境变量注入到 CICD 运行环境中，在 Cell 框架中，我们可以通过属性配置文件引用当前环境中的环境变量，如下所示：
 ```yaml
 password: ${env.PASSWORD}
 ```
@@ -102,9 +102,9 @@ pipeline {
         sh 'echo MALAGU_ACCOUNT_ID=$MALAGU_ACCOUNT_ID >> .env'  # 在环境变量中填写MALAGU_ACCOUNT_ID参数
       }
     }
-    stage('安装 Malagu 环境') {
+    stage('安装 Cell 环境') {
       steps {
-        sh 'pnpm install -g @malagu/cli'
+        sh 'pnpm install -g @celljs/cli'
       }
     }
     stage('安装依赖') {
@@ -115,7 +115,7 @@ pipeline {
     }
     stage('部署应用') {
       steps {
-        sh 'malagu deploy'  # 这里可以参照框架提供的GitHub脚本，对不同的分支执行不同的命令，部署到不同的环境
+        sh 'cell deploy'  # 这里可以参照框架提供的GitHub脚本，对不同的分支执行不同的命令，部署到不同的环境
       }
     }
   }

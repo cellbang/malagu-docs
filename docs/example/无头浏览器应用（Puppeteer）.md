@@ -6,15 +6,15 @@ toc: menu
 
 # 无头浏览器应用（Puppeteer）
 
-Malagu 框架对 Serverless 场景常用的云服务接口做了一层抽象，比如对象存储服务，在 Malagu 框架的 `@malagu/cloud` 组件中抽象了一个云厂商无关的接口： `ObjectStorageService` 。我们在真实应用中操作对象存储服务使用框架提供的接口即可，不需要关心接口不同云厂商的实现细节。虽然不用云厂商对象存储服务的 Open API 大同小异，但是如果我们需要用到了某个云厂商对象存储服务特定的接口，其他的云厂商是没有的，这时，我们可以使用 `ObjectStorageService` 接口的 `getRawCloudService` 方法，获得原生的云服务接口。
+Cell 框架对 Serverless 场景常用的云服务接口做了一层抽象，比如对象存储服务，在 Cell 框架的 `@celljs/cloud` 组件中抽象了一个云厂商无关的接口： `ObjectStorageService` 。我们在真实应用中操作对象存储服务使用框架提供的接口即可，不需要关心接口不同云厂商的实现细节。虽然不用云厂商对象存储服务的 Open API 大同小异，但是如果我们需要用到了某个云厂商对象存储服务特定的接口，其他的云厂商是没有的，这时，我们可以使用 `ObjectStorageService` 接口的 `getRawCloudService` 方法，获得原生的云服务接口。
 
 
-在使用 Malagu 实现无头浏览器应用的时候，发现 Puppeteer 的二进制文件过大，超过了 50 MB。很多 Serverless 平台限制在 50 MB 以内，就是某些平台支持超过 50 MB 以上的代码包，也不推荐将二进制打包到代码包中，如果这样，每次部署的时候将会很长。推荐使用**对象存储服务** + **FaaS 服务**来实现。将二进制文件上传到对象存储，函数实例启动的时候，通过内网从对象存储中下载二进制文件到 `/tmp` 目录。由于内网下载速度很快，大约 1 秒左右可以下载好。
+在使用 Cell 实现无头浏览器应用的时候，发现 Puppeteer 的二进制文件过大，超过了 50 MB。很多 Serverless 平台限制在 50 MB 以内，就是某些平台支持超过 50 MB 以上的代码包，也不推荐将二进制打包到代码包中，如果这样，每次部署的时候将会很长。推荐使用**对象存储服务** + **FaaS 服务**来实现。将二进制文件上传到对象存储，函数实例启动的时候，通过内网从对象存储中下载二进制文件到 `/tmp` 目录。由于内网下载速度很快，大约 1 秒左右可以下载好。
 
-不同云厂商对应的对象存储组件不一样，腾讯云对象存储 COS：@malagu/cos；阿里云对象存储 OSS：@malagu/oss；亚马逊云对象存储 S3：@malagu/s3。不同云厂商依赖的对象存储组件不一样，但是相关的配置和接口是一样的，框架会屏蔽不同云厂商之间的差异。
+不同云厂商对应的对象存储组件不一样，腾讯云对象存储 COS：@celljs/cos；阿里云对象存储 OSS：@celljs/oss；亚马逊云对象存储 S3：@celljs/s3。不同云厂商依赖的对象存储组件不一样，但是相关的配置和接口是一样的，框架会屏蔽不同云厂商之间的差异。
 
 
-Malagu 框架提供了一个组件 `@malagu/puppeteer` 组件，帮助我们快速开发无头浏览器应用。其中最关键的是注入并使用以下服务接口：
+Cell 框架提供了一个组件 `@celljs/puppeteer` 组件，帮助我们快速开发无头浏览器应用。其中最关键的是注入并使用以下服务接口：
 ```typescript
 @Controller()
 export class PuppeteerController {
@@ -23,7 +23,7 @@ export class PuppeteerController {
     protected readonly browserProvider: BrowserProvider;
 }
 
-`@malagu/puppeteer` 主要的作用是集成了 puppeteer-core  这个库，BrowserProvider 接口提供给开发者使用。Browser 的安装是通过 BrowserInstaller 接口实现，默认实现机制提供了两种策略，一是通过对象存储下载 headless 二进制；二是直接使用本地已经存在的 headless；不同的策略是通过配置参数控制。开发者也可以完全覆盖默认安装这个行为。
+`@celljs/puppeteer` 主要的作用是集成了 puppeteer-core  这个库，BrowserProvider 接口提供给开发者使用。Browser 的安装是通过 BrowserInstaller 接口实现，默认实现机制提供了两种策略，一是通过对象存储下载 headless 二进制；二是直接使用本地已经存在的 headless；不同的策略是通过配置参数控制。开发者也可以完全覆盖默认安装这个行为。
 
 ```
 相关配置：
@@ -32,7 +32,7 @@ export class PuppeteerController {
 ```yaml
 targets:
   - backend
-malagu:
+cell:
   cloud:
     region: cn-hangzhou                             # 指定存放 headless 相关二进制的 oss 的地域，建议与应用部署的地域一致，一致可以省略配置
     credentials:                                    # 如果函数配置了角色权限，且拥有访问以下 bucket 的读权限，就不需要配置 AK 信息了
@@ -48,19 +48,19 @@ malagu:
 ```yaml
 targets:
   - backend
-malagu:
+cell:
   puppeteer:
     launchOptions:
       headless: true
-      executablePath: ${malagu.puppeteer.setupPath}/headless-chromium  # 指定 Headless 的执行路径
+      executablePath: ${cell.puppeteer.setupPath}/headless-chromium  # 指定 Headless 的执行路径
 ```
 
 ## 快速开始
 
 
-Malagu 框架提供了命令行模板，我们可以通过 `malagu init` 命令快速创建一个无头浏览器应用项目。选择如下模板：
+Cell 框架提供了命令行模板，我们可以通过 `cell init` 命令快速创建一个无头浏览器应用项目。选择如下模板：
 ```bash
-➜  test malagu init
+➜  test cell init
 
                    ___
  /'\_/`\          /\_ \
@@ -70,7 +70,7 @@ Malagu 框架提供了命令行模板，我们可以通过 `malagu init` 命令�
   \ \_\\ \_\ \__/.\_\/\____\ \__/.\_\ \____ \ \____/
    \/_/ \/_/\/__/\/_/\/____/\/__/\/_/\/___L\ \/___/
                                        /\____/
-                   @malagu/cli@2.30.0  \_/__/
+                   @celljs/cli@2.30.0  \_/__/
 
 ╭──────────────────────────────────────────────────╮
 │      Serverless First Development Framework      │

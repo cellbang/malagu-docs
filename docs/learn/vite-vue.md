@@ -1,6 +1,6 @@
 ---
 title: 'Vue项目'
-description: Malagu框架结合Vue适配Vite
+description: Cell框架结合Vue适配Vite
 type: learn
 lang: zh-CN
 ---
@@ -10,9 +10,9 @@ lang: zh-CN
 ### 创建项目
 
 ```bash
-npm create vite@latest malagu-vue-for-vite --template vue-ts
+npm create vite@latest cell-vue-for-vite --template vue-ts
 npm i
-npm i -D @malagu/core @malagu/vue
+npm i -D @celljs/core @celljs/vue
 ```
 
 ### 适配项目
@@ -21,7 +21,7 @@ npm i -D @malagu/core @malagu/vue
 
 ```ts
 import { createApp } from "vue";
-import { App } from "@malagu/vue";
+import { App } from "@celljs/vue";
 import Root from './App.vue'
 
 @App(createApp(Root))
@@ -31,7 +31,7 @@ export default class {}
 添加`src/module.ts`
 
 ```ts
-import { autoBind } from "@malagu/core";
+import { autoBind } from "@celljs/core";
 import "./main";
 
 export default autoBind();
@@ -45,21 +45,21 @@ export default autoBind();
 import "reflect-metadata";
 import "setimmediate";
 import { Container } from "inversify";
-import { Application } from "@malagu/core/lib/common/application/application-protocol"
-import { ContainerProvider } from "@malagu/core/lib/common/container/container-provider";
-import { currentThis } from "@malagu/core/lib/common/utils";
-import commonModule from "@malagu/core/lib/common/static-module";
-import browserModule from "@malagu/core/lib/browser/static-module";
+import { Application } from "@celljs/core/lib/common/application/application-protocol"
+import { ContainerProvider } from "@celljs/core/lib/common/container/container-provider";
+import { currentThis } from "@celljs/core/lib/common/utils";
+import commonModule from "@celljs/core/lib/common/static-module";
+import browserModule from "@celljs/core/lib/browser/static-module";
 
 function bootstrap() {
-    currentThis.malaguProps = {
-        malagu: {
+    currentThis.cellProps = {
+        cell: {
             hostDomId: "app"
         }
     };
     const container = new Container({ skipBaseClassChecks: true });
     container.load(commonModule, browserModule);
-    import("@malagu/vue/lib/browser/module")
+    import("@celljs/vue/lib/browser/module")
         .then(res => container.load(res.default))
         .then(() =>import("./module"))
         .then(res => container.load(res.default))

@@ -1,6 +1,6 @@
 ---
 title: 连接数据库
-description: 本篇通过使用Malagu框架的Security组件来演示用法
+description: 本篇通过使用Cell框架的Security组件来演示用法
 type: learn
 lang: zh-CN
 ---
@@ -12,15 +12,15 @@ lang: zh-CN
 添加 Npm 组件
 
 ```bash
-yarn add crypto-js @malagu/typeorm
+yarn add crypto-js @celljs/typeorm
 yarn add --dev @types/crypto-js
 ```
 
-修改`malagu.yml`添加数据库配置，内容如下：
+修改`cell.yml`添加数据库配置，内容如下：
 
 ```yaml
 backend: 
-  malagu:
+  cell:
     typeorm:
       ormConfig:
         - type: mysql
@@ -35,13 +35,13 @@ backend:
 
 * 将db_host、db_user、db_pass进行相应替换。
 
-完整`malagu.yml`内容如下：
+完整`cell.yml`内容如下：
 
 ```yaml
 backend:
   modules:
     - src/backend/module
-  malagu:
+  cell:
     typeorm:
       ormConfig:
         - type: mysql
@@ -53,7 +53,7 @@ backend:
           database: security-demo
           logging: true
 
-malagu:
+cell:
   security:
     password: ${ 'MzQ0NTg4ZTk2NzQyYWI1ODY0M2NjM2VjNWFkYjA0YzcwYWZiMzg3MTJhZjY5NGYw' | onTarget('backend')}
     logoutMethod: GET
@@ -61,7 +61,7 @@ malagu:
 
 #### 创建数据库
 
-使用工具或命令行创建数据库，示例中数据库名为 security-demo，名称和上面 malagu.yaml 中的 datebase 字段对应即可。typeorm 会根据 entity 自动建表修改字段，不需要手动建表。
+使用工具或命令行创建数据库，示例中数据库名为 security-demo，名称和上面 cell.yaml 中的 datebase 字段对应即可。typeorm 会根据 entity 自动建表修改字段，不需要手动建表。
 
 ### 添加用户模型实体
 
@@ -99,8 +99,8 @@ export class User extends BaseEntity {
 创建`src/backend/services/user-service.ts`文件处理用户加载，内容如下：
 
 ```ts
-import { Service } from "@malagu/core";
-import { UserService } from "@malagu/security/lib/node";
+import { Service } from "@celljs/core";
+import { UserService } from "@celljs/security/lib/node";
 import { User } from "../entity/user";
 
 @Service({ id: UserService, rebind: true })
@@ -112,13 +112,13 @@ export class UserServiceImpl implements UserService<string, any> {
 }
 ```
 
-默认 [user-service](https://github.com/cellbang/malagu/blob/main/packages/security/src/node/user/user-service.ts) 实现
+默认 [user-service](https://github.com/cellbang/cell/blob/main/packages/security/src/node/user/user-service.ts) 实现
 
 创建`src/backend/authentication/user-checker.ts`文件处理用户检测，内容如下：
 
 ```ts
-import { Service } from "@malagu/core";
-import { UserChecker, UsernameNotFoundError } from "@malagu/security/lib/node";
+import { Service } from "@celljs/core";
+import { UserChecker, UsernameNotFoundError } from "@celljs/security/lib/node";
 
 @Service({id: UserChecker, rebind: true})
 export class UserCheckerImpl implements UserChecker {
@@ -131,7 +131,7 @@ export class UserCheckerImpl implements UserChecker {
 }
 ```
 
-默认 [user-checker](https://github.com/cellbang/malagu/blob/main/packages/security/src/node/user/user-checker.ts) 实现
+默认 [user-checker](https://github.com/cellbang/cell/blob/main/packages/security/src/node/user/user-checker.ts) 实现
 
 创建`src/backend/utils/crypto.ts`文件处理密码加密，内容如下：
 
@@ -146,8 +146,8 @@ export function sha256Encode(content: string) {
 创建`src/backend/authentication/password-encoder.ts`文件处理密码比较，内容如下：
 
 ```ts
-import { Service } from "@malagu/core";
-import { PasswordEncoder } from "@malagu/security/lib/node";
+import { Service } from "@celljs/core";
+import { PasswordEncoder } from "@celljs/security/lib/node";
 import { sha256Encode } from "../utils/crypto";
 
 @Service({ id: PasswordEncoder, rebind: true })
@@ -163,18 +163,18 @@ export class PasswordEncoderImpl implements PasswordEncoder {
 }
 ```
 
-默认 [password-encoder](https://github.com/cellbang/malagu/blob/main/packages/security/src/node/crypto/password/password-encoder.ts) 实现
+默认 [password-encoder](https://github.com/cellbang/cell/blob/main/packages/security/src/node/crypto/password/password-encoder.ts) 实现
 
 因为我们刚刚创建数据库，数据库中还没有用户
 
 修改`src/backend/controllers/home-controller.ts`添加 createAction 方法创建默认用户，内容如下：
 
 ```ts
-import { Controller, Get, Query, Html } from "@malagu/mvc/lib/node";
-import { Authenticated, SecurityContext } from "@malagu/security/lib/node";
+import { Controller, Get, Query, Html } from "@celljs/mvc/lib/node";
+import { Authenticated, SecurityContext } from "@celljs/security/lib/node";
 import { User } from "../entity/user";
 import { sha256Encode } from "../utils/crypto";
-import { Value } from "@malagu/core";
+import { Value } from "@celljs/core";
 
 @Controller("")
 export class HomeController {
@@ -221,8 +221,8 @@ export class HomeController {
 
 修改`src/module.ts`引入上述文件，最终代码如下：
 ```ts
-import { autoBind } from "@malagu/core";
-import { autoBindEntities } from "@malagu/typeorm";
+import { autoBind } from "@celljs/core";
+import { autoBindEntities } from "@celljs/typeorm";
 import "./controllers/home-controller";
 import "./authentication/error-handler";
 import "./authentication/user-checker";

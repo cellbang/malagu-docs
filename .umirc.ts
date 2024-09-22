@@ -1,7 +1,7 @@
 import { defineConfig } from 'dumi';
 
 export default defineConfig({
-  title: 'Malagu',
+  title: 'Cell',
   mode: 'site',
   // hash: true,
   // more config: https://d.umijs.org/config
@@ -9,7 +9,7 @@ export default defineConfig({
 
   // locales: [['zh-CN', '中文'], ['en-US', 'English'] ],
   locales: [['zh-CN', '中文']],
-  logo: 'https://cellbang-lib.oss-cn-hangzhou.aliyuncs.com/Malagu%20Logo%20Green.svg',
+  logo: 'https://cellbang-lib.oss-cn-hangzhou.aliyuncs.com/Cell%20Logo%20Green.svg',
 
   menus: {
     // 需要自定义侧边菜单的路径，没有配置的路径还是会使用自动生成的配置
@@ -98,7 +98,7 @@ export default defineConfig({
         ]
       },
       {
-        title: 'Malagu Blog 项目',
+        title: 'Cell Blog 项目',
         children: [
           'learn/blog-intro.md',
           'learn/blog-create-project.md',
@@ -139,23 +139,23 @@ export default defineConfig({
       // path: '链接是可选的',
       // 可通过如下形式嵌套二级导航菜单，目前暂不支持更多层级嵌套：
       children: [
-        { title: '学习 Malagu', path: '/learn' },
+        { title: '学习 Cell', path: '/learn' },
         { title: 'Vite 适配', path: '/learn/vite-intro'},
         { title: 'Package 文档', path: '/package' },
-        { title: '参与贡献', path: '/malagu' },
+        { title: '参与贡献', path: '/cell' },
       ],
     },
     // {
     //   title: '更多文档',
-    //   path: 'https://www.yuque.com/cellbang/malagu',
+    //   path: 'https://www.yuque.com/cellbang/cell',
     // },
     {
       title: 'API 参考',
-      path: 'https://cellbang.github.io/malagu/docs/next/',
+      path: 'https://cellbang.github.io/cell/docs/next/',
     },
     {
       title: 'GitHub',
-      path: 'https://github.com/cellbang/malagu',
+      path: 'https://github.com/cellbang/cell',
     },
   ],
 

@@ -6,23 +6,23 @@ toc: menu
 
 # Typeorm
 
-Malagu 框架可以很方便集成第三方数据库操作相关的框架，比如 [Sequelize](https://sequelize.org/)、[Typeorm](https://typeorm.io/#/) 等等。基于 Malagu 的组件机制，让第三库扩展性更强，且支持属性配置，开箱即用。目前，框架提供了对 Typeorm 库的集成，让我们可以通过框架配置文件，配置数据库链接相关信息。另外，Malagu 框架是 Serverless First，框架在集成 Typeorm 的时候，对 **Serverless 场景做了最佳实践适配**。并且也**借鉴了 Spring 事务管理机制**，提供了**无侵入式的事务管理**，且支持事务的传播行为。
+Cell 框架可以很方便集成第三方数据库操作相关的框架，比如 [Sequelize](https://sequelize.org/)、[Typeorm](https://typeorm.io/#/) 等等。基于 Cell 的组件机制，让第三库扩展性更强，且支持属性配置，开箱即用。目前，框架提供了对 Typeorm 库的集成，让我们可以通过框架配置文件，配置数据库链接相关信息。另外，Cell 框架是 Serverless First，框架在集成 Typeorm 的时候，对 **Serverless 场景做了最佳实践适配**。并且也**借鉴了 Spring 事务管理机制**，提供了**无侵入式的事务管理**，且支持事务的传播行为。
 
 ## 使用方法
 
 
-框架提供了一个内置模板 `database-app` ，使用命令 `malagu init database-app -o demo` 可以快速初始化一个有关数据库操作的模板应用。初始化完成后，只需要把数据库链接配置改成我们自己的就好了。当然，我们也可以在项目里面直接安装 `@malagu/typeorm` 组件：
+框架提供了一个内置模板 `database-app` ，使用命令 `cell init database-app -o demo` 可以快速初始化一个有关数据库操作的模板应用。初始化完成后，只需要把数据库链接配置改成我们自己的就好了。当然，我们也可以在项目里面直接安装 `@celljs/typeorm` 组件：
 
 
 ```bash
-yarn add @malagu/typeorm # 或者 npm i @malagu/typeorm
+yarn add @celljs/typeorm # 或者 npm i @celljs/typeorm
 ```
 
 
 ## 配置数据源链接
 
 
-在 Malagu 中，数据源链接配置与 Typeorm 几乎是一样的，只是配置的形式和位置不一样而已。框架为了让第三库的配置方式与框架组件的配置方式保持统一，框架在集成 Typeorm 的时候，将 Typeorm 的原有配置方式适配成了框架组件的配置方式。更多 Typeorm 数据源链接配置说明，请查看 [Typeorm 官方文档](https://typeorm.io/#/connection-options)。
+在 Cell 中，数据源链接配置与 Typeorm 几乎是一样的，只是配置的形式和位置不一样而已。框架为了让第三库的配置方式与框架组件的配置方式保持统一，框架在集成 Typeorm 的时候，将 Typeorm 的原有配置方式适配成了框架组件的配置方式。更多 Typeorm 数据源链接配置说明，请查看 [Typeorm 官方文档](https://typeorm.io/#/connection-options)。
 
 
 #### 单数据源
@@ -32,9 +32,9 @@ yarn add @malagu/typeorm # 或者 npm i @malagu/typeorm
 
 
 ```yaml
-# malagu.yml
+# cell.yml
 backend: 
-  malagu:
+  cell:
     typeorm:
       ormConfig:
         - type: mysql
@@ -54,9 +54,9 @@ backend:
 
 
 ```yaml
-# malagu.yml
+# cell.yml
 backend: 
-  malagu:
+  cell:
     typeorm:
       ormConfig:
         - type: mysql
@@ -89,8 +89,8 @@ backend:
 
 
 ```typescript
-import { Controller, Get, Param, Delete, Put, Post, Body } from '@malagu/mvc/lib/node';
-import { Transactional, OrmContext } from '@malagu/typeorm/lib/node';
+import { Controller, Get, Param, Delete, Put, Post, Body } from '@celljs/mvc/lib/node';
+import { Transactional, OrmContext } from '@celljs/typeorm/lib/node';
 import { User } from './entity';
 import { Order } from './mongo_entity';
 
@@ -148,7 +148,7 @@ export class UserController {
 ## 数据库上下文
 
 
-在 Malagu 框架中，Typeorm 的事务托管给框架管理。框架提供了一个装饰器 `@Transactional` ，用于框架在执行方法前后如何开启、传播、提交和回滚事务。然后，框架把托管的 `Entitymanager` 对象放到数据库上下文中，方便我们在业务代码中使用。当然，我们也可以手动管理数据库事务和创建 `EntityManager` 对象。
+在 Cell 框架中，Typeorm 的事务托管给框架管理。框架提供了一个装饰器 `@Transactional` ，用于框架在执行方法前后如何开启、传播、提交和回滚事务。然后，框架把托管的 `Entitymanager` 对象放到数据库上下文中，方便我们在业务代码中使用。当然，我们也可以手动管理数据库事务和创建 `EntityManager` 对象。
 
 
 数据库上下文是基于请求上下文实现，所以数据库上下文也是请求级别的。在数据库上下文中主要提供了获取 `EntityManager` 和 `Repository` 对象相关的方法：
@@ -193,7 +193,7 @@ export namespace OrmContext {
 ## 事务管理
 
 
-Malagu 框架提供了一个装饰器 `@Transactional` ，以声明的方式定义事务的行为，Malagu 框架根据装饰器声明决定事务的开启、传播、提交和回滚行为。
+Cell 框架提供了一个装饰器 `@Transactional` ，以声明的方式定义事务的行为，Cell 框架根据装饰器声明决定事务的开启、传播、提交和回滚行为。
 
 
 #### `@Transactional` 
@@ -230,7 +230,7 @@ async modify(@Body() user: User): Promise<void> {
 #### @Transactional 与 OrmContext
 
 
-Malagu 框架根据装饰器的配置，在方法调用前开启事务（也可能不开启），然后把 EntityManager 托管在 OrmContext 上下文中，通过  OrmContext 取到框架帮我们开启过事务的 EntityManager，其中 Repository 也是通过托管的 EntityManager 创建的。为了正确的取到 EntityManager，请确保装饰器配置的名称与 通过 OrmContext 要获取的 EntityMananger 名称保持一致，不指定名称，则默认为 `default` 。
+Cell 框架根据装饰器的配置，在方法调用前开启事务（也可能不开启），然后把 EntityManager 托管在 OrmContext 上下文中，通过  OrmContext 取到框架帮我们开启过事务的 EntityManager，其中 Repository 也是通过托管的 EntityManager 创建的。为了正确的取到 EntityManager，请确保装饰器配置的名称与 通过 OrmContext 要获取的 EntityMananger 名称保持一致，不指定名称，则默认为 `default` 。
 
 方法执行完后，框架根据方法的执行情况，自动决定事务是提交还是回滚，方法执行出现异常则回滚事务，否则提交事务。
 
@@ -318,10 +318,10 @@ export function autoBindEntities(entities: any, name = DEFAULT_CONNECTION_NAME) 
 
 
 ```typescript
-import { autoBindEntities } from '@malagu/typeorm';
+import { autoBindEntities } from '@celljs/typeorm';
 import * as entities from './entity';
 import * as mongo_entities from './mongo_entity';
-import { autoBind } from '@malagu/core';
+import { autoBind } from '@celljs/core';
 
 autoBindEntities(entities);
 autoBindEntities(mongo_entities,'mongo'); // 多数据源链接情况下，需要指定数据源链接名称

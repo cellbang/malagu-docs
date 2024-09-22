@@ -1,6 +1,6 @@
 ---
 title: 创建项目
-description: 本篇通过代码实例演示Malagu框架的Security组件用法
+description: 本篇通过代码实例演示Cell框架的Security组件用法
 type: learn
 lang: zh-CN
 ---
@@ -8,15 +8,15 @@ lang: zh-CN
 
 # 创建项目
 
-本篇介绍使用命令行创建一个 Malagu 项目，并通过 Mvc 组件来展示一个简单的页面。
+本篇介绍使用命令行创建一个 Cell 项目，并通过 Mvc 组件来展示一个简单的页面。
 
 ### 创建目录及初始化
 
 ```bash
 mkdir security-demo
 echo '{}' > package.json
-yarn add @malagu/core @malagu/mvc
-yarn add --dev @malagu/cli @malagu/cli-service
+yarn add @celljs/core @celljs/mvc
+yarn add --dev @celljs/cli @celljs/cli-service
 ```
 
 
@@ -28,10 +28,10 @@ yarn add --dev @malagu/cli @malagu/cli-service
 {
   "name": "security-demo",
   "keywords": [
-    "malagu-components"
+    "cell-components"
   ],
   "scripts": {
-    "start": "malagu serve"
+    "start": "cell serve"
   },
   // ...
 }
@@ -43,23 +43,23 @@ yarn add --dev @malagu/cli @malagu/cli-service
 {
   "name": "security-demo",
   "keywords": [
-    "malagu-components"
+    "cell-components"
   ],
   "scripts": {
-    "start": "malagu serve"
+    "start": "cell serve"
   },
   "dependencies": {
-    "@malagu/core": "^2.56.0",
-    "@malagu/mvc": "^2.56.0"
+    "@celljs/core": "^2.56.0",
+    "@celljs/mvc": "^2.56.0"
   },
   "devDependencies": {
-    "@malagu/cli": "^2.56.0",
-    "@malagu/cli-service": "^2.56.0"
+    "@celljs/cli": "^2.56.0",
+    "@celljs/cli-service": "^2.56.0"
   }
 }
 ```
 
-* `必须在keywords中包含malagu-components`，框架通过此配置来循环查找依赖链
+* `必须在keywords中包含cell-components`，框架通过此配置来循环查找依赖链
 
 
 ### 创建示例
@@ -110,7 +110,7 @@ yarn add --dev @malagu/cli @malagu/cli-service
 }
 ```
 
-创建`malagu.yml`配置项目模块，内容如下：
+创建`cell.yml`配置项目模块，内容如下：
 
 ```yaml
 backend:
@@ -123,7 +123,7 @@ backend:
 创建`src/backend/controllers/home-controller.ts`文件处理请求，内容如下：
 
 ```typescript
-import { Controller, Get, Html } from "@malagu/mvc/lib/node";
+import { Controller, Get, Html } from "@celljs/mvc/lib/node";
 
 @Controller("")
 export class HomeController {
@@ -155,7 +155,7 @@ export class HomeController {
 创建`src/backend/module.ts`文件引入定义的controller并导出项目，内容如下：
 
 ```typescript
-import { autoBind } from "@malagu/core";
+import { autoBind } from "@celljs/core";
 import "./controllers/home-controller";
 
 export default autoBind();

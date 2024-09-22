@@ -1,6 +1,6 @@
 ---
 title: 添加jwt支持
-description: 本篇通过使用Malagu框架的Security组件来演示用法
+description: 本篇通过使用Cell框架的Security组件来演示用法
 type: learn
 lang: zh-CN
 ---
@@ -10,13 +10,13 @@ lang: zh-CN
 ### 安装依赖
 
 ```bash
-yarn add @malagu/jwt
+yarn add @celljs/jwt
 ```
 
-修改 malagu.yml 添加 jwt 密钥配置
+修改 cell.yml 添加 jwt 密钥配置
 
 ```yml
-malagu:
+cell:
   # 新增内容
   jwt:
     secret: abcdefg
@@ -27,10 +27,10 @@ malagu:
 创建`src/backend/authentication/authentication-success-handler.ts`文件，登录成功时返回 token ，内容如下：
 
 ```typescript
-import { Component, Autowired } from "@malagu/core";
-import { Context } from "@malagu/web/lib/node";
-import { AuthenticationSuccessHandler, Authentication } from "@malagu/security/lib/node";
-import { JwtService } from "@malagu/jwt";
+import { Component, Autowired } from "@celljs/core";
+import { Context } from "@celljs/web/lib/node";
+import { AuthenticationSuccessHandler, Authentication } from "@celljs/security/lib/node";
+import { JwtService } from "@celljs/jwt";
 
 @Component({ id: AuthenticationSuccessHandler, rebind: true })
 export class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHandler {
@@ -45,20 +45,20 @@ export class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 }
 ```
 
-默认 [authentication-success-handler](https://github.com/cellbang/malagu/blob/main/packages/security/src/node/authentication/authentication-success-handler.ts) 实现
+默认 [authentication-success-handler](https://github.com/cellbang/cell/blob/main/packages/security/src/node/authentication/authentication-success-handler.ts) 实现
 
 创建`src/backend/authentication/security-context-store.ts`处理 header 带 Token 的请求，内容如下：
 
 ```typescript
-import { Autowired, Component, Value } from "@malagu/core";
-import { User } from "@malagu/security";
-import { SecurityContext, SecurityContextStore, SecurityContextStrategy, UserMapper, UserService } from "@malagu/security/lib/node";
-import { Context } from '@malagu/web/lib/node';
-import { JwtService } from "@malagu/jwt";
+import { Autowired, Component, Value } from "@celljs/core";
+import { User } from "@celljs/security";
+import { SecurityContext, SecurityContextStore, SecurityContextStrategy, UserMapper, UserService } from "@celljs/security/lib/node";
+import { Context } from '@celljs/web/lib/node';
+import { JwtService } from "@celljs/jwt";
 
 @Component({ id: SecurityContextStore, rebind: true })
 export class SecurityContextStoreImpl implements SecurityContextStore {
-    @Value('malagu.security')
+    @Value('cell.security')
     protected readonly options: any;
 
     @Autowired(UserService)
@@ -96,18 +96,18 @@ export class SecurityContextStoreImpl implements SecurityContextStore {
 }
 ```
 
-默认 [security-context-store](https://github.com/cellbang/malagu/blob/main/packages/security/src/node/context/security-context-store.ts) 实现
+默认 [security-context-store](https://github.com/cellbang/cell/blob/main/packages/security/src/node/context/security-context-store.ts) 实现
 
 
 
 修改`src/backend/controllers/home-controller.ts`文件，添加 userAction 方法返回用户信息，内容如下：
 
 ```ts
-import { Controller, Get, Query, Html } from "@malagu/mvc/lib/node";
-import { Authenticated, SecurityContext } from "@malagu/security/lib/node";
+import { Controller, Get, Query, Html } from "@celljs/mvc/lib/node";
+import { Authenticated, SecurityContext } from "@celljs/security/lib/node";
 import { User } from "../entity/user";
 import { sha256Encode } from "../utils/crypto";
-import { Value } from "@malagu/core";
+import { Value } from "@celljs/core";
 
 @Controller("")
 export class HomeController {
@@ -160,8 +160,8 @@ export class HomeController {
 修改`src/backend/module.ts`引入 security-context-store 文件，内容如下：
 
 ```typescript
-import { autoBind } from "@malagu/core";
-import { autoBindEntities } from "@malagu/typeorm";
+import { autoBind } from "@celljs/core";
+import { autoBindEntities } from "@celljs/typeorm";
 import "./controllers/home-controller";
 import "./authentication/error-handler";
 import "./authentication/user-checker";

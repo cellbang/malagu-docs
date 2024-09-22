@@ -1,6 +1,6 @@
 ---
-title: 学习Malagu
-description: 通过一系列示例学习Malagu框架
+title: 学习Cell
+description: 通过一系列示例学习Cell框架
 type: learn
 lang: zh-CN
 ---
@@ -16,7 +16,7 @@ lang: zh-CN
 - Vue项目 [链接](learn/vite-vue.md)
 - React项目 [链接](learn/vite-react.md)
 
-### Malagu Blog 项目
+### Cell Blog 项目
 - 项目介绍   [链接](learn/blog-intro.md)
 - 创建项目   [链接](learn/blog-create-project.md)
 - 接口格式   [链接](learn/blog-api.md)

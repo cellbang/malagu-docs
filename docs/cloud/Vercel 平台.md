@@ -6,7 +6,7 @@ toc: menu
 
 # Vercel 平台
 
-[Vercel](https://vercel.com/) 是国外一个用户体验很棒的 Serverless 平台。我们可以使用 `@malagu/vercel-adapter` 组件把应用部署到 Vercel 平台。基于约定大于配置原则，零配置，开箱即用。适配器组件基于 Vercel CLI 工具实现部署，所有部署的体验与该工具是一样的，甚至部署规则也是简单适配该工具的配置，只是采用了框架的配置文件方式。
+[Vercel](https://vercel.com/) 是国外一个用户体验很棒的 Serverless 平台。我们可以使用 `@celljs/vercel-adapter` 组件把应用部署到 Vercel 平台。基于约定大于配置原则，零配置，开箱即用。适配器组件基于 Vercel CLI 工具实现部署，所有部署的体验与该工具是一样的，甚至部署规则也是简单适配该工具的配置，只是采用了框架的配置文件方式。
 
 
 #### 云资源
@@ -18,15 +18,15 @@ toc: menu
 #### 部署规则
 
 
-我们可以通过同名覆盖自定义部署规则。默认规则定义在 `@malagu/vercel-adapter` 组件的 `malagu-remote.yml` 配置文件中。部署规则的配置项与 Vercel CLI 工具的配置文件 [`vercel.json`](https://vercel.com/docs/configuration) 是相同的。默认配置如下：
+我们可以通过同名覆盖自定义部署规则。默认规则定义在 `@celljs/vercel-adapter` 组件的 `cell-remote.yml` 配置文件中。部署规则的配置项与 Vercel CLI 工具的配置文件 [`vercel.json`](https://vercel.com/docs/configuration) 是相同的。默认配置如下：
 ```yaml
-malagu:
+cell:
   vercel:
     config:
       version: 2
         
 frontend:
-  malagu:
+  cell:
     vercel:
       config:
         builds:
@@ -37,7 +37,7 @@ frontend:
             dest: frontend/$1
 
 backend:
-  malagu:
+  cell:
     vercel:
       config:
         builds:

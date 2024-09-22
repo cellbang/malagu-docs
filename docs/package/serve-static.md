@@ -1,6 +1,6 @@
 ---
-title: '@malagu/serve-static'
-description: '@malagu/service-static 参考'
+title: '@celljs/serve-static'
+description: '@celljs/service-static 参考'
 type: package
 lang: zh-CN
 ---

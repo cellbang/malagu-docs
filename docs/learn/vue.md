@@ -1,13 +1,13 @@
 ---
 title: '创建Vue项目'
-description: '本篇从零开始创建一个基于Malagu框架的vue项目，以便大家更好的了解Malagu框架'
+description: '本篇从零开始创建一个基于Cell框架的vue项目，以便大家更好的了解Cell框架'
 type: learn
 lang: zh-CN
 ---
 
 # 创建Vue项目
 
-本篇从零开始创建一个基于Malagu框架的vue项目，以便大家更好的了解Malagu框架。Malagu自带的cli工具可快速创建模板项目，可参考以下链接：[创建项目](https://www.yuque.com/cellbang/malagu/ogreg3)、[Vue 开发](https://www.yuque.com/cellbang/malagu/vgim9q)
+本篇从零开始创建一个基于Cell框架的vue项目，以便大家更好的了解Cell框架。Cell自带的cli工具可快速创建模板项目，可参考以下链接：[创建项目](https://www.yuque.com/cellbang/cell/ogreg3)、[Vue 开发](https://www.yuque.com/cellbang/cell/vgim9q)
 
 
 ### 创建项目
@@ -23,8 +23,8 @@ echo '{}'>package.json
 #### 安装相关依赖
 
 ```bash
-npm i -D @malagu/cli @malagu/cli-service
-npm i -S @malagu/vue @malagu/serve-static @malagu/vue
+npm i -D @celljs/cli @celljs/cli-service
+npm i -S @celljs/vue @celljs/serve-static @celljs/vue
 ```
 
 #### 编辑package.json
@@ -34,14 +34,14 @@ npm i -S @malagu/vue @malagu/serve-static @malagu/vue
 ```json
 {
     "name": "vue-example",
-    "keywords": ["malagu-component"],
+    "keywords": ["cell-component"],
     "scripts": {
-        "start": "malagu serve",
-        "build": "malagu build"
+        "start": "cell serve",
+        "build": "cell build"
     },
 }
 ```
-* keywords必须添加且其中必须有`malagu-component`，框架通过此配置来循环查找依赖链
+* keywords必须添加且其中必须有`cell-component`，框架通过此配置来循环查找依赖链
 
 #### 添加文件
 
@@ -86,14 +86,14 @@ tsconfig.json
 
 * 添加ts配置
 
-malagu.yml
+cell.yml
 
 ```yaml
 targets:
   - frontend
 ```
 
-* 添加Malagu项目配置，仅加载前端模块
+* 添加Cell项目配置，仅加载前端模块
 
 src/shims-vue.d.ts
 
@@ -120,7 +120,7 @@ import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   setup() {
-    const msg = ref("hello malagu");
+    const msg = ref("hello cell");
     return { msg };
   }
 })
@@ -133,25 +133,25 @@ src/app.ts
 
 ```ts
 import { createApp } from "vue";
-import { App } from "@malagu/vue";
+import { App } from "@celljs/vue";
 import Root from "./root.vue";
 
 @App(createApp(Root))
 export default class { }
 ```
 
-* 为使用@malagu/core提供的`App`注解器挂载vue实例
+* 为使用@celljs/core提供的`App`注解器挂载vue实例
 
 src/module.ts
 
 ```ts
-import { autoBind } from "@malagu/core";
+import { autoBind } from "@celljs/core";
 import "./app";
 
 export default autoBind();
 ```
 
-* Malagu框架通过module.ts加载项目，必须引入`autoBind`方法并调用。在此文件中引app.ts使Malagu框架能引导vue项目
+* Cell框架通过module.ts加载项目，必须引入`autoBind`方法并调用。在此文件中引app.ts使Cell框架能引导vue项目
 
 项目文件如下：
 ```
@@ -162,7 +162,7 @@ vue-example/
     module.ts
     root.tsx
     shims-vue.d.ts
-  malagu.yml
+  cell.yml
   package-lock.json
   package.json
   tsconfig.json
@@ -255,7 +255,7 @@ export default defineComponent({
 
 ```ts
 import { createApp } from "vue";
-import { App } from "@malagu/vue";
+import { App } from "@celljs/vue";
 import Root from "./root.vue";
 import { router } from "./config/router";
 
@@ -291,7 +291,7 @@ export const store = createStore({
 
 ```ts
 import { createApp } from "vue";
-import { App } from "@malagu/vue";
+import { App } from "@celljs/vue";
 import Root from "./root.vue";
 import { router } from "./config/router";
 import { store } from "./store";

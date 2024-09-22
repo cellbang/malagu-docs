@@ -6,13 +6,13 @@ toc: menu
 
 # EL 表达式
 
-Malagu 框架很多地方使用到了 EL 表达式功能，EL 表达式使用了开源库 [jexl](https://www.npmjs.com/package/jexl) 实现。EL 表达式让组件属性的定义与使用变得极度灵活。
+Cell 框架很多地方使用到了 EL 表达式功能，EL 表达式使用了开源库 [jexl](https://www.npmjs.com/package/jexl) 实现。EL 表达式让组件属性的定义与使用变得极度灵活。
 
 
 ## 在配置文件中使用 EL 
 
 
-在 Malagu 框架中，使用 Yaml 文件配置组件属性。为了让属性普通值与 EL 表达式区别开来，Malagu 使用 `${}` 和 `${{}}` 包裹 EL 表达式。一个属性值可以包含多个 EL 表达式和字符串的组合，并且 EL 表达式还可以嵌套使用。
+在 Cell 框架中，使用 Yaml 文件配置组件属性。为了让属性普通值与 EL 表达式区别开来，Cell 使用 `${}` 和 `${{}}` 包裹 EL 表达式。一个属性值可以包含多个 EL 表达式和字符串的组合，并且 EL 表达式还可以嵌套使用。
 
 - `${}` 编译时 EL 表达式，在项目编译构建时计算
 - `${{}}` 运行时 EL 表达式，在项目运行时计算
@@ -73,7 +73,7 @@ password: '${{env.PASSWORD?:123456}}'
 
 
 ```typescript
-import { Component, Value } from '@malagu/core';
+import { Component, Value } from '@celljs/core';
 
 @Component()
 export class A {
@@ -91,7 +91,7 @@ export class A {
 
 ```typescript
 export function Logo(props: NavItemProps) {
-    const { label, icon, ...rest } = ConfigUtil.get('malagu.shell.logo');
+    const { label, icon, ...rest } = ConfigUtil.get('cell.shell.logo');
     props = { ...rest, ...props };
     return (<NavItem size="medium" gap="xsmall" label={label} icon={<Icon icon={icon}/>} hoverIndicator={false} activatable={false} {...props}/>);
 }
@@ -125,7 +125,7 @@ export class CoreContextInitializer implements ContextInitializer {
 ```
 其中，在示例代码中，我们可以看到，不仅仅扩展了表达式上下文，还为 EL 表达式引擎扩展了转换函数 `replace` 和 `regexp` 。
 ```yaml
-name: ${malagu['fc-adapter'].function.name|replace('-', '_')}
+name: ${cell['fc-adapter'].function.name|replace('-', '_')}
 origin: ${{'cellbang\.com$'|regexp}}
 ```
 
@@ -133,7 +133,7 @@ origin: ${{'cellbang\.com$'|regexp}}
 ## 默认提供 EL 表达式上下文
 
 
-- 应用配置属性，使用范围：编译时和运行时。例如 `${mode}` `${malagu.server.port}`  `${stage}` 
+- 应用配置属性，使用范围：编译时和运行时。例如 `${mode}` `${cell.server.port}`  `${stage}` 
 - `env` 环境变量，使用范围：编译时和运行时。例如 `${env.PASSWORD}`  `${{env.PASSWORD}}` 
 - `pkg` 应用程序包信息，使用范围：编译时。例如 `${pkg.name}` 程序包名称 `${pkg.version}` 程序包版本
 - `cliContext` 命令行上下文信息，使用范围：编译时。例如 `${cliContext.dev}`  是否是本地运行环境

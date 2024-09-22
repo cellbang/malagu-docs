@@ -1,6 +1,6 @@
 ---
 title: '适配说明'
-description: 本篇讲解Malagu框架适配Vite相关说明
+description: 本篇讲解Cell框架适配Vite相关说明
 type: learn
 lang: zh-CN
 ---

@@ -40,7 +40,7 @@ Serverless 与 FaaS（函数即服务）通常被视为可以互换的术语，�
 ## 相关链接
 
 
-- [Malagu 是基于 TypeScript 的 Serverless First、组件化、平台无关的渐进式应用框架](https://github.com/cellbang/malagu)
+- [Cell 是基于 TypeScript 的 Serverless First、组件化、平台无关的渐进式应用框架](https://github.com/cellbang/cell)
 - [[译]简化云编程：伯克利关于Serverless计算的观点](https://zhuanlan.zhihu.com/p/76180907)
 - [What is Serverless Architecture? What are its Pros and Cons?](https://hackernoon.com/what-is-serverless-architecture-what-are-its-pros-and-cons-cc4b804022e9)
 - [Knative](https://cloud.google.com/knative/)

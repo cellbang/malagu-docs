@@ -6,7 +6,7 @@ toc: menu
 
 # AWS Lambda
 
-我们可以使用 `@malagu/lambda-adapter` 和 `@malagu/lambda-plugin` 组件把应用部署到 aws lambda 平台，其中 `@malagu/lambda-adapter` 适配平台运行时接口，比如函数入口；`@malagu/lambda-plugin` 负责适配平台部署接口。基于约定大于配置原则，零配置，开箱即用。
+我们可以使用 `@celljs/lambda-adapter` 和 `@celljs/lambda-plugin` 组件把应用部署到 aws lambda 平台，其中 `@celljs/lambda-adapter` 适配平台运行时接口，比如函数入口；`@celljs/lambda-plugin` 负责适配平台部署接口。基于约定大于配置原则，零配置，开箱即用。
 
 
 ## 云资源
@@ -21,7 +21,7 @@ toc: menu
 ## 环境隔离
 
 
-在 Malagu 框架中，提供了一个顶级配置属性 `stage` 表示环境。而在 `@malagu/lambda-plugin` 组件约定的部署规则中，使用 `mode` 属性映射 `stage` 属性。默认提供了三套环境：测试、预发和生产。表达式规则如下：
+在 Cell 框架中，提供了一个顶级配置属性 `stage` 表示环境。而在 `@celljs/lambda-plugin` 组件约定的部署规则中，使用 `mode` 属性映射 `stage` 属性。默认提供了三套环境：测试、预发和生产。表达式规则如下：
 ```yaml
 stage: "${'test' in mode ? 'test' : 'pre' in mode ? 'pre' : 'prod' in mode ? 'prod' : cliContext.prod ? 'prod' : 'test'}" # test, pre, prod
 ```
@@ -36,13 +36,13 @@ stage: "${'test' in mode ? 'test' : 'pre' in mode ? 'pre' : 'prod' in mode ? 'pr
 通过指定特殊的 `mode` 表示不同的部署环境：
 ```bash
 # 部署到测试环境
-malagu deploy -m test # 或者 malagu deploy
+cell deploy -m test # 或者 cell deploy
 
 # 部署到预发环境，我们也可以直接跳过预发环境的部署，直接部署到生产环境
-malagu deploy -m pre
+cell deploy -m pre
 
 # 部署到生成环境
-malagu deploy -m prod
+cell deploy -m prod
 ```
 
 
@@ -54,14 +54,14 @@ malagu deploy -m prod
 
 `stage` 属性值与函数别名关联（以下是默认规则，无需配置）：
 ```yaml
-malagu:
+cell:
   cloud:
     alias:
       name: ${stage}
 ```
 API 网关的 `stage` 关联（以下是默认规则，无需配置）：
 ```yaml
-malagu:
+cell:
   cloud:
     apiGateway:
       stage:
@@ -90,11 +90,11 @@ mode:
 #### 默认规则
 
 
-默认规则定义在 `@malagu/lambda-plugin` 组件的 `malagu-*.yml` 配置文件中。
+默认规则定义在 `@celljs/lambda-plugin` 组件的 `cell-*.yml` 配置文件中。
 
 #### 自定义部署模式
 ```yaml
-malagu:
+cell:
 	mode:
     - api-gateway # 默认值是 api-gateway，目前支持 api-gateway、timer
 ```
@@ -104,7 +104,7 @@ malagu:
 
 #### 自定义函数名
 ```yaml
-malagu:
+cell:
   cloud:
     function:
       name: xxxx # 默认值是 ${pkg.name}

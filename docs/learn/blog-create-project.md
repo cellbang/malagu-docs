@@ -1,6 +1,6 @@
 ---
 title: 创建项目
-description: 本篇通过使用Malagu框架编写Blog来演示相关组件用法
+description: 本篇通过使用Cell框架编写Blog来演示相关组件用法
 type: learn
 lang: zh-CN
 ---
@@ -10,11 +10,11 @@ lang: zh-CN
 #### 创建目录及初始化
 
 ```bash
-mkdir malagu-blog
-cd malagu-blog
+mkdir cell-blog
+cd cell-blog
 echo '{}' > package.json
-yarn add @malagu/core @malagu/mvc
-yarn add --dev @malagu/cli @malagu/cli-service
+yarn add @celljs/core @celljs/mvc
+yarn add --dev @celljs/cli @celljs/cli-service
 ```
 
 #### 编辑package.json
@@ -23,34 +23,34 @@ yarn add --dev @malagu/cli @malagu/cli-service
 
 ```json
 {
-    "name": "malagu-blog",
-    "keywords": ["malagu-component"],
+    "name": "cell-blog",
+    "keywords": ["cell-component"],
     "scripts": {
-        "start": "malagu serve",
-        "build": "malagu build"
+        "start": "cell serve",
+        "build": "cell build"
     },
     // npm依赖等
 }
 ```
-* keywords必须添加且其中必须有`malagu-component`，框架通过此配置来循环查找依赖链
+* keywords必须添加且其中必须有`cell-component`，框架通过此配置来循环查找依赖链
 
 完整 package.json 内容如下：
 
 ```json
 {
-  "name": "malagu-blog",
-    "keywords": ["malagu-component"],
+  "name": "cell-blog",
+    "keywords": ["cell-component"],
     "scripts": {
-        "start": "malagu serve",
-        "build": "malagu build"
+        "start": "cell serve",
+        "build": "cell build"
     },
   "dependencies": {
-    "@malagu/core": "^2.56.0",
-    "@malagu/mvc": "^2.56.0"
+    "@celljs/core": "^2.56.0",
+    "@celljs/mvc": "^2.56.0"
   },
   "devDependencies": {
-    "@malagu/cli": "^2.56.0",
-    "@malagu/cli-service": "^2.56.0"
+    "@celljs/cli": "^2.56.0",
+    "@celljs/cli-service": "^2.56.0"
   }
 }
 ```
@@ -102,7 +102,7 @@ yarn add --dev @malagu/cli @malagu/cli-service
 }
 ```
 
-在项目根目录创建 `malagu.yml` 配置项目模块
+在项目根目录创建 `cell.yml` 配置项目模块
 
 ```yaml
 targets:
@@ -115,7 +115,7 @@ backend:
 创建 `src/backend/controllers/home-controller.ts` 测试输出
 
 ```ts
-import { Controller, Get, Text } from "@malagu/mvc/lib/node";
+import { Controller, Get, Text } from "@celljs/mvc/lib/node";
 
 @Controller("api/home")
 export class HomeController {
@@ -136,7 +136,7 @@ export * from "./home-controller";
 创建 `src/backend/module.ts` 引入定义的controller并导出项目模块
 
 ```ts
-import { autoBind } from "@malagu/core";
+import { autoBind } from "@celljs/core";
 import "./controllers";
 
 export default autoBind();
